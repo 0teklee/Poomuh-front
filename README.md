@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+_프로젝트 소개는 아래를 참고해서 자유롭게 작성해주세요._ <br>
+_그대로 따라서 작성하면, 다른 프로젝트와 획일화 되어서 특별해보이지 않습니다. 나만의 언어로 나의 소중한 프로젝트를 특별하게 설명해주세요_
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 푸망 프로젝트 Front-end 소개
 
-## Available Scripts
+- 다방 클론 프로젝트입니다.
 
-In the project directory, you can run:
+### 개발 인원 및 기간
 
-### `npm start`
+- 개발기간 : 2022/4/18 ~ 2022/5/6
+- 개발 인원 : 프론트엔드 3명, 백엔드 2명
+- [백엔드 github 링크](https://github.com/wecode-bootcamp-korea/justcode-4-2nd-poomuh-back)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 프로젝트 선정이유
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 이 사이트는...
 
-### `npm test`
+### 데모 영상(이미지 클릭)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+_유투브 영상 링크나 캡쳐 이미지 넣어주세요._
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 적용 기술 및 구현 기능
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 적용 기술
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> - Front-End : React.js, Styled-Components, react-modal
+> - Back-End : Python, Django web framework, Beautifulsoup, Selenium, Bcrypt, My SQL
+> - Common : KAKAO social login, AWS(EC2,RDS), RESTful API
 
-### `npm run eject`
+### 구현 기능
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### 메인페이지
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### 지도
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- 지도 API 구현
+- 매물 검색 / 필터
+- 매물 리스트 컴포넌트
+- 중개자 정보, 연락처 모달
 
-## Learn More
+#### 관심목록
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- 최근 본 방 리스트
+- 찜한 방 리스트
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### 방 내놓기
 
-### Code Splitting
+- 매물 등록
+- 내 방 관리 (매물 관리)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### 로그인
 
-### Analyzing the Bundle Size
+- 일반, 중개인 공통 로그인 기능 구현
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### 회원가입
 
-### Making a Progressive Web App
+- 일반, 중개인 회원가입을 한 페이지에 구현
+  <br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+_아래 Reference 부분은 README.md에 꼭 포함되어야 하는 내용입니다_
 
-### Advanced Configuration
+## Reference
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 이 프로젝트는 [다방](http://dabangapp.com) 사이트를 참조하여 학습목적으로 만들었습니다.
+- 실무수준의 프로젝트이지만 학습용으로 만들었기 때문에 이 코드를 활용하여 이득을 취하거나 무단 배포할 경우 법적으로 문제될 수 있습니다.
+- 이 프로젝트에서 사용하고 있는 사진 대부분은 위코드에서 구매한 것이므로 해당 프로젝트 외부인이 사용할 수 없습니다.
