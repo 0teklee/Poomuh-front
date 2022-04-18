@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
 import ManageNav from './ManageNav';
+import ManageFormNotice from './ManageFormNotice';
+import ManageFormRoomType from './ManageFormRoomType';
 
 function ManageForm() {
   return (
@@ -12,12 +13,16 @@ function ManageForm() {
         <Title>방내놓기</Title>
       </TitleWrapper>
       <ManageNav select="form" />
+      <ManageFormNotice />
+      <ManageFormRoomType />
     </Wrapper>
   );
 }
 
 const Wrapper = styled.section`
-  margin: 0 10rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 1200px;
 `;
 const TitleWrapper = styled.header`
   display: flex;
