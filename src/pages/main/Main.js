@@ -49,12 +49,10 @@ function Main() {
 export default Main;
 
 const MainContainer = styled.div`
-  font-family: 'Spoqa Han Sans', -apple-system, sans-serif;
   font-size: 1rem;
   display: flex;
   justify-content: space-around;
   margin: 0 1rem;
-  // background-color: yellow;
 `;
 
 const ListBox = styled.div`
