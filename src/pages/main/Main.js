@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Footer from '../../components/footer/Footer';
 
 function Main() {
   return (
@@ -42,6 +43,7 @@ function Main() {
         <Link>오시는 길</Link>
         <Link>제휴문의</Link>
       </ListBox>
+      <Footer />
     </MainContainer>
   );
 }
