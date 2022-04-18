@@ -16,9 +16,7 @@ function ManageForm() {
   );
 }
 
-const Wrapper = styled.section`
-  margin: 0 10rem;
-`;
+const Wrapper = styled.section``;
 const TitleWrapper = styled.header`
   display: flex;
   align-items: center;
