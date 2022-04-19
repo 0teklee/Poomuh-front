@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Footer from '../../components/footer/Footer';
+import Header from '../../components/header/Header';
 function Main() {
   return (
     <>
+      <Header />
       <MainContainer>
         <ListBox>
           <Title>형태별 검색</Title>
