@@ -69,7 +69,7 @@ function Footer() {
           </FooterBodyRight>
         </FooterBody>
       </FooterInner>
-      <TopButton>Top</TopButton>
+      {/* <TopButton>Top</TopButton> */}
     </FooterContainer>
   );
 }
@@ -149,12 +149,12 @@ const IconWrap = styled.div`
   font-size: 1.5rem;
   color: white;
 `;
-const TopButton = styled.button`
-  position: fixed;
-  width: 3rem;
-  height: 3rem;
-  right: 1rem;
-  bottom: 1rem;
-  border: none;
-  // border-radius: 50%;
-`;
+// const TopButton = styled.button`
+//   position: fixed;
+//   width: 3rem;
+//   height: 3rem;
+//   right: 1rem;
+//   bottom: 1rem;
+//   border: none;
+//   // border-radius: 50%;
+// `;
