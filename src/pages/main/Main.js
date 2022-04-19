@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Footer from '../../components/footer/Footer';
-
 function Main() {
   return (
     <>
@@ -67,7 +66,6 @@ const Title = styled.p`
   display: block;
   font-weight: bold;
   margin: 1.5rem 0;
-  // background-color: green;
 `;
 
 const Link = styled.a`
