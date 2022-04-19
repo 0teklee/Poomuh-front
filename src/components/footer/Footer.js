@@ -77,10 +77,8 @@ function Footer() {
 export default Footer;
 
 const FooterContainer = styled.div`
-  position: absolute;
   width: 100%;
   height: 20rem;
-  bottom: 0;
   color: rgb(170, 170, 170);
   background-color: rgb(55, 55, 55);
   // font-family: 'Spoqa Han Sans Neo', 'sans-serif';
