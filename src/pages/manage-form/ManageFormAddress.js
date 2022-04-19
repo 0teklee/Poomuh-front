@@ -10,8 +10,33 @@ function ManageFormAddress() {
         <TitleNotice>*등기부등본 상의 주소를 입력해 주세요.</TitleNotice>
       </Title>
       <RowWrapper>
-        <RowHead>주소</RowHead>
-        <button onClick={() => <DaumPostcode />}>주소 찾기</button>
+        <RowHead>
+          <InputTitle>주소</InputTitle>
+        </RowHead>
+        <AddressInputWrapper>
+          <InputInnerWrapper>
+            <SearchNotice>
+              도로명, 건물명, 지번에 대해 통합검색이 가능합니다.
+            </SearchNotice>
+            <SearchAddressBox>
+              <TextInput
+                placeholder="예)번동 10-1, 강북구 번동"
+                marginRight="15px"
+              />
+              <ButtonInput value="주소검색" />
+            </SearchAddressBox>
+            <BorderBox>
+              <div>도로명 : </div>
+              <div>지 번 : </div>
+            </BorderBox>
+            <FlexDiv>
+              <TextInput />
+              <TextInput />
+            </FlexDiv>
+          </InputInnerWrapper>
+
+          <MapWrapper>지도가 들어갈 자리</MapWrapper>
+        </AddressInputWrapper>
       </RowWrapper>
     </Wrapper>
   );
@@ -49,13 +74,76 @@ const RowWrapper = styled.div`
   display: flex;
 `;
 const RowHead = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 12%;
-  padding: 2rem;
   text-align: center;
-  font-weight: 700;
-  background: #fdfdfd;
   border-bottom: 1px solid rgb(226, 226, 226);
   border-right: 1px solid rgb(226, 226, 226);
+  background: #fdfdfd;
+`;
+
+const AddressInputWrapper = styled.div`
+  display: flex;
+  width: 88%;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  padding: 20px;
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
+`;
+
+const InputInnerWrapper = styled.div`
+  width: 55%;
+`;
+
+const InputTitle = styled.h1`
+  font-weight: 700;
+`;
+
+const SearchNotice = styled.div`
+  display: inline-block;
+  color: rgb(136, 136, 136);
+  font-size: 14px;
+`;
+
+const SearchAddressBox = styled.form`
+  display: flex;
+  margin: 15px 0px;
+`;
+
+const BorderBox = styled.div`
+  margin: 15px 0px;
+  padding: 20px;
+  border: 1px solid rgb(226, 226, 226);
+`;
+
+const TextInput = styled.input.attrs(props => ({
+  type: 'text',
+  name: props.name,
+}))`
+  display: inline-block;
+  margin-right: 15px;
+  width: 100%;
+  height: 46px;
+  padding: 0px 16px;
+  color: rgb(76, 76, 76);
+  font-size: 14px;
+  border: 1px solid rgb(223, 223, 223);
+  border-radius: 2px;
+`;
+
+const ButtonInput = styled.input.attrs(props => ({
+  type: 'button',
+  name: props.name,
+}))``;
+
+const MapWrapper = styled.div`
+  width: 40%;
+  border: 1px solid rgb(223, 223, 223);
 `;
 
 export default ManageFormAddress;
