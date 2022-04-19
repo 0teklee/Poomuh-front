@@ -4,6 +4,7 @@ import Header from '../../components/header/Header';
 import ManageNav from './ManageNav';
 import ManageFormNotice from './ManageFormNotice';
 import ManageFormRoomType from './ManageFormRoomType';
+import ManageFormAddress from './ManageFormAddress';
 
 function ManageForm() {
   return (
@@ -15,6 +16,7 @@ function ManageForm() {
       <ManageNav select="form" />
       <ManageFormNotice />
       <ManageFormRoomType />
+      <ManageFormAddress />
     </Wrapper>
   );
 }
