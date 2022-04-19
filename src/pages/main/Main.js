@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import Footer from '../../components/footer/Footer';
-import Header from '../../components/header/Header';
+import MainHeader from '../../components/header/MainHeader';
+import { useNavigate } from 'react-router-dom';
+
 function Main() {
   return (
     <>
-      <Header />
+      <MainHeader />
+      {/* 메인페이지 */}
       <MainContainer>
         <ListBox>
           <Title>형태별 검색</Title>
@@ -46,6 +49,8 @@ function Main() {
           <Link>제휴문의</Link>
         </ListBox>
       </MainContainer>
+
+      {/* 푸터 */}
       <Footer />
     </>
   );

@@ -12,7 +12,7 @@ function Header() {
   return (
     <Wrapper>
       <LogoWrapper onClick={() => navigate('/')}>
-        <HeaderLogo src="images/logo_header.png" />
+        <HeaderLogo src="images/logo_main_header.png" />
       </LogoWrapper>
       <MenuWrapper>
         <Link onClick={() => navigate('/search')}>지도</Link>
@@ -33,10 +33,11 @@ export default Header;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 4.5rem;
+  height: 9rem;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid rgb(231, 231, 231);
+  background-color: #326ce9;
 `;
 const LogoWrapper = styled.div`
   width: 4.5rem;
