@@ -32,6 +32,7 @@ function Header() {
 export default Header;
 
 const Wrapper = styled.div`
+  font-family: 'Spoqa Han Sans', -apple-system, sans-serif;
   width: 100%;
   height: 4.5rem;
   display: flex;
