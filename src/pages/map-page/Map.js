@@ -1,6 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { markerdata } from './markerData';
-import {}
+import { MarkerContext, MarkerDispatch, MarkerDispatch } from './context';
+
+const Marker = useContext(MarkerContext);
+const MarkerDispatch = useContext(MarkerDispatch);
 
 function Map() {
   useEffect(() => {
@@ -8,11 +11,11 @@ function Map() {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
-        'LatLng': `${CurrentLatLong}`,
+        LatLng: `${CurrentLatLong}`,
       },
     })
       .then(res => res.json)
-      .then(data => dispatch({ type: 'GET_MARKERS' }));
+      .then(data => MarkerDispatch({ type: 'GET_MARKERS', getMarkers: data }));
   }, []);
   useEffect(() => {
     mapscript();
