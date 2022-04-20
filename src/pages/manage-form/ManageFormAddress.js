@@ -95,8 +95,9 @@ function ManageFormAddress() {
             </Input>
           </InputInnerWrapper>
           <MapWrapper>
-            <Map />
+            <Map Address={infoContext.address} />
           </MapWrapper>
+          <button onClick={() => console.log(infoContext.address)}>콘솔</button>
         </AddressInputWrapper>
       </RowWrapper>
     </Wrapper>
