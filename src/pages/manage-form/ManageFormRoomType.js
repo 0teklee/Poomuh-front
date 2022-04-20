@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
+import { InfoDispatchContext } from './context';
 
 function ManageFormRoomType() {
   const [selectRoom, setSelectRoom] = useState('원룸');
   const [selectBuilding, setSelectBuilding] = useState('');
+  const infoDispatch = useContext(InfoDispatchContext);
+
   const handleSelectRoom = e => {
     setSelectRoom(e.target.value);
+    infoDispatch({ type: 'UPDATE_ROOM_TYPE', roomType: e.target.value });
   };
   const handleSelectBuilding = e => {
     setSelectBuilding(e.target.value);
+    infoDispatch({
+      type: 'UPDATE_BUILDING_TYPE',
+      buildingType: e.target.value,
+    });
   };
+
   return (
     <Wrapper>
       <Title>매물 종류</Title>

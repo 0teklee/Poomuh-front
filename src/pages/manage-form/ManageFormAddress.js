@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
-import DaumPostcode from 'react-daum-postcode';
+import Map from './ManageFormMap';
+import ManageFormPostCode from './ManageFormPostCode';
+import { InfoDispatchContext, InfoContext } from './context';
 
 function ManageFormAddress() {
   const [check, setCheck] = useState(false);
-  const handleCheck = e => {
+  const [detail, setDetail] = useState({ 동: '', 호: '' });
+  const infoDispatch = useContext(InfoDispatchContext);
+  const infoContext = useContext(InfoContext);
+  const handleCheck = () => {
     setCheck(prev => !prev);
   };
+  const handleDongAddress = e => {
+    const { value } = e.target;
+    infoDispatch({
+      type: 'UPDATE_DONG',
+      dong: `${value}동`,
+    });
+  };
+  const handleHoAddress = e => {
+    const { value } = e.target;
+    infoDispatch({
+      type: 'UPDATE_HO',
+      ho: `${value}호`,
+    });
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => {
+    setShowModal(prev => !prev);
+  };
+
   return (
     <Wrapper>
+      {showModal && <ManageFormPostCode handle={handleShowModal} />}
       <Title>
         위치 정보
         <TitleNotice>*등기부등본 상의 주소를 입력해 주세요.</TitleNotice>
@@ -25,26 +51,41 @@ function ManageFormAddress() {
             </SearchNotice>
             <SearchAddressBox>
               <TextInput placeholder="예)번동 10-1, 강북구 번동" />
-              <ButtonInput value="주소검색" />
+              <ButtonInput value="주소검색" onClick={handleShowModal} />
             </SearchAddressBox>
             <BorderBox>
-              <div>도로명 : </div>
-              <div>지 번 : </div>
+              <div className="addressText">{`도로명 : ${infoContext.address}`}</div>
+              <div className="addressText">
+                {`지  번 : `}
+                {infoContext.jaddress}
+              </div>
             </BorderBox>
             <FlexDiv>
               <FlexDiv check={check}>
-                <TextInput placeholder="예 ) 101동" check={check} />
+                <TextInput
+                  placeholder="예 ) 101동"
+                  check={check}
+                  onChange={handleDongAddress}
+                />
                 <DetailAdressBox marginRight="5px">동</DetailAdressBox>
               </FlexDiv>
-              <FlexDiv width={check}>
-                <TextInput placeholder="예 ) 101호" />
+              <FlexDiv flexWidth={check}>
+                <TextInput
+                  placeholder="예 ) 101호"
+                  onChange={handleHoAddress}
+                />
                 <DetailAdressBox>호</DetailAdressBox>
               </FlexDiv>
             </FlexDiv>
             <Input>
-              <div className="inputCheckbox" onClick={handleCheck}>
-                <input id="inputCheck" type="checkbox" checked={check} />
-                <label htmlFor="inputCheck">
+              <div className="inputCheckbox" onClick={() => handleCheck()}>
+                <input
+                  id="inputCheck"
+                  type="checkbox"
+                  checked={check}
+                  readOnly
+                />
+                <label htmlFor="inputCheck" onClick={() => handleCheck()}>
                   <BsCheck size="20px" color="#fff" />
                 </label>
                 <p className="notice">
@@ -53,8 +94,9 @@ function ManageFormAddress() {
               </div>
             </Input>
           </InputInnerWrapper>
-
-          <MapWrapper>지도가 들어갈 자리</MapWrapper>
+          <MapWrapper>
+            <Map />
+          </MapWrapper>
         </AddressInputWrapper>
       </RowWrapper>
     </Wrapper>
@@ -112,7 +154,7 @@ const AddressInputWrapper = styled.div`
 
 const FlexDiv = styled.div`
   display: ${props => (props.check ? 'none' : 'flex')};
-  width: ${props => (props.width ? '' : '100%')};
+  width: ${props => (props.flexWidth ? '50%' : '100%')};
   align-items: center;
 `;
 
@@ -130,7 +172,7 @@ const SearchNotice = styled.div`
   font-size: 14px;
 `;
 
-const SearchAddressBox = styled.form`
+const SearchAddressBox = styled.div`
   display: flex;
   margin: 15px 0px;
 `;
@@ -139,6 +181,11 @@ const BorderBox = styled.div`
   margin: 15px 0px;
   padding: 20px;
   border: 1px solid rgb(226, 226, 226);
+  .addressText {
+    color: rgb(136, 136, 136);
+    font-size: 15px;
+    line-height: 22px;
+  }
 `;
 
 const Input = styled.div`
@@ -157,6 +204,7 @@ const Input = styled.div`
       border: 1px solid rgb(226, 226, 226);
       position: absolute;
       bottom: -5px;
+      cursor: pointer;
     }
     input[type='checkbox']:checked + label {
       background: rgb(50, 108, 249);

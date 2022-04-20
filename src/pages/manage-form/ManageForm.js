@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
 import ManageNav from './ManageNav';
 import ManageFormNotice from './ManageFormNotice';
 import ManageFormRoomType from './ManageFormRoomType';
 import ManageFormAddress from './ManageFormAddress';
+import ManageFormSend from './ManageFormSend';
+import { GlobalContextProvider } from './context';
 
 function ManageForm() {
   return (
@@ -14,9 +17,13 @@ function ManageForm() {
         <Title>방내놓기</Title>
       </TitleWrapper>
       <ManageNav select="form" />
-      <ManageFormNotice />
-      <ManageFormRoomType />
-      <ManageFormAddress />
+      <GlobalContextProvider>
+        <ManageFormNotice />
+        <ManageFormRoomType />
+        <ManageFormAddress />
+        <ManageFormSend />
+      </GlobalContextProvider>
+      <Footer />
     </Wrapper>
   );
 }
