@@ -17,9 +17,6 @@ function ManageFormPostCode({ handle }) {
     infoDispatch({ type: 'UPDATE_JADDRESS', jaddress: data.jibunAddress });
   };
 
-  const LatLng = data => {
-    const addr = data.address;
-  };
   return (
     <Outer onClick={handle}>
       <Inner>
