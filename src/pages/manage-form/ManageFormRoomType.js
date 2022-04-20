@@ -178,7 +178,7 @@ const UlWrapper = styled.ul`
 
 const Label = styled.label`
   display: block;
-  position: relative;
+  position: absolute;
   padding: 1rem;
   margin: 0 1rem;
   border: 1px solid rgb(226, 226, 226);
