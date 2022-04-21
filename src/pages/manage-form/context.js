@@ -36,6 +36,10 @@ function infoReducer(state, action) {
       return { ...state, address_dong: action.dong };
     case 'UPDATE_HO':
       return { ...state, address_ho: action.ho };
+    case 'UPDATE_DETAIL_TITLE':
+      return { ...state, description_title: action.detail_title };
+    case 'UPDATE_DETAIL_CONTENT':
+      return { ...state, description_detail: action.detail_content };
     default:
       throw new Error(`Unknown action type : ${action.type}`);
   }

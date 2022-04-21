@@ -152,11 +152,9 @@ const Title = styled.h1`
   font-weight: 700;
   text-align: center;
 `;
-const RowWrapper = styled.div`
-  display: flex;
-`;
+
 const RowHead = styled.div`
-  width: 12%;
+  width: 150px;
   padding: 2rem;
   text-align: center;
   font-weight: 700;
@@ -164,6 +162,7 @@ const RowHead = styled.div`
   border-bottom: 1px solid rgb(226, 226, 226);
   border-right: 1px solid rgb(226, 226, 226);
 `;
+
 const RowSelectBox = styled.div`
   display: flex;
   justify-content: center;
@@ -171,6 +170,16 @@ const RowSelectBox = styled.div`
   width: 90%;
   border-bottom: 1px solid rgb(226, 226, 226);
 `;
+
+const RowWrapper = styled.div`
+  display: flex;
+  &:last-child {
+    ${RowHead}, ${RowSelectBox} {
+      border-bottom: none;
+    }
+  }
+`;
+
 const UlWrapper = styled.ul`
   display: flex;
   width: 100%;

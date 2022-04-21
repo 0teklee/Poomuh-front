@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
 import Map from './ManageFormMap';
@@ -7,9 +7,10 @@ import { InfoDispatchContext, InfoContext } from './context';
 
 function ManageFormAddress() {
   const [check, setCheck] = useState(false);
-  const [detail, setDetail] = useState({ 동: '', 호: '' });
   const infoDispatch = useContext(InfoDispatchContext);
   const infoContext = useContext(InfoContext);
+  const searchAddressValue = useRef('');
+
   const handleCheck = () => {
     setCheck(prev => !prev);
   };
@@ -35,7 +36,12 @@ function ManageFormAddress() {
 
   return (
     <Wrapper>
-      {showModal && <ManageFormPostCode handle={handleShowModal} />}
+      {showModal && (
+        <ManageFormPostCode
+          handle={handleShowModal}
+          val={searchAddressValue.current}
+        />
+      )}
       <Title>
         위치 정보
         <TitleNotice>*등기부등본 상의 주소를 입력해 주세요.</TitleNotice>
@@ -50,13 +56,21 @@ function ManageFormAddress() {
               도로명, 건물명, 지번에 대해 통합검색이 가능합니다.
             </SearchNotice>
             <SearchAddressBox>
-              <TextInput placeholder="예)번동 10-1, 강북구 번동" />
+              <TextInput
+                placeholder="예 ) 번동 10-1, 강북구 번동"
+                ref={searchAddressValue}
+                onClick={e => (e.target.value = '')}
+              />
               <ButtonInput value="주소검색" onClick={handleShowModal} />
             </SearchAddressBox>
             <BorderBox>
-              <div className="addressText">{`도로명 : ${infoContext.address}`}</div>
               <div className="addressText">
-                {`지  번 : `}
+                {' '}
+                <span>도로명 : </span>
+                {infoContext.address}
+              </div>
+              <div className="addressText">
+                <span>지 번 : </span>
                 {infoContext.jaddress}
               </div>
             </BorderBox>
@@ -97,7 +111,6 @@ function ManageFormAddress() {
           <MapWrapper>
             <Map Address={infoContext.address} />
           </MapWrapper>
-          <button onClick={() => console.log(infoContext.address)}>콘솔</button>
         </AddressInputWrapper>
       </RowWrapper>
     </Wrapper>
@@ -139,7 +152,7 @@ const RowHead = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 12%;
+  width: 18%;
   text-align: center;
   border-right: 1px solid rgb(226, 226, 226);
   background: #fdfdfd;
@@ -186,6 +199,10 @@ const BorderBox = styled.div`
     color: rgb(136, 136, 136);
     font-size: 15px;
     line-height: 22px;
+    span {
+      display: inline-block;
+      text-align: justify;
+    }
   }
 `;
 

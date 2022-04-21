@@ -8,6 +8,9 @@ import ManageFormRoomType from './ManageFormRoomType';
 import ManageFormAddress from './ManageFormAddress';
 import ManageFormSend from './ManageFormSend';
 import { GlobalContextProvider } from './context';
+import ManageFormDetail from './ManageFormDetail';
+import ManageFormRoomInfo from './ManageFormRoomInfo';
+import ManageFormTradeType from './ManageFormTradeType';
 
 function ManageForm() {
   return (
@@ -21,6 +24,9 @@ function ManageForm() {
         <ManageFormNotice />
         <ManageFormRoomType />
         <ManageFormAddress />
+        <ManageFormTradeType />
+        <ManageFormRoomInfo />
+        <ManageFormDetail />
         <ManageFormSend />
       </GlobalContextProvider>
       <Footer />

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { InfoContext } from './context';
 
-function ManageFormMap({}) {
+function ManageFormMap() {
   const container = useRef(null); //지도를 담을 영역의 DOM 레퍼런스
   const { kakao } = window;
   const infoContext = useContext(InfoContext);
