@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Header from '../../components/header/Header';
 function Login() {
   const onLogin = () => {
-    fetch('http://localhost:8000/요청경로', {
+    fetch('http://localhost:8000/users/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
