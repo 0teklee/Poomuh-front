@@ -1,14 +1,101 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { UserInfoContext, UserInfoDispatchContext } from './signupContext';
 
-const Verification = () => {
+const Verification = ({ setShow }) => {
+  //context.js
+  const userInfo = useContext(UserInfoContext);
+  const userInfoDispatch = useContext(UserInfoDispatchContext);
+
+  //isAgent의 값에 따라 요청 경로 다르게 해주는 상태값
+  const [requestedUrl, setRequestedUrl] = useState('');
+
+  //isAgent가 참이면 agent/signup 요청
+  useEffect(() => {
+    userInfo.isAgent
+      ? setRequestedUrl('agents/signup')
+      : setRequestedUrl('users/signup');
+  }, [userInfo.isAgent]);
+
+  const onSignup = () => {
+    fetch(`http://localhost:8000/${requestedUrl}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        is_agent: userInfo.isAgent,
+        email: userInfo.email,
+        nickname: userInfo.nickname,
+        password: userInfo.password,
+        name: userInfo.name,
+        phone_number: userInfo.phone_number,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => console.log(res));
+  };
+
   //전체 선택 관리할 상태값
   const [totalCheckVerif, setTotalCheckVerif] = useState(false);
   const [checksVerif, setChecksVerif] = useState(Array(4).fill(false));
   const [activeBtnVerif, setActiveBtnVerif] = useState(false);
+
+  //이름 유효성
+  const [nameError, setNameError] = useState(false);
+
+  //주민번호 유효성
+  const [idNum, setIdNum] = useState('');
+  const [secDigit, setSecDigit] = useState('');
+
+  //인증 보여줄 상태값 관리
+  const [showVerif, setShowVerif] = useState(false);
+
+  //checkbox 모두 체크하는 함수
   const allCheckVerif = () => {
     setChecksVerif(Array(checksVerif.length).fill(!totalCheckVerif));
     setTotalCheckVerif(!totalCheckVerif);
+  };
+
+  const clickNext = () => {
+    if (activeBtnVerif) {
+      setShow('success');
+    }
+  };
+
+  // context에서 이름 저장
+  const onChangeName = e => {
+    const nameRegex = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{0,10}$/;
+    if (!e.target.value || nameRegex.test(e.target.value)) setNameError(false);
+    else setNameError(true);
+    userInfoDispatch({
+      type: 'UPDATE_NAME',
+      name: e.target.value,
+    });
+  };
+
+  //context에서 전화번호 저장
+  const onChangePhoneNum = e => {
+    userInfoDispatch({
+      type: 'UPDATE_PHONENUM',
+      phoneNum: e.target.value,
+    });
+  };
+
+  //주민번호 앞자리 저장
+  const onChangeIdNum = e => {
+    const onlyNumRegex = /^[0-9\b -]{0,13}$/;
+    if (onlyNumRegex.test(e.target.value)) {
+      setIdNum(e.target.value);
+    }
+  };
+
+  //주민번호 뒷자리 input 넣었는지 관리
+  const onChangeSecDigit = e => {
+    const onlyNumRegex = /^[0-9\b -]{0,13}$/;
+    if (onlyNumRegex.test(e.target.value)) {
+      setSecDigit(e.target.value);
+    }
   };
 
   //전체 버튼이 active 되었는지 확인하는 함수
@@ -29,6 +116,7 @@ const Verification = () => {
     return result;
   };
 
+  //체크박스 표시하는 함수
   const singleCheck = index => {
     setChecksVerif(prev => {
       const newArr = [...prev];
@@ -41,8 +129,16 @@ const Verification = () => {
   useEffect(() => {
     let checkAllresult = checkAllBtnVerif();
     checkAllresult === 4 ? setTotalCheckVerif(true) : setTotalCheckVerif(false);
+    //체크된 필수 사항 개수 구하기
     let requiredResult = checkRequiredVerif();
-    requiredResult === 3 ? setActiveBtnVerif(true) : setActiveBtnVerif(false);
+    if (requiredResult === 3) {
+      setShowVerif(true);
+      console.log('showVerif', showVerif);
+    } else setShowVerif(false);
+    const name = userInfo.name;
+    if (name && idNum && secDigit && requiredResult === 3) {
+      setActiveBtnVerif(true);
+    } else setActiveBtnVerif(false);
   }, [checksVerif]);
 
   return (
@@ -57,6 +153,7 @@ const Verification = () => {
             id="name"
             placeholder="이름 입력"
             className="inputBox"
+            onChange={onChangeName}
           />
         </div>
 
@@ -65,15 +162,21 @@ const Verification = () => {
           <div className="idNumInputs">
             <input
               type="text"
+              maxLength={6}
               id="firstDigits"
               placeholder="주민번호 앞 6자리"
               className="inputBox"
+              onChange={onChangeIdNum}
+              value={idNum}
             />
             <span className="hyphen" />
             <input
               type="text"
+              maxLength={1}
               id="secondDigits"
               className="inputBox secondDigits"
+              onChange={onChangeSecDigit}
+              value={secDigit}
             />
             <span>●●●●●●</span>
           </div>
@@ -146,8 +249,8 @@ const Verification = () => {
           </label>
         </div>
       </CheckBoxes>
-      <Inputs activeBtnVerif={activeBtnVerif}>
-        <InputContainer activeBtnVerif={activeBtnVerif}>
+      <Inputs>
+        <InputContainer showVerif={showVerif}>
           <div className="inputWrapper">
             <label for="mobileCarrier">통신사</label>
             <select
@@ -170,6 +273,7 @@ const Verification = () => {
                 id="phoneNumber"
                 placeholder="-없이 숫자만 입력"
                 className="inputBox authBox"
+                onChange={onChangePhoneNum}
               />
               <AuthButton>인증번호 전송</AuthButton>
             </div>
@@ -189,10 +293,15 @@ const Verification = () => {
           </div>
         </InputContainer>
       </Inputs>
-      <SuccessButton>
+      <SuccessButton
+        onClick={(clickNext, onSignup)}
+        activeBtnVerif={activeBtnVerif}
+      >
         <span>회원가입 완료</span>
       </SuccessButton>
-      <LaterButton>본인인증 다음에 할래요</LaterButton>
+      <LaterButton onClick={(clickNext, onSignup)}>
+        본인인증 다음에 할래요
+      </LaterButton>
     </Wrapper>
   );
 };
@@ -270,8 +379,8 @@ const Inputs = styled.div`
 `;
 
 const InputContainer = styled.div`
-  ${({ activeBtnVerif }) => {
-    return !activeBtnVerif ? `display: none` : null;
+  ${({ showVerif }) => {
+    return !showVerif ? `display: none` : null;
   }}
 `;
 
@@ -314,6 +423,9 @@ const SuccessButton = styled.div`
   font-size: 13px;
   font-weight: 900;
   text-align: center;
+  ${({ activeBtnVerif }) => {
+    return activeBtnVerif ? `background-color: #4379fa; cursor:pointer` : null;
+  }}
 `;
 
 const LaterButton = styled.div`
@@ -321,6 +433,7 @@ const LaterButton = styled.div`
   text-align: center;
   font-size: 11px;
   font-weight: 800;
+  cursor: pointer;
 `;
 
 export default Verification;

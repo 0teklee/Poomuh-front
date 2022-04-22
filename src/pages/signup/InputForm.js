@@ -1,23 +1,61 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { UserInfoContext, UserInfoDispatchContext } from './signupContext';
 
-const InputForm = () => {
-  const [emailState, setEmailState] = useState('');
+const InputForm = ({ setShow }) => {
+  //context 사용
+  const userInfo = useContext(UserInfoContext);
+  const userInfoDispatch = useContext(UserInfoDispatchContext);
+
   const [emailError, setEmailError] = useState(false);
 
-  const [nicknameState, setNickNameState] = useState('');
   const [nicknameError, setNickNameError] = useState(false);
 
-  const [passwordState, setPasswordState] = useState({
-    password: '',
-    passwordCheck: '',
-  });
+  const [pwdForCheck, SetPwdForCheck] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordCheckError, setPasswordCheckError] = useState(false);
 
-  //비구조화 할당
-  const { password, passwordCheck } = passwordState;
+  //버튼 활성화 값 관리
+  const [activeBtnInput, setActiveBtnInput] = useState(false);
+
+  //비밀번호 값 관리 useRef
+  const passwordCheckInput = useRef();
+  const passwordInput = useRef();
+
+  //이메일
+  const email = userInfo.email;
+  //닉네임
+  const nickname = userInfo.nickname;
+
+  //input값이 모두 들어있는지 확인하는 함수
+  const isFilledAll = () => {
+    if (
+      email &&
+      nickname &&
+      pwdForCheck &&
+      !emailError &&
+      !nicknameError &&
+      !passwordError &&
+      !passwordCheckError
+    ) {
+      setActiveBtnInput(true);
+    } else {
+      setActiveBtnInput(false);
+    }
+  };
+
+  //input값 바뀔 때 마다 확인하기
+  useEffect(() => {
+    isFilledAll();
+  }, [email, nickname, pwdForCheck]);
+
+  //다음 버튼으로 넘어가는 함수
+  const clickNext = () => {
+    if (activeBtnInput) {
+      setShow('verif');
+    }
+  };
 
   //이메일 유효성 검사 및 값 담기
   const onChangeEmail = e => {
@@ -26,16 +64,22 @@ const InputForm = () => {
     if (!e.target.value || emailRegex.test(e.target.value))
       setEmailError(false);
     else setEmailError(true);
-    setEmailState(e.target.value);
+    userInfoDispatch({
+      type: 'UPDATE_EMAIL',
+      email: e.target.value,
+    });
   };
 
   //닉네임 유효성 검사 및 값 담기
   const onChangeNickName = e => {
-    const nameRegex = /^[가-힣]{1,10}|[a-zA-Z]{1,10}\s[a-zA-Z]{1,10}$/;
-    if (!e.target.value || nameRegex.test(e.target.value))
+    const nicknameRegex = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{0,10}$/;
+    if (!e.target.value || nicknameRegex.test(e.target.value))
       setNickNameError(false);
     else setNickNameError(true);
-    setNickNameState(e.target.value);
+    userInfoDispatch({
+      type: 'UPDATE_NICKNAME',
+      nickname: e.target.value,
+    });
   };
 
   //비밀번호 유효성 검사 및 값 담기
@@ -46,21 +90,27 @@ const InputForm = () => {
     else setPasswordError(true);
   };
 
-  //비밀번호 확인 및 값 담기
+  //비밀번호 확인 검사
   const checkPassword = e => {
-    const { value, name } = e.target;
-    setPasswordState({
-      ...passwordState,
-      [name]: value,
-    });
-    console.log(passwordState);
+    let result =
+      passwordInput.current.value === passwordCheckInput.current.value;
+    if (
+      !passwordCheckInput.current.value ||
+      passwordInput.current.value === passwordCheckInput.current.value
+    ) {
+      setPasswordCheckError(false);
+    } else setPasswordCheckError(true);
+    SetPwdForCheck(e.target.value);
   };
 
-  //비밀번호 확인 검사
-  const onChangeCheckPassword = e => {
-    if (e.target.value || password === passwordCheck) {
-      setPasswordCheckError(true);
-    } else setPasswordCheckError(false);
+  //비밀번호 값 담기
+  const setPassword = e => {
+    if (!passwordCheckError) {
+      userInfoDispatch({
+        type: 'UPDATE_PASSWORD',
+        password: e.target.value,
+      });
+    }
   };
 
   return (
@@ -93,7 +143,9 @@ const InputForm = () => {
             className="inputBox"
             onChange={onChangeNickName}
           />
-          {nicknameError && <div class="checkValid">닉네임을 입력해주세요</div>}
+          {nicknameError && (
+            <div class="checkValid">닉네임 형식을 지켜주세요</div>
+          )}
         </div>
 
         <div className="inputWrapper">
@@ -104,10 +156,8 @@ const InputForm = () => {
             placeholder=" 8자리 이상 영문,숫자,특수문자 포함"
             className="inputBox"
             name="password"
-            onKeyDown={checkPassword}
-            onChange={e => {
-              onChangePassword(e);
-            }}
+            ref={passwordInput}
+            onChange={onChangePassword}
           />
           {passwordError && (
             <div class="checkValid">
@@ -120,9 +170,10 @@ const InputForm = () => {
             placeholder="비밀번호 확인"
             className="inputBox"
             name="passwordCheck"
-            onKeyDown={checkPassword}
+            ref={passwordCheckInput}
             onChange={e => {
-              onChangeCheckPassword(e);
+              setPassword(e);
+              checkPassword(e);
             }}
           />
           {passwordCheckError && (
@@ -130,7 +181,7 @@ const InputForm = () => {
           )}
         </div>
       </Inputs>
-      <NextButton>
+      <NextButton onClick={clickNext} activeBtnInput={activeBtnInput}>
         <span>확인</span>
       </NextButton>
     </Wrapper>
@@ -190,6 +241,9 @@ const NextButton = styled.div`
   font-size: 13px;
   font-weight: 900;
   text-align: center;
+  ${({ activeBtnInput }) => {
+    return activeBtnInput ? `background-color: #4379fa; cursor:pointer` : null;
+  }}
 `;
 
 export default InputForm;

@@ -1,40 +1,97 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import Header from '../../components/header/Header';
 function Login() {
-  return (
-    <Wrapper>
-      <Heading>로그인</Heading>
-      <WelcomeMessage>푸망 서비스 이용을 위해 로그인해주세요.</WelcomeMessage>
-      <Inputs>
-        <div className="inputWrapper">
-          <label for="email">아이디</label>
-          <input
-            type="text"
-            id="email"
-            placeholder="이메일 주소 입력"
-            className="inputBox"
-          />
-        </div>
+  const onLogin = () => {
+    fetch('http://localhost:8000/요청경로', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.token) {
+          console.log(res.token);
+          sessionStorage.setItem('login-token', res.token);
+        }
+      });
+  };
 
-        <div className="inputWrapper">
-          <label for="password">비밀번호</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="비밀번호 입력"
-            className="inputBox"
-          />
-        </div>
-        <label for="remembetId" className="rememberId">
-          <input type="checkbox" id="rememberId" />
-          아이디 저장
-        </label>
-      </Inputs>
-      <LoginButton>
-        <span>로그인</span>
-      </LoginButton>
-      <div className="agentLogin">중개사 로그인</div>
-    </Wrapper>
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [activeBtn, setActiveBtn] = useState(false);
+
+  //아이디, 비밀번호 값 관리 useRef
+  const idInput = useRef();
+  const pwdInput = useRef();
+
+  //email 값 저장
+  const onChangeEmail = e => {
+    setEmail(e.target.value);
+  };
+
+  //password 값 저장
+  const onChangePassWord = e => {
+    setPassword(e.target.value);
+  };
+
+  //버튼 활성화 비활성화
+  const sendUserInfo = () => {
+    if (idInput.current.value && pwdInput.current.value) {
+      setActiveBtn(true);
+    } else setActiveBtn(false);
+  };
+
+  useEffect(() => {
+    sendUserInfo();
+  }, [email, password]);
+
+  return (
+    <>
+      <Header />
+      <Wrapper>
+        <Heading>로그인</Heading>
+        <WelcomeMessage>푸망 서비스 이용을 위해 로그인해주세요.</WelcomeMessage>
+        <Inputs>
+          <div className="inputWrapper">
+            <label for="email">아이디</label>
+            <input
+              type="text"
+              id="email"
+              placeholder="이메일 주소 입력"
+              className="inputBox"
+              onChange={onChangeEmail}
+              ref={idInput}
+            />
+          </div>
+
+          <div className="inputWrapper">
+            <label for="password">비밀번호</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="비밀번호 입력"
+              className="inputBox"
+              onChange={onChangePassWord}
+              ref={pwdInput}
+            />
+          </div>
+          <label for="remembetId" className="rememberId">
+            <input type="checkbox" id="rememberId" />
+            아이디 저장
+          </label>
+        </Inputs>
+        <LoginButton onClick={onLogin} activeBtn={activeBtn}>
+          <span>로그인</span>
+        </LoginButton>
+        <div className="agentLogin">중개사 로그인</div>
+      </Wrapper>
+    </>
   );
 }
 
@@ -94,9 +151,12 @@ const LoginButton = styled.div`
   margin-top: 30px;
   padding: 20px 0;
   color: white;
-  background-color: #326cf9;
+  background-color: #dfdfdf;
   font-size: 13px;
   font-weight: 900;
   text-align: center;
+  ${({ activeBtn }) => {
+    return activeBtn ? `background-color: #4379fa; cursor:pointer` : null;
+  }}
 `;
 export default Login;

@@ -1,16 +1,42 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { UserInfoContext, UserInfoDispatchContext } from './signupContext';
 
-const CheckForSignUp = () => {
+const CheckForSignUp = ({ setShow }) => {
+  //context 사용
+  const userInfo = useContext(UserInfoContext);
+  const userInfoDispatch = useContext(UserInfoDispatchContext);
+
   //전체 선택 관리할 상태값
   const [totalCheck, setTotalCheck] = useState(false);
   const [checks, setChecks] = useState(Array(4).fill(false));
-  const [activeBtn, setActiveBtn] = useState(false);
+  const [activeBtnCheck, setActiveBtnCheck] = useState(false);
+
+  //중개사 확인 값 담기
+  const onChangeAgent = e => {
+    if (e.target.checked) {
+      userInfoDispatch({
+        type: 'UPDATE_ISAGENT',
+        isAgent: e.target.checked,
+      });
+    } else if (!e.target.checked) {
+      userInfoDispatch({
+        type: 'UPDATE_ISAGENT',
+        isAgent: e.target.checked,
+      });
+    }
+  };
 
   const allCheck = () => {
     setChecks(Array(checks.length).fill(!totalCheck));
     setTotalCheck(!totalCheck);
+  };
+
+  const clickNext = () => {
+    if (activeBtnCheck) {
+      setShow('input');
+    }
   };
 
   //전체 버튼이 active 되었는지 확인하는 함수
@@ -44,7 +70,7 @@ const CheckForSignUp = () => {
     let checkAllresult = checkAllBtn();
     checkAllresult === 4 ? setTotalCheck(true) : setTotalCheck(false);
     let requiredResult = checkRequired();
-    requiredResult === 3 ? setActiveBtn(true) : setActiveBtn(false);
+    requiredResult === 3 ? setActiveBtnCheck(true) : setActiveBtnCheck(false);
   }, [checks]);
 
   return (
@@ -122,8 +148,15 @@ const CheckForSignUp = () => {
           해당 내용은 <span className="highlight">이용약관 및 정책</span>에서도
           확인이 가능합니다.
         </p>
+
+        <AgentCheckBox>
+          <label for="forAgent" name="중개사 가입">
+            <input type="checkbox" id="forAgent" onChange={onChangeAgent} />
+            중개인으로 가입하시겠습니까?
+          </label>
+        </AgentCheckBox>
       </SubDescription>
-      <NextButton activeBtn={activeBtn}>
+      <NextButton onClick={clickNext} activeBtnCheck={activeBtnCheck}>
         <span>동의하고 진행하기</span>
       </NextButton>
     </Wrapper>
@@ -181,6 +214,20 @@ const SubDescription = styled.div`
   }
 `;
 
+const AgentCheckBox = styled.div`
+  margin-top: 25px;
+  color: #9fb4ff;
+  :hover {
+    color: #4379fa;
+  }
+  label:hover {
+    cursor: pointer;
+  }
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+`;
+
 const NextButton = styled.div`
   margin-top: 30px;
   padding: 20px 0;
@@ -189,8 +236,11 @@ const NextButton = styled.div`
   font-size: 13px;
   font-weight: 900;
   text-align: center;
-  ${({ activeBtn }) => {
-    return activeBtn ? `background-color: #4379fa` : null;
+  :hover {
+    cursor: pointer;
+  }
+  ${({ activeBtnCheck }) => {
+    return activeBtnCheck ? `background-color: #4379fa` : null;
   }}
 `;
 export default CheckForSignUp;
