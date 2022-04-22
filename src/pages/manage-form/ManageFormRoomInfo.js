@@ -1,23 +1,114 @@
-import React from 'react';
+import React, { useRef, useContext } from 'react';
 import styled from 'styled-components';
+import { InfoContext, InfoDispatchContext } from './context';
 
 function ManageFormRoomInfo() {
-  const floorSelect = num => {
+  // 258번째줄 REFACTOR
+  const Info = useContext(InfoContext);
+  const InfoDispatch = useContext(InfoDispatchContext);
+
+  const SelectOption = num => {
     let result = [];
-    for (let i = 0; i.length < num; i++) {}
+    for (let i = 1; i <= num; i++) {
+      result.push(i);
+    }
+    return result;
+  };
+  const totalFloor = SelectOption(50);
+  const supplySizePRef = useRef('');
+  const supplySizeMRef = useRef('');
+  const exclusiveSizePRef = useRef('');
+  const exclusiveSizeMRef = useRef('');
+  const PtoM = (e, M) => {
+    if (!e.target.value) {
+      M.current.value = '';
+    } else {
+      M.current.value = (e.target.value * 3.3).toFixed(2);
+    }
+  };
+  const MtoP = (e, P) => {
+    if (!e.target.value) {
+      P.current.value = '';
+    } else {
+      P.current.value = (e.target.value / 3.3).toFixed(2);
+    }
+  };
+
+  const handleSupply = e => {
+    InfoDispatch({
+      type: 'UPDATE_SUPPLY_SIZE',
+      supply_size: e * 1,
+    });
+  };
+  const handleExclusive = e => {
+    InfoDispatch({
+      type: 'UPDATE_EXCLUSIVE_SIZE',
+      exclusive_size: e * 1,
+    });
+  };
+  const handleAvailableDate = e => {
+    InfoDispatch({
+      type: 'UPDATE_AVAILABLE_DATE',
+      available_date: e.target.value,
+    });
   };
   return (
     <Wrapper>
       <Title>기본 정보</Title>
       <FlexDiv>
         <div className="size">
-          <div className="title">건물 크기</div>
-          <div className="inner">
+          <div className="title">
             <div>
-              <span>공급 면적</span>
+              건물 크기
+              <p>(1P = 3.3058㎡)</p>
             </div>
-            <div>
+          </div>
+          <div className="inner">
+            <div className="inner-inner">
+              <span>공급 면적</span>
+              <input
+                ref={supplySizePRef}
+                name="supplySizeP"
+                type="number"
+                onChange={e => {
+                  PtoM(e, supplySizeMRef);
+                  handleSupply(supplySizeMRef.current.value);
+                }}
+              />
+              <span>평</span>
+              <input
+                ref={supplySizeMRef}
+                name="supplySize"
+                type="number"
+                onChange={e => {
+                  handleSupply(e.target.value);
+                  MtoP(e, supplySizePRef);
+                }}
+              />
+              <span>㎡</span>
+            </div>
+            <div className="inner-inner">
               <span>전용 면적</span>
+              <input
+                ref={exclusiveSizePRef}
+                name="exclusiveSizeP"
+                type="number"
+                onChange={e => {
+                  PtoM(e, exclusiveSizeMRef);
+                  handleExclusive(exclusiveSizeMRef.current.value);
+                }}
+              />
+              <span>평</span>
+              <input
+                ref={exclusiveSizeMRef}
+                name="exclusiveSizeM"
+                type="number"
+                onChange={e => {
+                  handleExclusive(e.target.value);
+                  MtoP(e, exclusiveSizePRef);
+                }}
+              />
+              <span>㎡</span>
             </div>
           </div>
         </div>
@@ -26,30 +117,113 @@ function ManageFormRoomInfo() {
           <div className="inner">
             <div>
               <span>건물 층수</span>
-              <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-              </select>
+              <Select
+                name="buildingFloor"
+                required
+                onChange={e =>
+                  InfoDispatch({
+                    type: 'UPDATE_BUILDING_FLOOR',
+                    building_floor: e.target.value,
+                  })
+                }
+              >
+                <option defaultValue style={{ display: 'none' }}>
+                  건물 층수 선택
+                </option>
+                {totalFloor.map(el => {
+                  return <option key={el}>{el}층</option>;
+                })}
+              </Select>
             </div>
             <div>
               <span>해당 층수</span>
-              <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-              </select>
+              <Select
+                name="currentFloor"
+                required
+                onChange={e =>
+                  InfoDispatch({
+                    type: 'UPDATE_CURRENT_FLOOR',
+                    current_floor: e.target.value,
+                  })
+                }
+              >
+                <option defaultValue style={{ display: 'none' }}>
+                  해당 층수 선택
+                </option>
+                {totalFloor.map(el => {
+                  return <option key={el}>{el}층</option>;
+                })}
+              </Select>
             </div>
           </div>
         </div>
       </FlexDiv>
       <RowWrapper>
         <RowHead>난방 종류</RowHead>
-        <RowContent>난방 종류 선택</RowContent>
+        <RowContent>
+          <Select
+            onChange={e => {
+              InfoDispatch({
+                type: 'UPDATE_HEAT',
+                heat_id: e.target.value * 1,
+              });
+            }}
+          >
+            <option defaultValue style={{ display: 'none' }}>
+              난방 종류 선택
+            </option>
+            <option value={1}>중앙 난방</option>
+            <option value={2}>지역 난방</option>
+            <option value={3}>개별 난방</option>
+          </Select>
+        </RowContent>
       </RowWrapper>
       <RowWrapper>
         <RowHead>입주 가능일</RowHead>
-        <RowContent>즉시 입주, 날짜 협의, 날짜 선택</RowContent>
+        <RowContent>
+          <FlexDiv>
+            <ul className="radioWrapper">
+              <li>
+                <RadioBtn
+                  type="radio"
+                  id="즉시입주"
+                  value="즉시입주"
+                  onChange={e => handleAvailableDate(e)}
+                  checked={Info.available_date === '즉시입주'}
+                  readOnly
+                />
+                <Label htmlFor="즉시입주">즉시 입주</Label>
+              </li>
+              <li>
+                <RadioBtn
+                  type="radio"
+                  id="날짜 협의"
+                  value="날짜 협의"
+                  checked={Info.available_date === '날짜 협의'}
+                  onChange={e => handleAvailableDate(e)}
+                  readOnly
+                />
+                <Label
+                  htmlFor="날짜 협의"
+                  checked={Info.available_date === '날짜 협의'}
+                >
+                  날짜 협의
+                </Label>
+              </li>
+              <li>
+                <RadioBtn
+                  type="radio"
+                  id="날짜 선택"
+                  value="날짜 선택"
+                  checked={Info.available_date === '날짜 선택'}
+                  onChange={e => handleAvailableDate(e)}
+                  readOnly
+                />
+                <Label htmlFor="날짜 선택">날짜 선택</Label>
+              </li>
+            </ul>
+          </FlexDiv>
+        </RowContent>
       </RowWrapper>
     </Wrapper>
   );
@@ -76,30 +250,68 @@ const FlexDiv = styled.div`
   .size,
   .story {
     display: flex;
-    width: -webkit-fill-available;
+    flex: 1;
     .title {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 2rem 0;
-      width: 300px;
+      width: 284px;
       text-align: center;
       font-weight: 700;
       background: #fdfdfd;
       border-right: 1px solid rgb(226, 226, 226);
       border-bottom: 1px solid rgb(226, 226, 226);
+      div {
+        line-height: 1.2;
+        p {
+          color: #888888;
+          font-weight: 300;
+        }
+      }
     }
 
     .inner {
       width: 100%;
+      display: flex;
+      flex-direction: column;
       div {
+        flex: 1;
         padding: 1rem;
         border-bottom: 1px solid rgb(226, 226, 226);
+      }
+      .inner-inner {
+        display: flex;
+        align-items: center;
+        input {
+          width: 100px;
+          height: 46px;
+          margin: 0 16px;
+          padding: 0px 8px 0px 10px;
+          border: 1px solid rgb(226, 226, 226);
+          font-size: 16px;
+          &:focus {
+            outline: none;
+            border: 1px solid rgb(50, 108, 249);
+          }
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+          &[type='number'] {
+            -moz-appearance: textfield;
+          }
+        }
       }
     }
   }
   .size {
     border-right: 1px solid rgb(226, 226, 226);
+  }
+  .radioWrapper {
+    display: flex;
+    align-items: center;
   }
 `;
 const RowHead = styled.div`
@@ -123,6 +335,20 @@ const RowContent = styled.div`
   border-bottom: 1px solid rgb(226, 226, 226);
 `;
 
+const Select = styled.select`
+  width: 170px;
+  height: 46px;
+  margin: 0 16px;
+  padding: 0px 8px 0px 10px;
+  border: 1px solid rgb(226, 226, 226);
+  font-size: 16px;
+  align-self: left;
+  color: #888888;
+  &:focus {
+    outline: none;
+    border: 1px solid rgb(50, 108, 249);
+  }
+`;
 const RowWrapper = styled.div`
   display: flex;
   &:last-child {
@@ -131,4 +357,24 @@ const RowWrapper = styled.div`
     }
   }
 `;
+const RadioBtn = styled.input`
+display: none;
+&:checked + label {
+  background: rgb(50, 108, 249);
+  border: 1px solid rgb(50, 108, 249);
+  color: rgb(255, 255, 255);
+`;
+
+const Label = styled.label`
+  display: block;
+  padding: 1rem;
+  margin: 0 1rem;
+  border: 1px solid rgb(226, 226, 226);
+  border-radius: 3px;
+  cursor: pointer;
+  &:hover {
+    background: rgb(226, 226, 226);
+  }
+`;
+
 export default ManageFormRoomInfo;

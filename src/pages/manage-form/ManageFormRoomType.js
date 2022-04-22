@@ -1,22 +1,14 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { InfoDispatchContext } from './context';
+import { InfoDispatchContext, InfoContext } from './context';
 
 function ManageFormRoomType() {
-  const [selectRoom, setSelectRoom] = useState('원룸');
   const [selectBuilding, setSelectBuilding] = useState('');
   const infoDispatch = useContext(InfoDispatchContext);
+  const Info = useContext(InfoContext);
 
   const handleSelectRoom = e => {
-    setSelectRoom(e.target.value);
-    infoDispatch({ type: 'UPDATE_ROOM_TYPE', roomType: e.target.value });
-  };
-  const handleSelectBuilding = e => {
-    setSelectBuilding(e.target.value);
-    infoDispatch({
-      type: 'UPDATE_BUILDING_TYPE',
-      buildingType: e.target.value,
-    });
+    infoDispatch({ type: 'UPDATE_CATEGORY', category_id: e.target.value * 1 });
   };
 
   return (
@@ -30,8 +22,8 @@ function ManageFormRoomType() {
               <RadioBtn
                 id="원룸"
                 name="원룸"
-                value="원룸"
-                checked={selectRoom === '원룸'}
+                value={1}
+                checked={Info.category_id === 1}
                 onChange={e => handleSelectRoom(e)}
               />
               <Label htmlFor="원룸">
@@ -42,8 +34,8 @@ function ManageFormRoomType() {
               <RadioBtn
                 id="투룸/쓰리룸"
                 name="투룸/쓰리룸"
-                value="투룸/쓰리룸"
-                checked={selectRoom === '투룸/쓰리룸'}
+                value={2}
+                checked={Info.category_id === 2}
                 onChange={e => handleSelectRoom(e)}
               />
               <Label htmlFor="투룸/쓰리룸">
@@ -54,8 +46,8 @@ function ManageFormRoomType() {
               <RadioBtn
                 id="빌라"
                 name="빌라"
-                value="빌라"
-                checked={selectRoom === '빌라'}
+                value={3}
+                checked={Info.category_id === 3}
                 onChange={e => handleSelectRoom(e)}
               />
               <Label htmlFor="빌라">
@@ -66,8 +58,8 @@ function ManageFormRoomType() {
               <RadioBtn
                 id="아파트"
                 name="아파트"
-                value="아파트"
-                checked={selectRoom === '아파트'}
+                value={4}
+                checked={Info.category_id === 4}
                 onChange={e => handleSelectRoom(e)}
               />
               <Label htmlFor="아파트">
@@ -87,7 +79,7 @@ function ManageFormRoomType() {
                 name="단독주택"
                 value="단독주택"
                 checked={selectBuilding === '단독주택'}
-                onChange={e => handleSelectBuilding(e)}
+                onChange={e => setSelectBuilding(e.target.value)}
               />
               <Label htmlFor="단독주택">
                 <p>단독주택</p>
@@ -99,7 +91,7 @@ function ManageFormRoomType() {
                 name="다가구주택"
                 value="다가구주택"
                 checked={selectBuilding === '다가구주택'}
-                onChange={e => handleSelectBuilding(e)}
+                onChange={e => setSelectBuilding(e.target.value)}
               />
               <Label htmlFor="다가구주택">
                 <p>다가구주택</p>
@@ -111,10 +103,10 @@ function ManageFormRoomType() {
                 name="빌라/연립/다세대"
                 value="빌라/연립/다세대"
                 checked={selectBuilding === '빌라/연립/다세대'}
-                onChange={e => handleSelectBuilding(e)}
+                onChange={e => setSelectBuilding(e.target.value)}
               />
               <Label htmlFor="빌라/연립/다세대">
-                <p>빌라</p>
+                <p>다세대주택</p>
               </Label>
             </li>
             <li>
@@ -123,7 +115,7 @@ function ManageFormRoomType() {
                 name="상가주택"
                 value="상가주택"
                 checked={selectBuilding === '상가주택'}
-                onChange={e => handleSelectBuilding(e)}
+                onChange={e => setSelectBuilding(e.target.value)}
               />
               <Label htmlFor="상가주택">
                 <p>상가주택</p>
@@ -164,9 +156,6 @@ const RowHead = styled.div`
 `;
 
 const RowSelectBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 90%;
   border-bottom: 1px solid rgb(226, 226, 226);
 `;
@@ -187,7 +176,6 @@ const UlWrapper = styled.ul`
 
 const Label = styled.label`
   display: block;
-  position: relative;
   padding: 1rem;
   margin: 0 1rem;
   border: 1px solid rgb(226, 226, 226);
@@ -205,7 +193,6 @@ const RadioBtn = styled.input.attrs(props => ({
   width: 0px;
   height: 0px;
   opacity: 0;
-  position: absolute;
   top: 0px;
   left: 0px;
   &:checked + ${Label} {

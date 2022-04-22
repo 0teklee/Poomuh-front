@@ -23,6 +23,7 @@ function ManageFormDetail() {
             className="title"
             placeholder="예 ) 신논현역 도보 5분거리, 혼자 살기 좋은 방입니다."
             onChange={handleTitle}
+            maxLength={50}
           />
         </RowContent>
       </RowWrapper>
@@ -32,10 +33,8 @@ function ManageFormDetail() {
           <textarea
             className="description"
             placeholder="[상세설명 작성 주의사항]
-            
             - 매물 정보와 관련없는 홍보성 정보는 입력할 수 없습니다.
             - 매물등록규정에 위반되는 금칙어는 입력할 수 없습니다.
-
             위 주의사항 위반시 임의로 매물 삭제 혹은 서비스 이용이 제한될 수 있습니다."
             onChange={handleContent}
           />
@@ -93,6 +92,7 @@ const RowContent = styled.div`
   }
   textarea:focus {
     outline: none;
+    border: 1px solid rgb(50, 108, 249);
   }
   .title {
     height: 46px;
@@ -113,7 +113,5 @@ const RowWrapper = styled.div`
     }
   }
 `;
-
-const TextInput = styled.input.attrs({ type: 'text' })``;
 
 export default ManageFormDetail;

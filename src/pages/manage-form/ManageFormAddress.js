@@ -64,7 +64,7 @@ function ManageFormAddress() {
               <ButtonInput value="주소검색" onClick={handleShowModal} />
             </SearchAddressBox>
             <BorderBox>
-              <div className="addressText">
+              <div className="addressText" onChange={e => console.log(e)}>
                 {' '}
                 <span>도로명 : </span>
                 {infoContext.address}
