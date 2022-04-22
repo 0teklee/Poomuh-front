@@ -8,8 +8,14 @@ import ManageFormRoomType from './ManageFormRoomType';
 import ManageFormAddress from './ManageFormAddress';
 import ManageFormSend from './ManageFormSend';
 import { GlobalContextProvider } from './context';
+import ManageFormDetail from './ManageFormDetail';
+import ManageFormRoomInfo from './ManageFormRoomInfo';
+import ManageFormTradeType from './ManageFormTradeType';
 
 function ManageForm() {
+  // 유효성 검사 추가. 검증 실패시 해당 ref 위치로 스크롤
+  // map 라이브러리 사용하여 refactor
+  // css 하드코딩 된 부분 수정 22/04/22
   return (
     <Wrapper>
       <Header />
@@ -21,6 +27,9 @@ function ManageForm() {
         <ManageFormNotice />
         <ManageFormRoomType />
         <ManageFormAddress />
+        <ManageFormTradeType />
+        <ManageFormRoomInfo />
+        <ManageFormDetail />
         <ManageFormSend />
       </GlobalContextProvider>
       <Footer />
