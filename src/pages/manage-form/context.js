@@ -12,6 +12,7 @@ const initialInfo = {
   building_floor: '',
   current_floor: '',
   price_main: 0,
+  price_deposit: 0,
   price_monthly: 0,
   heat_id: '',
   available_date: '',
@@ -55,6 +56,8 @@ function infoReducer(state, action) {
       return { ...state, available_date: action.available_date };
     case 'UPDATE_PRICE_MAIN':
       return { ...state, price_main: action.price_main };
+    case 'UPDATE_PRICE_DEPOSIT':
+      return { ...state, price_deposit: action.price_deposit };
     case 'UPDATE_PRICE_MONTHLY':
       return { ...state, price_monthly: action.price_monthly };
     default:

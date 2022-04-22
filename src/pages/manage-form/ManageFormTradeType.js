@@ -10,6 +10,12 @@ function Trade({ name, close }) {
   const handlePriceMain = e => {
     InfoDispatch({ type: 'UPDATE_PRICE_MAIN', price_main: e.target.value * 1 });
   };
+  const handlePriceDeposit = e => {
+    InfoDispatch({
+      type: 'UPDATE_PRICE_DEPOSIT',
+      price_deposit: e.target.value * 1,
+    });
+  };
   const handlePriceMonthly = e => {
     InfoDispatch({
       type: 'UPDATE_PRICE_MONTHLY',
@@ -44,7 +50,7 @@ function Trade({ name, close }) {
           <input
             type="number"
             onChange={e => {
-              handlePriceMonthly(e);
+              handlePriceDeposit(e);
               if (sample.current.innerText === '(예 월세 1000만원/50만원)') {
                 sample.current.innerText = '';
               }
