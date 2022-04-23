@@ -69,9 +69,10 @@ const Verification = ({ setShow }) => {
     if (!e.target.value || nameRegex.test(e.target.value)) setNameError(false);
     else setNameError(true);
     userInfoDispatch({
-      type: 'UPDATE_NAME',
-      name: e.target.value,
+      type: 'UPDATE_USERNAME',
+      username: e.target.value,
     });
+    console.log(userInfo.username);
   };
 
   //context에서 전화번호 저장
@@ -294,12 +295,20 @@ const Verification = ({ setShow }) => {
         </InputContainer>
       </Inputs>
       <SuccessButton
-        onClick={(clickNext, onSignup)}
+        onClick={() => {
+          clickNext();
+          onSignup();
+        }}
         activeBtnVerif={activeBtnVerif}
       >
         <span>회원가입 완료</span>
       </SuccessButton>
-      <LaterButton onClick={(clickNext, onSignup)}>
+      <LaterButton
+        onClick={() => {
+          clickNext();
+          onSignup();
+        }}
+      >
         본인인증 다음에 할래요
       </LaterButton>
     </Wrapper>
