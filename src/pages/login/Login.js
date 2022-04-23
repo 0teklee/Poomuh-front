@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Header from '../../components/header/Header';
 function Login() {
   const onLogin = () => {
-    fetch('http://localhost:8000/users/login', {
+    fetch(`http://localhost:8000/${requestedUrl}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,14 +16,20 @@ function Login() {
       .then(res => res.json())
       .then(res => {
         if (res.token) {
-          console.log(res.token);
-          sessionStorage.setItem('login-token', res.token);
+          console.log(res.accessToken);
+          sessionStorage.setItem('access_token', res.accessToken);
         }
       });
   };
 
+  //중개인 로그인 관리를 위한 상태값
+  const [requestedUrl, setRequestedUrl] = useState('users');
+
+  //로그인 처리를 위해 보낼 이메일과 비밀번호
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  //로그인 버튼 활성화 관리를 위한 상태값
   const [activeBtn, setActiveBtn] = useState(false);
 
   //아이디, 비밀번호 값 관리 useRef
@@ -45,6 +51,14 @@ function Login() {
     if (idInput.current.value && pwdInput.current.value) {
       setActiveBtn(true);
     } else setActiveBtn(false);
+  };
+
+  //중개인 체크 확인하기
+  const onClickAgent = e => {
+    if (e.target.checked) {
+      setRequestedUrl('agents');
+    } else setRequestedUrl('users');
+    console.log(requestedUrl);
   };
 
   useEffect(() => {
@@ -89,7 +103,12 @@ function Login() {
         <LoginButton onClick={onLogin} activeBtn={activeBtn}>
           <span>로그인</span>
         </LoginButton>
-        <div className="agentLogin">중개사 로그인</div>
+        <AgentCheckBox>
+          <label for="forAgent" name="중개사 가입">
+            <input type="checkbox" id="forAgent" onClick={onClickAgent} />
+            중개인으로 로그인하기
+          </label>
+        </AgentCheckBox>
       </Wrapper>
     </>
   );
@@ -158,5 +177,19 @@ const LoginButton = styled.div`
   ${({ activeBtn }) => {
     return activeBtn ? `background-color: #4379fa; cursor:pointer` : null;
   }}
+`;
+
+const AgentCheckBox = styled.div`
+  margin-top: 25px;
+  color: #9fb4ff;
+  :hover {
+    color: #4379fa;
+  }
+  label:hover {
+    cursor: pointer;
+  }
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
 `;
 export default Login;

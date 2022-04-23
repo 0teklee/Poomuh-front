@@ -5,8 +5,8 @@ const initialUserInfo = {
   email: '',
   nickname: '',
   password: '',
-  name: '',
-  phone_number: '',
+  username: '',
+  phoneNumber: '',
 };
 
 export const UserInfoContext = createContext();
@@ -23,8 +23,8 @@ function userInfoReducer(state, action) {
       return { ...state, nickname: action.nickname };
     case 'UPDATE_PASSWORD':
       return { ...state, password: action.password };
-    case 'UPDATE_NAME':
-      return { ...state, name: action.name };
+    case 'UPDATE_USERNAME':
+      return { ...state, username: action.username };
     case 'UPDATE_PHONENUM':
       return { ...state, phone_number: action.phoneNum };
     default:
