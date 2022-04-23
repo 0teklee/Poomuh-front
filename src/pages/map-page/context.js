@@ -1,6 +1,11 @@
 import { createContext, useReducer } from 'react';
 
-const initialRealEstate = { realEstate: [], mapBounds: {} };
+const initialRealEstate = {
+  realEstate: [],
+  mapBounds: {},
+  selected: [],
+  mapCenter: {},
+};
 
 export const RealEstateContext = createContext();
 export const RealEstateContextDispatch = createContext();
@@ -11,6 +16,8 @@ function realEstateReducer(state, action) {
       return { ...state, realEstate: action.realEstate };
     case 'GET_BOUNDS':
       return { ...state, mapBounds: action.getBounds };
+    case 'GET_SELECTED_ESTATE':
+      return { ...state, selected: action.selected };
     default:
       throw new Error('UNKNOWN ACTION TYPE', action.type);
   }

@@ -14,8 +14,12 @@ function MapPage() {
       <GlobalContextProvider>
         <SearchBar />
         <Wrapper>
-          <List />
-          <Map />
+          <div className="list">
+            <List />
+          </div>
+          <div className="map">
+            <Map />
+          </div>
         </Wrapper>
       </GlobalContextProvider>
     </div>
@@ -24,6 +28,13 @@ function MapPage() {
 
 const Wrapper = styled.div`
   display: flex;
+  height: 90vh;
+  .list {
+    width: 35%;
+  }
+  .map {
+    width: 65%;
+  }
 `;
 
 export default MapPage;
