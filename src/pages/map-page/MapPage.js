@@ -32,14 +32,13 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 90vh;
-  background: red;
 `;
 
 const MapWrapper = styled.div`
   display: flex;
   flex: 1;
   .list {
-    width: 20rem;
+    width: 25rem;
     border-right: 1px solid rgb(205, 205, 205);
   }
   .map {

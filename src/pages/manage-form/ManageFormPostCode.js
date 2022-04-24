@@ -3,7 +3,7 @@ import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import { InfoDispatchContext } from './context';
 
-function ManageFormPostCode({ handle }) {
+function ManageFormPostCode({ handle, val }) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -15,6 +15,7 @@ function ManageFormPostCode({ handle }) {
   const handleAddress = data => {
     infoDispatch({ type: 'UPDATE_ADDRESS', address: data.address });
     infoDispatch({ type: 'UPDATE_JADDRESS', jaddress: data.jibunAddress });
+    val.value = data.address;
   };
 
   return (
@@ -25,6 +26,7 @@ function ManageFormPostCode({ handle }) {
     </Outer>
   );
 }
+
 const Outer = styled.div`
   width: 100%;
   height: 100%;
