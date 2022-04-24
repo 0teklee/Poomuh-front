@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const EstateCard = () => {
+  const navigate = useNavigate();
+
+  //만료일 저장하는 상태값
+  const [expirationDate, setExpirationDate] = useState(0);
+  //광고 상태를 저장하는 상태값
+  const [advertising, setAdvertising] = useState(true);
+  //거래 상태를 저장하는 상태값
+  const [isSealed, setIsSealed] = useState(true);
+
   const deleteEstate = () => {
     //택우는 똑똑이 -> 왜냐? 삭제해서 재랜더링 디펜던시는 그냥 fetch해온 배열의 값을 주면 되니까
     fetch(`http://localhost:8000/delete?id=id`, {
@@ -28,8 +38,21 @@ const EstateCard = () => {
     manage-form/:item_id 이런 식으로 전달이 되고
     manage-form에는 item_id가 useParams로 받아오고
     그 값에 따라 입력/ 수정 페이지를 다르게 해준다
-
   */
+
+  //시간 계산해주는 함수
+  const getExpirationDate = () => {
+    let created = new Date('2022-04-24 22:59:52'); //DATAFETCH
+    let today = new Date();
+
+    let milliSecond = created - today;
+    let day = Math.floor(milliSecond / 1000 / 60 / 60 / 24);
+    setExpirationDate(29 + day);
+  };
+
+  useEffect(() => {
+    getExpirationDate();
+  }, []);
 
   return (
     <Wrapper>
@@ -39,10 +62,20 @@ const EstateCard = () => {
             <div className="estateNum">
               <p>매물번호 27248658</p>
             </div>
-            <div className="adInfo">
-              <p className="advertising">광고중</p>
-              <p className="expirationDate">광고종료 D-29</p>
-            </div>
+            {!advertising || expirationDate <= 0 ? (
+              <div className="adInfo">
+                <p className="expiredDate">광고 종료</p>
+              </div>
+            ) : !isSealed ? (
+              <div className="adInfo">
+                <p className="expiredDate">거래 완료</p>
+              </div>
+            ) : (
+              <div className="adInfo">
+                <p className="advertising">광고중</p>
+                <p className="expiredDate">광고종료 D-{expirationDate}</p>
+              </div>
+            )}
           </EstateDeadline>
           <EstateInfo>
             <div className="imgWrapper">
@@ -72,12 +105,33 @@ const EstateCard = () => {
                   찜 <span className="count">0</span>
                 </p>
               </div>
-              <div className="buttons">
-                <button>수정</button>
-                <button onClick={checkDelete}>삭제</button>
-                <button>광고 종료</button>
-                <button>거래 완료</button>
-              </div>
+              {!advertising ? (
+                <div className="Btns">
+                  <button onClick={() => navigate('/manage/form:1')}>
+                    수정
+                  </button>
+                  <button onClick={checkDelete}>삭제</button>
+                  <button onClick={() => setAdvertising(true)}>
+                    광고 재등록
+                  </button>
+                </div>
+              ) : !isSealed ? (
+                <div className="Btns">
+                  <button onClick={checkDelete}>삭제</button>
+                  <button onClick={() => setIsSealed(true)}>광고 재등록</button>
+                </div>
+              ) : (
+                <div className="Btns">
+                  <button onClick={() => navigate('/manage/form:1')}>
+                    수정
+                  </button>
+                  <button onClick={checkDelete}>삭제</button>
+                  <button onClick={() => setAdvertising(false)}>
+                    광고 종료
+                  </button>
+                  <button onClick={() => setIsSealed(false)}>거래 완료</button>
+                </div>
+              )}
             </div>
           </Buttons>
         </DescriptionBox>
@@ -127,13 +181,12 @@ const EstateDeadline = styled.div`
   }
 
   .adInfo {
-    margin-bottom: 20px;
     line-height: 20px;
     .advertising {
       color: #1564f9;
       font-size: 15px;
     }
-    .expirationDate {
+    .expiredDate {
       color: #62a6ff;
       font-size: 13px;
     }
@@ -143,6 +196,7 @@ const EstateDeadline = styled.div`
 const EstateInfo = styled.div`
   display: flex;
   flex-wrap: nowrap;
+  margin-bottom: 30px;
   width: 70%;
 
   .imgWrapper {
@@ -201,12 +255,16 @@ const Buttons = styled.div`
     }
   }
 
-  .buttons {
-    margin-top: 20px;
+  .Btns {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
     button {
       padding: 10px 15px;
       background-color: white;
       border: 1px solid rgb(226, 226, 226);
+
       :hover {
         cursor: pointer;
         background-color: rgb(204, 204, 204);
