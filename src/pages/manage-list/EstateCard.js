@@ -22,6 +22,15 @@ const EstateCard = () => {
     }
   };
 
+  //수정 버튼 눌렀을 때
+  /*
+    수정 버튼을 누르면 해당 카드에 있는 매물의 id값이 
+    manage-form/:item_id 이런 식으로 전달이 되고
+    manage-form에는 item_id가 useParams로 받아오고
+    그 값에 따라 입력/ 수정 페이지를 다르게 해준다
+
+  */
+
   return (
     <Wrapper>
       <CardBox>
