@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { BsCheck } from 'react-icons/bs';
 import { RealEstateContext, RealEstateContextDispatch } from './context';
@@ -6,6 +6,8 @@ import { RealEstateContext, RealEstateContextDispatch } from './context';
 function RoomTypeModal() {
   const RealEstate = useContext(RealEstateContext);
   const RealEstateDispatch = useContext(RealEstateContextDispatch);
+  const kakaoClusterer = RealEstate.clusterer;
+  const kakaoMap = RealEstate.map;
   const [check, setCheck] = useState({
     원룸: false,
     빌라: false,
@@ -16,6 +18,17 @@ function RoomTypeModal() {
     const { id } = e.target;
     setCheck({ ...check, [id]: !check[id] });
   };
+  const handleRoomTypeFilter = e => {
+    if (kakaoClusterer) {
+      kakaoClusterer.clear();
+    }
+    RealEstateDispatch({
+      type: 'GET_SELECTED_ESTATE',
+      selected: RealEstate.realEstate.filter(estate => {
+        return estate.category_id === e.target.value;
+      }),
+    });
+  };
 
   return (
     <Wrapper>
@@ -25,14 +38,28 @@ function RoomTypeModal() {
       </div>
       <Input>
         <div className="inputCheckbox" id="원룸" onClick={e => handleCheck(e)}>
-          <input id="원룸" type="checkbox" checked={check.원룸} readOnly />
+          <input
+            id="원룸"
+            type="checkbox"
+            checked={check.원룸}
+            value={1}
+            onChange={handleRoomTypeFilter}
+            readOnly
+          />
           <label htmlFor="원룸" onClick={e => handleCheck(e)} id="원룸">
             <BsCheck size="20px" color="#fff" id="원룸" />
           </label>
           <span>원룸</span>
         </div>
         <div className="inputCheckbox" id="빌라" onClick={e => handleCheck(e)}>
-          <input id="빌라" type="checkbox" checked={check.빌라} readOnly />
+          <input
+            id="빌라"
+            type="checkbox"
+            checked={check.빌라}
+            value={2}
+            onChange={handleRoomTypeFilter}
+            readOnly
+          />
           <label htmlFor="빌라" onClick={e => handleCheck(e)} id="빌라">
             <BsCheck size="20px" color="#fff" id="빌라" />
           </label>
@@ -47,6 +74,8 @@ function RoomTypeModal() {
             id="오피스텔"
             type="checkbox"
             checked={check.오피스텔}
+            value={3}
+            onChange={handleRoomTypeFilter}
             readOnly
           />
           <label htmlFor="오피스텔" onClick={e => handleCheck(e)} id="오피스텔">
@@ -59,7 +88,14 @@ function RoomTypeModal() {
           id="아파트"
           onClick={e => handleCheck(e)}
         >
-          <input id="아파트" type="checkbox" checked={check.아파트} readOnly />
+          <input
+            id="아파트"
+            type="checkbox"
+            checked={check.아파트}
+            value={4}
+            onChange={handleRoomTypeFilter}
+            readOnly
+          />
           <label htmlFor="아파트" onClick={e => handleCheck(e)} id="아파트">
             <BsCheck size="20px" color="#fff" id="아파트" />
           </label>
