@@ -1,0 +1,290 @@
+import React, { useState, useRef, useContext } from 'react';
+import styled from 'styled-components';
+import { InfoContext, InfoDispatchContext } from './context';
+
+function Trade({ name, close }) {
+  const sample = useRef('');
+  const sampleMonthly = useRef('');
+  const InfoDispatch = useContext(InfoDispatchContext);
+
+  const handlePriceMain = e => {
+    InfoDispatch({ type: 'UPDATE_PRICE_MAIN', price_main: e.target.value * 1 });
+  };
+  const handlePriceMonthly = e => {
+    InfoDispatch({
+      type: 'UPDATE_PRICE_MONTHLY',
+      price_monthly: e.target.value * 1,
+    });
+  };
+  const updateSample = (e, targetRef) => {
+    if (e.target.value * 1 <= 9999) {
+      targetRef.current.innerText = e.target.value + '만원';
+    } else {
+      targetRef.current.innerText =
+        (e.target.value / 10000).toFixed(0) +
+        '억' +
+        (e.target.value - (e.target.value / 10000).toFixed(0) * 10000) +
+        '만원';
+    }
+  };
+  return (
+    <TradeWrapper>
+      <span className="typeName">{name}</span>
+      {name === '월세' ? (
+        <>
+          <input
+            type="number"
+            onChange={e => {
+              handlePriceMain(e);
+              updateSample(e, sample);
+            }}
+            placeholder="보증금"
+          />
+          <span>/</span>
+          <input
+            type="number"
+            onChange={e => {
+              handlePriceMonthly(e);
+              if (sample.current.innerText === '(예 월세 1000만원/50만원)') {
+                sample.current.innerText = '';
+              }
+
+              if (e.target.value * 1 <= 9999) {
+                sampleMonthly.current.innerText = ` /  ${e.target.value} 만원`;
+              } else if (e.target.value === '') {
+                sampleMonthly.current.value = ' / ';
+              } else {
+                sampleMonthly.current.innerText = ` /  ${(
+                  e.target.value / 10000
+                ).toFixed(0)} 억
+                  ${
+                    e.target.value - (e.target.value / 10000).toFixed(0) * 10000
+                  }
+                  만원`;
+              }
+            }}
+            placeholder="월세"
+          />
+          <span className="info" ref={sample}>
+            (예 월세 1000만원/50만원)
+          </span>
+          <span className="info" ref={sampleMonthly} />
+        </>
+      ) : (
+        <>
+          <input
+            type="number"
+            onChange={e => {
+              handlePriceMain(e);
+              updateSample(e, sample);
+            }}
+            placeholder="전세"
+          />
+          <span className="info" ref={sample}>
+            (예 전세 2000만원)
+          </span>
+        </>
+      )}
+
+      <button className="closeBtn" onClick={close}>
+        X
+      </button>
+    </TradeWrapper>
+  );
+}
+let tradeKey = 0;
+
+function ManageFormTradeType() {
+  const [trade, setTrade] = useState([]);
+  const deleteCompo = e => {
+    setTrade(trade.filter(el => el.key !== e.key));
+  };
+  return (
+    <Wrapper>
+      <Title>거래 정보</Title>
+      <RowWrapper>
+        <RowHead>거래 종류</RowHead>
+        <RowContent>
+          <RowInner>
+            {trade.length === 0
+              ? null
+              : trade.map(el => (
+                  <Trade
+                    name={el.name}
+                    close={() => deleteCompo(el)}
+                    key={el.key}
+                  />
+                ))}
+            <div className="selectButton">
+              <button
+                onClick={() => {
+                  setTrade([
+                    ...trade,
+                    {
+                      key: ++tradeKey,
+                      name: '월세',
+                    },
+                  ]);
+                }}
+                disabled={0 < trade.filter(el => el.name === '월세').length}
+              >
+                월세
+              </button>
+              <button
+                onClick={() => {
+                  setTrade([
+                    ...trade,
+                    {
+                      key: ++tradeKey,
+                      name: '전세',
+                    },
+                  ]);
+                }}
+                disabled={0 < trade.filter(el => el.name === '전세').length}
+              >
+                전세
+              </button>
+              <input type="checkbox" id="shortTerm" />
+              <label htmlFor="shortTerm" />
+              단기가능
+            </div>
+          </RowInner>
+        </RowContent>
+      </RowWrapper>
+    </Wrapper>
+  );
+}
+
+const Wrapper = styled.section`
+  width: 100%;
+  margin-bottom: 50px;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 5%) 0px 1px 5px 0px;
+  border: 1px solid rgb(226, 226, 226);
+  background-color: rgb(255, 255, 255);
+  overflow: hidden;
+`;
+const Title = styled.h1`
+  padding: 1rem;
+  border-bottom: 1px solid rgb(226, 226, 226);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+`;
+
+const RowHead = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 11%;
+  padding: 2rem;
+  text-align: center;
+  font-weight: 700;
+  background: #fdfdfd;
+  border-right: 1px solid rgb(226, 226, 226);
+  border-bottom: 1px solid rgb(226, 226, 226);
+  &:last-child {
+    border-bottom: 0px solid #fff;
+  }
+`;
+const RowContent = styled.div`
+  width: 80%;
+  padding: 20px;
+  border-bottom: 1px solid rgb(226, 226, 226);
+`;
+
+const RowWrapper = styled.div`
+  display: flex;
+  &:last-child {
+    ${RowHead}, ${RowContent} {
+      border-bottom: none;
+    }
+  }
+`;
+
+const RowInner = styled.div`
+  .selectButton {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid rgb(226, 226, 226);
+    padding-top: 10px;
+    button {
+      all: unset;
+      width: 100px;
+      height: 40px;
+      margin-right: 10px;
+      color: rgb(68, 68, 68);
+      font-size: 14px;
+      border: 1px solid rgb(68, 68, 68);
+      border-radius: 3px;
+      background-color: rgb(255, 255, 255);
+      text-align: center;
+      cursor: pointer;
+      &:disabled {
+        color: #fdfdfd;
+        border: 1px solid #fdfdfd;
+        background: rgb(226, 226, 226);
+      }
+    }
+  }
+`;
+
+const TradeWrapper = styled.div`
+  display: flex;
+  height: 46px;
+  align-items: center;
+  margin-bottom: 10px;
+  .typeName {
+    width: 50px;
+    height: 26px;
+    margin-right: 10px;
+    line-height: 26px;
+    color: rgb(255, 255, 255);
+    font-size: 13px;
+    text-align: center;
+    border-radius: 3px;
+    background-color: rgb(97, 182, 229);
+  }
+  input {
+    width: 120px;
+    height: 46px;
+    margin: 0 16px;
+    padding: 0px 8px 0px 10px;
+    border: 1px solid rgb(226, 226, 226);
+    font-size: 16px;
+    &:focus {
+      outline: none;
+      border: 1px solid rgb(50, 108, 249);
+    }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  .info {
+    margin-left: 10px;
+    color: rgb(136, 136, 136);
+    font-size: 14px;
+  }
+
+  .closeBtn {
+    all: unset;
+    margin-left: auto;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    color: #fff;
+    font-weight: 100;
+    font-size: 14px;
+    background: rgb(102, 102, 102);
+    cursor: pointer;
+  }
+`;
+
+export default ManageFormTradeType;
