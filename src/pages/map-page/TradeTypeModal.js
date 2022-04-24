@@ -1,6 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { BsCheck } from 'react-icons/bs';
+import { Slider } from 'antd';
+import 'antd/dist/antd.css';
 
 function TradeTypeModal() {
   const [check, setCheck] = useState({
@@ -10,6 +12,18 @@ function TradeTypeModal() {
   const handleCheck = e => {
     const { id } = e.target;
     setCheck({ ...check, [id]: !check[id] });
+  };
+
+  const [rangeVal, setRangeVal] = useState({
+    deposit: [20, 50],
+    monthly: [20, 50],
+  });
+
+  const handleDeposit = e => {
+    setRangeVal({ ...rangeVal, deposit: e });
+  };
+  const handleMonthly = e => {
+    setRangeVal({ ...rangeVal, monthly: e });
   };
 
   return (
@@ -35,10 +49,47 @@ function TradeTypeModal() {
         </div>
       </Input>
       <Input>
-        <p>보증금/전세가</p>
-        <input type="range" />
-        <p>월세</p>
-        <input type="range" />
+        <h1>가격</h1>
+        <div className="range">
+          <div className="rangeWrapper">
+            <div className="priceInfo">
+              <p>보증금/전세가</p>
+              <span>{`${rangeVal.deposit[0] * 100} 만원 ~ ${
+                rangeVal.deposit[1] === 500
+                  ? '무제한'
+                  : rangeVal.deposit[1] + ' 만원'
+              } `}</span>
+            </div>
+            <Slider
+              range
+              defaultValue={[20, 50]}
+              min={1}
+              max={500}
+              onChange={handleDeposit}
+            />
+          </div>
+          <div className="rangeWrapper">
+            <div className="priceInfo">
+              <p>월세</p>
+              <span>{`${rangeVal.monthly[0]} 만원 ~ ${
+                rangeVal.monthly[1] === 200
+                  ? '무제한'
+                  : rangeVal.monthly[1] + ' 만원'
+              }`}</span>
+            </div>
+            <Slider
+              range
+              defaultValue={[20, 50]}
+              // tipFormatter={null}
+              max={300}
+              min={10}
+              draggableTrack={false}
+              onChange={handleMonthly}
+              step={5}
+              id="monthly"
+            />
+          </div>
+        </div>
       </Input>
     </Wrapper>
   );
@@ -70,6 +121,14 @@ const Wrapper = styled.div`
 
 const Input = styled.div`
   padding: 1.5rem;
+  border-bottom: 1px solid rgb(226, 226, 226);
+  h1 {
+    color: rgb(34, 34, 34);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    margin-bottom: 1.5rem;
+  }
 
   .inputCheckbox {
     display: flex;
@@ -92,6 +151,31 @@ const Input = styled.div`
   }
   span {
     font-weight: 300;
+  }
+  .rangeWrapper {
+    &:first-child {
+      border-bottom: 1px solid rgb(226, 226, 226);
+      margin-bottom: 10px;
+    }
+    .priceInfo {
+      display: flex;
+      justify-content: space-between;
+      span {
+        color: rgb(50, 108, 249);
+      }
+    }
+  }
+  .range {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    p {
+      text-align: center;
+    }
+    input[type='range'] {
+      padding: 20px 0px;
+      width: 100%;
+    }
   }
 `;
 

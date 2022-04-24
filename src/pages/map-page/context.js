@@ -7,6 +7,21 @@ const initialRealEstate = {
   mapCenter: {},
   map: null,
   clusterer: null,
+  clustererStyle: [
+    {
+      cursor: 'pointer',
+      width: '60px',
+      height: '60px',
+      lineHeight: '60px',
+      fontSize: '14px',
+      background: 'rgba(50, 106, 249, 0.8)',
+      color: '#fff',
+      border: '1px solid rgb(50, 106, 249)',
+      textAlign: 'center',
+      fontWeight: 'bold',
+      borderRadius: '50%',
+    },
+  ],
 };
 
 export const RealEstateContext = createContext();
