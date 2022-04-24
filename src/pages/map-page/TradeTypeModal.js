@@ -47,11 +47,11 @@ function TradeTypeModal() {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
   background: #fff;
   border: 1px solid rgb(226, 226, 226);
   border-radius: 5px;
   .title {
+    padding: 1.5rem;
     h1 {
       color: rgb(34, 34, 34);
       font-size: 18px;
@@ -69,7 +69,8 @@ const Wrapper = styled.div`
 `;
 
 const Input = styled.div`
-  padding: 16px 0px;
+  padding: 1.5rem;
+
   .inputCheckbox {
     display: flex;
     align-items: center;
