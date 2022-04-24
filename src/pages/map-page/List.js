@@ -13,8 +13,8 @@ function List() {
   };
   // console.log(RealEstate);
   // console.log(RealEstateDispatch);
-  console.log(RealEstate.selected[0]);
-  console.log(RealEstate.selected[0].description_title);
+  // console.log(RealEstate.selected[0]);
+  // console.log(RealEstate.selected[0].description_title);
   return (
     <ListWrapper>
       <CardWrapper>
@@ -29,15 +29,19 @@ function List() {
             </Like>
           </ImageWrapper>
           <InfoWrap>
-            <p class="price">전세 2억 6000</p> <br />
-            <p class="type">원룸</p>
-            <br />
-            <p class="description">
-              {RealEstate.selected[0].current_floor}, &nbsp;
-              {RealEstate.selected[0].supply_size}
-              <br />
-              {RealEstate.selected[0].description_title}
-            </p>
+            {RealEstate.selected.length === 0 ? null : (
+              <>
+                <p class="price">전세 2억 6000</p> <br />
+                <p class="type">원룸</p>
+                <br />
+                <p class="description">
+                  {RealEstate.selected[0].current_floor}, &nbsp;
+                  {RealEstate.selected[0].supply_size}
+                  <br />
+                  {RealEstate.selected[0].description_title}
+                </p>
+              </>
+            )}
           </InfoWrap>
         </Card>
       </CardWrapper>
