@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PreemptRoomCard from './PreemptRoomCard';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import NavBar from '../favorite-recent/NavBar';
@@ -18,7 +19,11 @@ function FavoritePreempt() {
             총 <span>{'7개'}</span>의 찜한 방이 있습니다.
           </CountRecent>
         </CountInfoWrapper>
-        {/* <RecentRooms /> */}
+        <CardWrapper>
+          {/* {recentRoom.map(data => (
+            <PreemptRoomCard key={data.id} data={data} />
+          ))} */}
+        </CardWrapper>
       </Main>
       <Footer />
     </Wrapper>
@@ -52,5 +57,10 @@ const CountRecent = styled.h2`
     color: #326cf9;
   }
 `;
-
+const CardWrapper = styled.p`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 7rem;
+`;
 export default FavoritePreempt;

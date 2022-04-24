@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 
-function RecentRoomCard({ data }) {
+function PreemptRoomCard({ data }) {
   const [like, setLike] = useState(false);
 
   const LikeHandler = () => {
@@ -93,4 +93,4 @@ const Informations = styled.div`
   font-weight: 300;
   font-size: 0.9rem;
 `;
-export default RecentRoomCard;
+export default PreemptRoomCard;

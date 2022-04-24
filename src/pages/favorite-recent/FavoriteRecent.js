@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import NavBar from './NavBar';
-// import RecentRooms from './RecentRooms';
 
 function FavoriteRecent() {
   const [recentRoom, setRecentRoom] = useState([]);
@@ -17,8 +16,6 @@ function FavoriteRecent() {
         setRecentRoom(data);
       });
   }, []);
-
-  console.log('recentRoom', recentRoom);
 
   return (
     <Wrapper>

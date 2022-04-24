@@ -8,7 +8,7 @@ function Header() {
   return (
     <Wrapper>
       <LogoWrapper onClick={() => navigate('/')}>
-        <HeaderLogo src="images/logo_header.png" />
+        <HeaderLogo src="../images/logo_header.png" />
       </LogoWrapper>
       <MenuWrapper>
         <Link onClick={() => navigate('/search')}>지도</Link>
