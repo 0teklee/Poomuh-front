@@ -1,19 +1,32 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { RealEstateContext, RealEstateContextDispatch } from './context';
-// import { IoHeartOutline } from 'react-icons/io5';
-// import { FaBeer } from 'react-icons/fa';
+import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
+
 function List() {
   const RealEstate = useContext(RealEstateContext);
   const RealEstateDispatch = useContext(RealEstateContextDispatch);
-  // const [like, setLike] = useState(false);
-  console.log(RealEstate);
-  console.log(RealEstateDispatch);
+  const [like, setLike] = useState(false);
+
+  const LikeHandler = () => {
+    setLike(!like);
+  };
+  // console.log(RealEstate);
+  // console.log(RealEstateDispatch);
+  console.log(RealEstate.selected[0]);
   return (
     <ListWrapper>
       <CardWrapper>
         <Card>
-          <ImageWrapper>{/* <FaBeer /> */}</ImageWrapper>
+          <ImageWrapper>
+            <Like onClick={LikeHandler}>
+              {like === false ? (
+                <IoMdHeartEmpty color="black" />
+              ) : (
+                <IoMdHeart color="red" />
+              )}
+            </Like>
+          </ImageWrapper>
           <InfoWrap>
             <p class="price">전세 2억 6000</p> <br />
             <p class="type">원룸</p>
@@ -44,10 +57,19 @@ const Card = styled.div`
   justify-content: flex-start;
   margin: 1rem;
 `;
-const ImageWrapper = styled.img`
-  // border: 1px solid blue;
+const ImageWrapper = styled.div`
+  border: 1px solid blue;
+  position: relative;
   width: 140px;
   height: 140px;
+`;
+const Like = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: ${props => props.color};
+  font-size: 1.5rem;
+  cursor: pointer;
 `;
 const InfoWrap = styled.div`
   // border: 1px solid black;
