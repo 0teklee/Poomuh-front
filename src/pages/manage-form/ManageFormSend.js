@@ -35,7 +35,11 @@ function ManageFormSend() {
             value="취소"
             onClick={() => navigate('/manage/list')}
           />
-          <input type="button" value="매물등록" />
+          <input
+            type="button"
+            value="매물등록"
+            onClick={() => console.log(Info)}
+          />
         </FlexDiv>
       </Input>
     </FlexDiv>
