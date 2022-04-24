@@ -12,14 +12,16 @@ function MapPage() {
     <div>
       <Header />
       <GlobalContextProvider>
-        <SearchBar />
         <Wrapper>
-          <div className="list">
-            <List />
-          </div>
-          <div className="map">
-            <Map />
-          </div>
+          <SearchBar />
+          <MapWrapper>
+            <div className="list">
+              <List />
+            </div>
+            <div className="map">
+              <Map />
+            </div>
+          </MapWrapper>
         </Wrapper>
       </GlobalContextProvider>
     </div>
@@ -28,12 +30,21 @@ function MapPage() {
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
   height: 90vh;
+  background: red;
+`;
+
+const MapWrapper = styled.div`
+  display: flex;
+  flex: 1;
   .list {
-    width: 35%;
+    width: 20rem;
+    border-right: 1px solid rgb(205, 205, 205);
   }
   .map {
-    width: 65%;
+    flex: 1;
+    background: white;
   }
 `;
 

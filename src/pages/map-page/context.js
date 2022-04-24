@@ -5,6 +5,8 @@ const initialRealEstate = {
   mapBounds: {},
   selected: [],
   mapCenter: {},
+  map: null,
+  clusterer: null,
 };
 
 export const RealEstateContext = createContext();
@@ -18,6 +20,10 @@ function realEstateReducer(state, action) {
       return { ...state, mapBounds: action.getBounds };
     case 'GET_SELECTED_ESTATE':
       return { ...state, selected: action.selected };
+    case 'UPDATE_MAP':
+      return { ...state, map: action.map };
+    case 'UPDATE_CLUSTERER':
+      return { ...state, clusterer: action.clusterer };
     default:
       throw new Error('UNKNOWN ACTION TYPE', action.type);
   }

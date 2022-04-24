@@ -9,8 +9,9 @@ function Map() {
   const mapContainer = useRef('');
   // 지도 객체, 클러스터러를 담을 ref
   const mapDOM = useRef('');
+  const clustererDOM = useRef('');
   const kakaoMap = mapDOM.current;
-
+  const kakaoClusterer = clustererDOM.current;
   // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
   useEffect(() => {
     mapDOM.current = mapscript();
@@ -50,6 +51,9 @@ function Map() {
   // filter 조건을 toFixed(13)으로 수정
   // 클릭한 클러스터에 해당하는 매물들을 context의 selected에 저장.
   useEffect(() => {
+    if (kakaoClusterer) {
+      kakaoClusterer.clear();
+    }
     if (kakaoMap) {
       const clusterStyle = [
         {
@@ -105,12 +109,14 @@ function Map() {
               .map(x => x.getPosition())
               .find(
                 qa =>
-                  estate.lat.toFixed(13) === qa.Ma.toFixed(13) &&
-                  estate.lng.toFixed(13) === qa.La.toFixed(13)
+                  estate.lat.toFixed(12) === qa.Ma.toFixed(12) &&
+                  estate.lng.toFixed(12) === qa.La.toFixed(12)
               );
           }),
         });
       });
+      clustererDOM.current = clusterer;
+      RealEstateDispatch({ type: 'UPDATE_CLUSTERER', clusterer: clusterer });
     }
   }, [RealEstate.realEstate]);
 
@@ -124,7 +130,7 @@ function Map() {
     const map = new kakao.maps.Map(container, options);
 
     const zoomControl = new kakao.maps.ZoomControl();
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
 
     kakao.maps.event.addListener(map, 'zoom_changed', () => {
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
@@ -132,6 +138,7 @@ function Map() {
     kakao.maps.event.addListener(map, 'dragend', () => {
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
     });
+    RealEstateDispatch({ type: 'UPDATE_MAP', map: map });
     return map;
   };
   return (
@@ -139,7 +146,7 @@ function Map() {
       <div
         id="map"
         ref={mapContainer}
-        style={{ width: '100vw', height: '90vh' }}
+        style={{ width: '100%', height: '90vh' }}
       />
     </div>
   );
