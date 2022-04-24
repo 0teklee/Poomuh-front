@@ -7,6 +7,7 @@ import NavBar from './NavBar';
 
 function FavoriteRecent() {
   const [recentRoom, setRecentRoom] = useState([]);
+  //최근본방의 데이터 => 지도페이지에서 매물 클릭시 해당 데이터를 로컬스토리지에 저장, 최근본방에 가져오기?
 
   //최근본방 목데이터 가져오기
   useEffect(() => {
