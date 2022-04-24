@@ -2,23 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
-import ManageNav from '../manage-form/ManageNav';
+import ManageNav from './ManageNav';
 
-function ManageList() {
+function ManageForm() {
   return (
     <Wrapper>
       <Header />
       <TitleWrapper>
         <Title>방내놓기</Title>
       </TitleWrapper>
-      <ManageNav select="list" />
+      <ManageNav select="form" />
     </Wrapper>
   );
 }
 
-const Wrapper = styled.section`
-  margin: 0 10rem;
-`;
+const Wrapper = styled.section``;
 const TitleWrapper = styled.header`
   display: flex;
   align-items: center;
@@ -31,4 +29,4 @@ const Title = styled.h1`
   font-size: 2rem;
 `;
 
-export default ManageList;
+export default ManageForm;
