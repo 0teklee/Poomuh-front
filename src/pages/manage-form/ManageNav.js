@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-function ManageForm({ select }) {
+function ManageNav({ select }) {
   return (
     <ComponentNav>
       <FormLink to="/manage/form" select={select}>
@@ -53,4 +53,4 @@ const ListLink = styled(Link)`
   cursor: pointer;
 `;
 
-export default ManageForm;
+export default ManageNav;

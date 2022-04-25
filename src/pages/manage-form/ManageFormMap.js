@@ -1,32 +1,42 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { InfoContext } from './context';
 
-const options = {
-  //지도를 생성할 때 필요한 기본 옵션
-  center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-  level: 3, //지도의 레벨(확대, 축소 정도)
-};
-
-function ManageFormMap({ Width, Height, Lat, Lng }) {
+function ManageFormMap() {
   const container = useRef(null); //지도를 담을 영역의 DOM 레퍼런스
+  const { kakao } = window;
+  const infoContext = useContext(InfoContext);
+  const Address = infoContext.address;
+  let Lat = 0;
+  let Lng = 0;
+  const geocoder = new kakao.maps.services.Geocoder();
 
-  useEffect(() => {
-    new window.kakao.maps.Map(container.current, options); //지도 생성 및 객체 리턴
-    return () => {};
-  }, []);
-
-  const geocoder = new window.kakao.maps.services.Geocoder();
-  const marker = (Lat, Lng) => {
-    return new window.kakao.maps.Marker({
-      position: new window.kakao.maps.LatLng(Lat, Lng),
-      map: container,
-    });
+  const options = {
+    center: new kakao.maps.LatLng(Lat, Lng),
+    level: 3,
+    draggable: false,
   };
+  const marker = new kakao.maps.Marker({
+    position: new kakao.maps.LatLng(Lat, Lng),
+  });
+  useEffect(() => {
+    const map = new kakao.maps.Map(container.current, options);
+    marker.setMap(map);
+    geocoder.addressSearch(infoContext.address, function (results, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        const result = results[0];
+        const coords = new kakao.maps.LatLng(result.y, result.x);
+        map.setCenter(coords);
+        marker.setPosition(coords);
+      }
+    });
 
+    return () => {};
+  }, [Address]);
   return (
     <div
-      className="map"
-      style={{ width: Width || '100%', height: Height || '100%' }}
+      id="mapDiv"
       ref={container}
+      style={{ width: '100%', height: '100%' }}
     />
   );
 }

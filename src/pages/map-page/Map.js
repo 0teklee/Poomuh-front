@@ -74,7 +74,7 @@ function Map() {
       const marker = RealEstate.realEstate.map(el => {
         return new kakao.maps.Marker({
           map: kakaoMap,
-          position: new kakao.maps.LatLng(el.lat, el.lng),
+          position: new kakao.maps.LatLng(el.latitude, el.longitude),
         });
       });
 
@@ -99,7 +99,7 @@ function Map() {
         overlay.style.background = 'rgba(50, 106, 249, 0.8)';
         overlay.style.color = '#fff';
       });
-
+      console.log(clusterer.getMarkers().map(x => x.getPosition()));
       kakao.maps.event.addListener(clusterer, 'clusterclick', cluster => {
         RealEstateDispatch({
           type: 'GET_SELECTED_ESTATE',
@@ -109,8 +109,8 @@ function Map() {
               .map(x => x.getPosition())
               .find(
                 qa =>
-                  estate.lat.toFixed(12) === qa.Ma.toFixed(12) &&
-                  estate.lng.toFixed(12) === qa.La.toFixed(12)
+                  estate.latitude.toFixed(12) === qa.Ma.toFixed(12) &&
+                  estate.longitude.toFixed(12) === qa.La.toFixed(12)
               );
           }),
         });

@@ -13,35 +13,45 @@ function List() {
   };
   // console.log(RealEstate);
   // console.log(RealEstateDispatch);
-  console.log(RealEstate.selected[0]);
-  console.log(RealEstate.selected[0].description_title);
+  // console.log(RealEstate.selected[0]);
+  // console.log(RealEstate.selected[0].description_title);
   return (
-    <ListWrapper>
-      <CardWrapper>
-        <Card>
-          <ImageWrapper>
-            <Like onClick={LikeHandler}>
-              {like === false ? (
-                <IoMdHeartEmpty color="black" />
-              ) : (
-                <IoMdHeart color="red" />
-              )}
-            </Like>
-          </ImageWrapper>
-          <InfoWrap>
-            <p class="price">전세 2억 6000</p> <br />
-            <p class="type">원룸</p>
-            <br />
-            <p class="description">
-              {RealEstate.selected[0].current_floor}, &nbsp;
-              {RealEstate.selected[0].supply_size}
-              <br />
-              {RealEstate.selected[0].description_title}
-            </p>
-          </InfoWrap>
-        </Card>
-      </CardWrapper>
-    </ListWrapper>
+    <>
+      {RealEstate.selected.length === 0 ? null : (
+        <ListWrapper>
+          <CardWrapper>
+            <Card>
+              <ImageWrapper>
+                <Like onClick={LikeHandler}>
+                  {like === false ? (
+                    <IoMdHeartEmpty color="black" />
+                  ) : (
+                    <IoMdHeart color="red" />
+                  )}
+                </Like>
+              </ImageWrapper>
+              <InfoWrap>
+                <p class="price">
+                  {RealEstate.selected[0].trade_type === '월세'
+                    ? `${RealEstate.selected[0].trade_type} 
+                      ${RealEstate.selected[0].price_deposit}/${RealEstate.selected[0].price_monthly}`
+                    : RealEstate.selected[0].trade_type}
+                </p>{' '}
+                <br />
+                <p class="type">{RealEstate.selected[0].trade_type}</p>
+                <br />
+                <p class="description">
+                  {RealEstate.selected[0].current_floor}, &nbsp;
+                  {RealEstate.selected[0].supply_size}
+                  <br />
+                  {RealEstate.selected[0].description_title}
+                </p>
+              </InfoWrap>
+            </Card>
+          </CardWrapper>
+        </ListWrapper>
+      )}
+    </>
   );
 }
 
@@ -50,6 +60,11 @@ export default List;
 const ListWrapper = styled.div`
   // background-color: yellow;
   margin-top: 65px;
+  border-bottom: 1px solid rgb(231, 231, 231);
+  transition: 0.3s;
+  :hover {
+    background-color: #f0f4fa;
+  }
 `;
 const CardWrapper = styled.div`
   border: 1px solid transparent;

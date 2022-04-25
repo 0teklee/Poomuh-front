@@ -1,22 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-
 function Header() {
-  // const [name, setName] = useState('');
   const navigate = useNavigate();
-  // const params = useParams();
-
-  // console.log(params);
 
   return (
     <Wrapper>
       <LogoWrapper onClick={() => navigate('/')}>
-        <HeaderLogo src="images/logo_header.png" />
+        <HeaderLogo src="../images/logo_header.png" />
       </LogoWrapper>
       <MenuWrapper>
         <Link onClick={() => navigate('/search')}>지도</Link>
-        <Link onClick={() => navigate('/favorite')}>관심목록</Link>
+        <Link onClick={() => navigate('/favorite/recent-room')}>관심목록</Link>
         <Link onClick={() => navigate('/manage/form')}>방내놓기</Link>
         <Button onClick={() => navigate('/login')}>
           <Login>로그인</Login>
@@ -32,6 +27,7 @@ function Header() {
 export default Header;
 
 const Wrapper = styled.div`
+  font-family: 'Spoqa Han Sans', -apple-system, sans-serif;
   width: 100%;
   height: 4.5rem;
   display: flex;
