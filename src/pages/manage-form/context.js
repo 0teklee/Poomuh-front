@@ -18,7 +18,7 @@ const initialInfo = {
   available_date: '',
   description_title: '',
   description_detail: '',
-  trade_type: '',
+  trade_id: [],
 };
 
 export const InfoContext = createContext();
@@ -60,6 +60,8 @@ function infoReducer(state, action) {
       return { ...state, price_deposit: action.price_deposit };
     case 'UPDATE_PRICE_MONTHLY':
       return { ...state, price_monthly: action.price_monthly };
+    case 'UPDATE_TRADE_ID':
+      return { ...state, trade_id: action.trade_id };
     default:
       throw new Error(`Unknown action type : ${action.type}`);
   }
