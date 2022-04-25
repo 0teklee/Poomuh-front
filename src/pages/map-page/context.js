@@ -22,12 +22,11 @@ const initialRealEstate = {
       borderRadius: '50%',
     },
   ],
-  filteredEstate: [],
-  roomTypeFitler: {
-    원룸: true,
-    빌라: true,
-    오피스텔: true,
-    아파트: true,
+  roomTypeFilter: {
+    원룸: { isOn: true, category_id: 1 },
+    빌라: { isOn: true, category_id: 2 },
+    오피스텔: { isOn: true, category_id: 3 },
+    아파트: { isOn: true, category_id: 4 },
   },
 };
 
@@ -46,10 +45,10 @@ function realEstateReducer(state, action) {
       return { ...state, map: action.map };
     case 'UPDATE_CLUSTERER':
       return { ...state, clusterer: action.clusterer };
-    case 'UPDATE_FILTERED_ESTATE':
-      return { ...state, filteredEstate: action.filterdEstate };
+    case 'UPDATE_MARKER':
+      return { ...state, marker: action.marker };
     case 'UPDATE_ROOM_TYPE_FILTER':
-      return { ...state, roomTypeFitler: action.roomTypeFitler };
+      return { ...state, roomTypeFilter: action.roomTypeFilter };
     default:
       throw new Error('UNKNOWN ACTION TYPE', action.type);
   }

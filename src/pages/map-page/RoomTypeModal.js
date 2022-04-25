@@ -9,87 +9,30 @@ function RoomTypeModal() {
   const kakaoClusterer = RealEstate.clusterer;
   const kakaoMap = RealEstate.map;
   const [check, setCheck] = useState({
-    원룸: true,
-    빌라: true,
-    오피스텔: true,
-    아파트: true,
+    원룸: { isOn: true, category_id: 1 },
+    빌라: { isOn: true, category_id: 2 },
+    오피스텔: { isOn: true, category_id: 3 },
+    아파트: { isOn: true, category_id: 4 },
   });
 
   useEffect(() => {
-    setCheck(RealEstate.roomTypeFitler);
+    setCheck(RealEstate.roomTypeFilter);
   }, []);
 
   useEffect(() => {
     RealEstateDispatch({
       type: 'UPDATE_ROOM_TYPE_FILTER',
-      roomTypeFitler: check,
+      roomTypeFilter: check,
     });
   }, [check]);
 
   const handleCheck = e => {
     const { id } = e.target;
-    setCheck({ ...check, [id]: !check[id] });
+    Object.values(check).filter(check => check.isOn === true).length === 1
+      ? setCheck({ ...check, [id]: { ...check[id], isOn: true } })
+      : setCheck({ ...check, [id]: { ...check[id], isOn: !check[id].isOn } });
   };
 
-  const handleRoomTypeFilter = e => {
-    let result = [];
-    for (let i = 0; i < e.length; i++) {
-      result.push(
-        RealEstate.realEstate.filter(estate => {
-          return estate.category_id === e[i];
-        })
-      );
-    }
-    return result.flat();
-  };
-
-  useEffect(() => {
-    const { 원룸, 빌라, 오피스텔, 아파트 } = RealEstate.roomTypeFitler;
-    // if (원룸 && 빌라 && 오피스텔 && 아파트) {
-    //   return;
-    // }
-    // console.log('useEffect, 핸들룸타입필터', RealEstate.realEstate);
-
-    if (원룸) {
-      handleRoomTypeFilter([1]);
-    }
-    if (빌라) {
-      handleRoomTypeFilter([2]);
-    }
-    if (오피스텔) {
-      handleRoomTypeFilter([3]);
-    }
-    if (아파트) {
-      handleRoomTypeFilter([4]);
-    }
-    if (원룸 && 빌라) {
-      handleRoomTypeFilter([1, 2]);
-    }
-    if (원룸 && 오피스텔) {
-      handleRoomTypeFilter([1, 3]);
-    }
-    if (원룸 && 아파트) {
-      handleRoomTypeFilter([1, 4]);
-    }
-    if (원룸 && 빌라 && 오피스텔) {
-      handleRoomTypeFilter([1, 2, 3]);
-    }
-    if (원룸 && 빌라 && 오피스텔 && 아파트) {
-      handleRoomTypeFilter([1, 2, 3, 4]);
-    }
-    if (빌라 && 오피스텔) {
-      handleRoomTypeFilter([2, 3]);
-    }
-    if (빌라 && 아파트) {
-      handleRoomTypeFilter([2, 4]);
-    }
-    if (빌라 && 오피스텔 && 아파트) {
-      handleRoomTypeFilter([2, 3, 4]);
-    }
-    if (오피스텔 && 아파트) {
-      handleRoomTypeFilter([3, 4]);
-    }
-  }, [check]);
   return (
     <Wrapper>
       <div className="title">
@@ -101,9 +44,8 @@ function RoomTypeModal() {
           <input
             id="원룸"
             type="checkbox"
-            checked={check.원룸}
+            checked={check.원룸.isOn}
             value={1}
-            // onChange={handleRoomTypeFilter}
             readOnly
           />
           <label htmlFor="원룸" id="원룸">
@@ -115,9 +57,8 @@ function RoomTypeModal() {
           <input
             id="빌라"
             type="checkbox"
-            checked={check.빌라}
+            checked={check.빌라.isOn}
             value={2}
-            // onChange={handleRoomTypeFilter}
             readOnly
           />
           <label htmlFor="빌라" id="빌라">
@@ -129,9 +70,8 @@ function RoomTypeModal() {
           <input
             id="오피스텔"
             type="checkbox"
-            checked={check.오피스텔}
+            checked={check.오피스텔.isOn}
             value={3}
-            // onChange={handleRoomTypeFilter}
             readOnly
           />
           <label htmlFor="오피스텔" id="오피스텔">
@@ -143,9 +83,8 @@ function RoomTypeModal() {
           <input
             id="아파트"
             type="checkbox"
-            checked={check.아파트}
+            checked={check.아파트.isOn}
             value={4}
-            // onChange={handleRoomTypeFilter}
             readOnly
           />
           <label htmlFor="아파트" id="아파트">

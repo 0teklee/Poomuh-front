@@ -10,6 +10,7 @@ function Map() {
   // 지도 객체, 클러스터러를 담을 ref
   const mapDOM = useRef('');
   const clustererDOM = useRef('');
+  const markerDOM = useRef('');
   const kakaoMap = mapDOM.current;
   const kakaoClusterer = clustererDOM.current;
   // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
@@ -35,28 +36,41 @@ function Map() {
       .then(data => {
         // 해당 범위 내의 존재하는 매물이 없다면
         // 백엔드 상에서 realEstate에 빈 배열을 보내주도록 할 것.
-        RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: data });
+        if (
+          Object.values(RealEstate.roomTypeFilter).filter(
+            filter => filter.isOn === true
+          ).length < 4
+        ) {
+          const filteredData = data.filter(estate =>
+            Object.values(RealEstate.roomTypeFilter).find(
+              filter => filter.category_id === estate.category_id && filter.isOn
+            )
+          );
+          RealEstateDispatch({
+            type: 'GET_REAL_ESTATE',
+            realEstate: filteredData,
+          });
+          return;
+        } else {
+          RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: data });
+        }
       });
   };
 
   // 지도의 범위가 바뀔 때마다 fetch함수가 실행, Context에 범위 내 매물 저장
   useEffect(() => {
     sendBoundGetItem();
-  }, [RealEstate.mapBounds]);
+  }, [RealEstate.mapBounds, RealEstate.roomTypeFilter]);
 
   // 현재 좌표 범위 내의 매물들이 로드 되고 난 후, 클러스터만 다시 렌더링
-  // 이슈 :: 클러스터 클릭 시에 어떤 매물들은 Context에 담기고, 어떤 매물들은 담기지 않음.
-  // 이유 : 받아온 데이터의 좌표와 그 데이터를 받아 지도에 뿌린 클러스터(안에 포함된 마커들의) 좌표가 다름.
-  // 원인 : 좌표 소숫점 14자리부터 데이터의 좌표와 지도상 마커의 좌표가 다름.
-  // filter 조건을 toFixed(13)으로 수정
-  // 클릭한 클러스터에 해당하는 매물들을 context의 selected에 저장.
+
   useEffect(() => {
     if (kakaoClusterer) {
       kakaoClusterer.clear();
     }
-    if (kakaoMap) {
-      const clusterStyle = RealEstate.clustererStyle;
+    const clusterStyle = RealEstate.clustererStyle;
 
+    if (kakaoMap) {
       const marker = RealEstate.realEstate.map(el => {
         return new kakao.maps.Marker({
           map: kakaoMap,
@@ -102,6 +116,8 @@ function Map() {
       });
       clustererDOM.current = clusterer;
       RealEstateDispatch({ type: 'UPDATE_CLUSTERER', clusterer: clusterer });
+      markerDOM.current = marker;
+      RealEstateDispatch({ type: 'UPDATE_MARKER', marker: marker });
     }
   }, [RealEstate.realEstate]);
 
