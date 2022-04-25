@@ -43,7 +43,7 @@ function Map() {
         ) {
           const filteredData = data.filter(estate =>
             Object.values(RealEstate.roomTypeFilter).find(
-              filter => filter.category_id === estate.category_id && filter.isOn
+              filter => filter.roomType === estate.roomType && filter.isOn
             )
           );
           RealEstateDispatch({

@@ -9,10 +9,10 @@ function RoomTypeModal() {
   const kakaoClusterer = RealEstate.clusterer;
   const kakaoMap = RealEstate.map;
   const [check, setCheck] = useState({
-    원룸: { isOn: true, category_id: 1 },
-    빌라: { isOn: true, category_id: 2 },
-    오피스텔: { isOn: true, category_id: 3 },
-    아파트: { isOn: true, category_id: 4 },
+    원룸: { isOn: true, roomType: '원룸' },
+    빌라: { isOn: true, roomType: '빌라' },
+    오피스텔: { isOn: true, roomType: '오피스텔' },
+    아파트: { isOn: true, roomType: '아파트' },
   });
 
   useEffect(() => {
