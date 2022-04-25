@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "category_type": "원룸",
+    "trade_type": "월세",
+    "price_main": 0,
+    "price_deposit": 200,
+    "price_monthly": 39,
+    "current_floor": "반지층",
+    "supply_size": 24.9,
+    "description_title": "화전역앞 깔끔한 풀옵 원룸",
+    "image": ""
+  },
+  {
+    "id": 2,
+    "category_type": "투룸/쓰리룸",
+    "trade_type": "월세",
+    "price_main": 0,
+    "price_deposit": 500,
+    "price_monthly": 35,
+    "current_floor": "1층",
+    "supply_size": 38.2,
+    "description_title": "서해선 원종역 5월 개통, 3룸 주방분리 및 고급",
+    "image": ""
+  },
+  {
+    "id": 3,
+    "category_type": "빌라",
+    "trade_type": "전세",
+    "price_main": "2억1000",
+    "price_deposit": 0,
+    "price_monthly": 900000,
+    "current_floor": "5층",
+    "supply_size": 19.4,
+    "description_title": "시세보다 저렴한 한강뷰 되는 밝은 전세집입니다.",
+    "image": ""
+  },
+  {
+    "id": 4,
+    "category_type": "원룸",
+    "trade_type": "월세",
+    "price_main": 0,
+    "price_deposit": 100,
+    "price_monthly": 55,
+    "current_floor": "3층",
+    "supply_size": 58.0,
+    "description_title": "큰길가 가까운 원룸입니다",
+    "image": "/images/logo_header.png"
+  },
+  {
+    "id": 5,
+    "category_type": "아파트",
+    "trade_type": "전세",
+    "price_main": "6억8000",
+    "price_deposit": 0,
+    "price_monthly": 0,
+    "current_floor": "14층",
+    "supply_size": 80.9,
+    "description_title": "구룡역 수인분당 도보 5분거리 역세권",
+    "image": ""
+  }
+]
