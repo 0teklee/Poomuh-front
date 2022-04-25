@@ -20,7 +20,7 @@ function Map() {
   // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 받는 fetch 함수
   const sendBoundGetItem = () => {
     // fetch('백엔드에서 좌표 범위 내의 매물을 요청하는 URI로 변경', {
-    fetch('data/list.json', {
+    fetch('data/realEstate.json', {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -55,21 +55,7 @@ function Map() {
       kakaoClusterer.clear();
     }
     if (kakaoMap) {
-      const clusterStyle = [
-        {
-          cursor: 'pointer',
-          width: '60px',
-          height: '60px',
-          lineHeight: '60px',
-          fontSize: '14px',
-          background: 'rgba(50, 106, 249, 0.8)',
-          color: '#fff',
-          border: '1px solid rgb(50, 106, 249)',
-          textAlign: 'center',
-          fontWeight: 'bold',
-          borderRadius: '50%',
-        },
-      ];
+      const clusterStyle = RealEstate.clustererStyle;
 
       const marker = RealEstate.realEstate.map(el => {
         return new kakao.maps.Marker({
@@ -99,7 +85,6 @@ function Map() {
         overlay.style.background = 'rgba(50, 106, 249, 0.8)';
         overlay.style.color = '#fff';
       });
-      console.log(clusterer.getMarkers().map(x => x.getPosition()));
       kakao.maps.event.addListener(clusterer, 'clusterclick', cluster => {
         RealEstateDispatch({
           type: 'GET_SELECTED_ESTATE',

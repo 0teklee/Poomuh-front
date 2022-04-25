@@ -1,0 +1,668 @@
+[
+  {
+    "title": "콜드스퀘어",
+    "category_id": 3,
+    "latitude": 37.62197524055062,
+    "longitude": 127.16017523675508,
+    "supply_size": 34.4,
+    "current_floor": "3층",
+    "price_main": 123,
+    "price_deposit": 321,
+    "price_monthly": 123,
+    "description_title": "콜드스퀘어 3층 깔끔 개별난방 싸진않음 햇빛은 잘들어옴 입주협의"
+  },
+  {
+    "category_id": 2,
+    "title": "하남돼지집",
+    "latitude": 37.620842424005616,
+    "longitude": 127.1583774403176,
+    "price_main": 123,
+    "price_deposit": 321,
+    "supply_size": 34.4,
+    "current_floor": "3층",
+    "price_monthly": 123,
+    "description_title": "콜드스퀘어 3층 깔끔 개별난방 싸진않음 햇빛은 잘들어옴 입주협의"
+  },
+  {
+    "category_id": 1,
+    "title": "수유리우동",
+    "latitude": 37.624915253753194,
+    "longitude": 127.15122688059974
+  },
+  {
+    "category_id": 1,
+    "title": "맛닭꼬",
+    "latitude": 37.62456273069659,
+    "longitude": 127.15211256646381
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.27943075229118,
+    "longitude": 127.01763998406159
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.55915668706214,
+    "longitude": 126.92536526611102
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.13854258261161,
+    "longitude": 129.1014781294671
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.55518388656961,
+    "longitude": 126.92926237742505
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.20618517638034,
+    "longitude": 129.07944301057026
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.561110808242056,
+    "longitude": 126.9831268386891
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.86187129655063,
+    "longitude": 127.7410250820423
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.47160156778542,
+    "longitude": 126.62818064142286
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.10233410927457,
+    "longitude": 129.02611815856181
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.10215562270429,
+    "longitude": 129.02579793018205
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.475423012251106,
+    "longitude": 128.76666923366042
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.93282824693927,
+    "longitude": 126.95307628834287
+  },
+  {
+    "category_id": 1,
+    "latitude": 36.33884892276137,
+    "longitude": 127.393666019664
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.520412849636,
+    "longitude": 126.9742764161581
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.155139675209675,
+    "longitude": 129.06154773758374
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.816041994696576,
+    "longitude": 127.11046706211324
+  },
+  {
+    "category_id": 1,
+    "latitude": 38.20441110638504,
+    "longitude": 128.59038671285234
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.586112739308916,
+    "longitude": 127.02949148517999
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.50380641844987,
+    "longitude": 127.02130716617751
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.55155704387368,
+    "longitude": 126.92161115892036
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.55413060051369,
+    "longitude": 126.92207472929526
+  },
+  {
+    "category_id": 1,
+    "latitude": 36.362321615174835,
+    "longitude": 127.35000483225389
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.55227862908755,
+    "longitude": 126.92280546294998
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.490413948014606,
+    "longitude": 127.02079678472444
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.172358507549596,
+    "longitude": 126.90545394866643
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.15474103200252,
+    "longitude": 129.11827889154455
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.516081250973485,
+    "longitude": 127.02369057166361
+  },
+  {
+    "category_id": 1,
+    "latitude": 36.80711722863776,
+    "longitude": 127.14020346037576
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.28957415752673,
+    "longitude": 127.00103752005424
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.83953896766896,
+    "longitude": 128.7566880321854
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.51027412948879,
+    "longitude": 127.08227718124704
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.493581783270294,
+    "longitude": 126.72541955660554
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.135291862962795,
+    "longitude": 129.10060911448775
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.174574933144065,
+    "longitude": 126.91389980787773
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.795887691878654,
+    "longitude": 127.10660416587146
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.59288687521181,
+    "longitude": 126.96560524627377
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.45076411130452,
+    "longitude": 127.14593003749792
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.86008337557079,
+    "longitude": 127.1263912488061
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.23773491330953,
+    "longitude": 129.08371037429578
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.524297321304886,
+    "longitude": 127.05018281937049
+  },
+  {
+    "category_id": 1,
+    "latitude": 36.33386658021849,
+    "longitude": 127.4461721466889
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.72963747546802,
+    "longitude": 128.27079056365005
+  },
+  {
+    "category_id": 1,
+    "latitude": 36.02726828142973,
+    "longitude": 129.37257233594056
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.0708030360945,
+    "longitude": 129.0593185494088
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.86835862950247,
+    "longitude": 128.59755089175871
+  },
+  {
+    "category_id": 1,
+    "latitude": 33.51133264696746,
+    "longitude": 126.51852347452322
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.61284289586752,
+    "longitude": 127.03120547238589
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.851696038722466,
+    "longitude": 128.59092937125666
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.59084695083232,
+    "longitude": 127.01872773588882
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.52114874288784,
+    "longitude": 129.33573629945764
+  },
+  {
+    "category_id": 1,
+    "latitude": 36.362326407439845,
+    "longitude": 127.33577420148076
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.28941189110747,
+    "longitude": 127.00446132665141
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.32049801117398,
+    "longitude": 129.1810343576788
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.53338631541601,
+    "longitude": 127.00615481678061
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.413461468258156,
+    "longitude": 126.67735680840826
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.920390371093205,
+    "longitude": 128.54411720249956
+  },
+  {
+    "category_id": 1,
+    "latitude": 36.65489374054824,
+    "longitude": 127.48374816871991
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.49491987110441,
+    "longitude": 127.01493134206048
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.64985695608336,
+    "longitude": 127.14496345268074
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.55686770317417,
+    "longitude": 127.16927880543041
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.37014007589146,
+    "longitude": 127.10614330185591
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.5350236507627,
+    "longitude": 126.96157681184789
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.40549630594667,
+    "longitude": 126.8980581820004
+  },
+  {
+    "category_id": 1,
+    "latitude": 34.867950544005744,
+    "longitude": 128.69069690081176
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.16317059543225,
+    "longitude": 128.98452978748048
+  },
+  {
+    "category_id": 1,
+    "latitude": 36.607484825953186,
+    "longitude": 127.48520451195111
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.651724785213986,
+    "longitude": 126.58306748337554
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.86059690063427,
+    "longitude": 128.59193087665244
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.25685847585025,
+    "longitude": 128.59912605060455
+  },
+  {
+    "category_id": 1,
+    "latitude": 33.509258155694496,
+    "longitude": 126.5109451464813
+  },
+  {
+    "category_id": 1,
+    "latitude": 37.64366155701157,
+    "longitude": 126.63255039247507
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.82667262227336,
+    "longitude": 127.1030670574823
+  },
+  {
+    "category_id": 1,
+    "latitude": 35.82003554991111,
+    "longitude": 127.14810974062483
+  },
+  {
+    "category_id": 2,
+    "latitude": 35.097485195649455,
+    "longitude": 128.99486181862338
+  },
+  {
+    "category_id": 2,
+    "latitude": 37.32204249590605,
+    "longitude": 127.95591893585816
+  },
+  {
+    "category_id": 2,
+    "latitude": 37.50535127272031,
+    "longitude": 127.1047465440526
+  },
+  {
+    "category_id": 2,
+    "latitude": 36.99081407156533,
+    "longitude": 127.09338324956647
+  },
+  {
+    "category_id": 2,
+    "latitude": 37.323486640444834,
+    "longitude": 127.12285239871076
+  },
+  {
+    "category_id": 2,
+    "latitude": 35.78973089440451,
+    "longitude": 127.13644319545601
+  },
+  {
+    "category_id": 2,
+    "latitude": 35.641373953578196,
+    "longitude": 129.35463220719618
+  },
+  {
+    "category_id": 2,
+    "latitude": 37.47423127310911,
+    "longitude": 126.97625029161996
+  },
+  {
+    "category_id": 2,
+    "latitude": 35.84357192991226,
+    "longitude": 128.61143720719716
+  },
+  {
+    "category_id": 2,
+    "latitude": 37.180974984085736,
+    "longitude": 128.20294526341132
+  },
+  {
+    "category_id": 2,
+    "latitude": 37.57895718642583,
+    "longitude": 126.9316897337244
+  },
+  {
+    "category_id": 2,
+    "latitude": 33.49077253755052,
+    "longitude": 126.49314817000993
+  },
+  {
+    "category_id": 3,
+    "latitude": 36.42175925330255,
+    "longitude": 128.67409133225766
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.46405540570109,
+    "longitude": 126.7153544119173
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.594758776232126,
+    "longitude": 127.10099917489818
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.7239966558994,
+    "longitude": 127.0478671731854
+  },
+  {
+    "category_id": 3,
+    "latitude": 35.86680171505329,
+    "longitude": 128.5923738376741
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.560573727266785,
+    "longitude": 126.81239107485251
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.78692224857484,
+    "longitude": 126.98966010341789
+  },
+  {
+    "category_id": 4,
+    "latitude": 35.10368644802913,
+    "longitude": 129.0206862606022
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.063839948992644,
+    "longitude": 127.06856523030079
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.34344643728643,
+    "longitude": 127.94382181350932
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.512521267219064,
+    "longitude": 127.40054805648133
+  },
+  {
+    "category_id": 4,
+    "latitude": 35.15286653837983,
+    "longitude": 126.90419903971498
+  },
+  {
+    "category_id": 4,
+    "latitude": 35.173238445546296,
+    "longitude": 129.176082844468
+  },
+  {
+    "category_id": 4,
+    "latitude": 36.082394201323524,
+    "longitude": 129.40330471725923
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.51043665598106,
+    "longitude": 127.03974070036524
+  },
+  {
+    "category_id": 4,
+    "latitude": 36.627816673285054,
+    "longitude": 127.44969866021904
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.59194624756919,
+    "longitude": 127.01817545576053
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.387147045560866,
+    "longitude": 127.1253365438929
+  },
+  {
+    "category_id": 3,
+    "latitude": 35.89948383848115,
+    "longitude": 128.60809550730653
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.555316235235324,
+    "longitude": 127.14038447894715
+  },
+  {
+    "category_id": 3,
+    "latitude": 36.09622092762977,
+    "longitude": 128.43314679004078
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.582855922985544,
+    "longitude": 126.91907857008522
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.516000983841586,
+    "longitude": 128.72798872032757
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.48429363675198,
+    "longitude": 127.0379630203579
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.54502575965604,
+    "longitude": 126.95429338245707
+  },
+  {
+    "category_id": 3,
+    "latitude": 35.236247173046394,
+    "longitude": 128.8677618015292
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.40157536691968,
+    "longitude": 127.11717457214067
+  },
+  {
+    "category_id": 3,
+    "latitude": 36.95191038001258,
+    "longitude": 127.91064040877527
+  },
+  {
+    "category_id": 3,
+    "latitude": 37.491526492971346,
+    "longitude": 126.85463749525812
+  },
+  {
+    "category_id": 4,
+    "latitude": 36.124356479753196,
+    "longitude": 128.09517052346138
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.15715169307048,
+    "longitude": 128.15853461363773
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.5808156608605,
+    "longitude": 126.95109705510639
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.46931787249714,
+    "longitude": 126.89904775044873
+  },
+  {
+    "category_id": 4,
+    "latitude": 35.52195614910054,
+    "longitude": 129.3209904841746
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.58625703195563,
+    "longitude": 126.9496035206742
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.28463639199199,
+    "longitude": 126.85984474757359
+  },
+  {
+    "category_id": 4,
+    "latitude": 35.534169458631226,
+    "longitude": 129.31169021536095
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.553341234194285,
+    "longitude": 127.15481222237025
+  },
+  {
+    "category_id": 4,
+    "latitude": 37.62293367990081,
+    "longitude": 126.83445005122417
+  },
+  {
+    "category_id": 4,
+    "latitude": 35.5272027005698,
+    "longitude": 127.72953798950101
+  },
+  {
+    "category_id": 4,
+    "latitude": 35.180032285898854,
+    "longitude": 128.06954509175367
+  }
+]

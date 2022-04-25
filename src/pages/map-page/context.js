@@ -22,6 +22,13 @@ const initialRealEstate = {
       borderRadius: '50%',
     },
   ],
+  filteredEstate: [],
+  roomTypeFitler: {
+    원룸: true,
+    빌라: true,
+    오피스텔: true,
+    아파트: true,
+  },
 };
 
 export const RealEstateContext = createContext();
@@ -39,6 +46,10 @@ function realEstateReducer(state, action) {
       return { ...state, map: action.map };
     case 'UPDATE_CLUSTERER':
       return { ...state, clusterer: action.clusterer };
+    case 'UPDATE_FILTERED_ESTATE':
+      return { ...state, filteredEstate: action.filterdEstate };
+    case 'UPDATE_ROOM_TYPE_FILTER':
+      return { ...state, roomTypeFitler: action.roomTypeFitler };
     default:
       throw new Error('UNKNOWN ACTION TYPE', action.type);
   }

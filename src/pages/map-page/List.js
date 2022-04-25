@@ -31,10 +31,10 @@ function List() {
           <InfoWrap>
             {RealEstate.selected.length === 0 ? null : (
               <>
-                <p class="price">전세 2억 6000</p> <br />
-                <p class="type">원룸</p>
+                <p className="price">전세 2억 6000</p> <br />
+                <p className="type">원룸</p>
                 <br />
-                <p class="description">
+                <p className="description">
                   {RealEstate.selected[0].current_floor}, &nbsp;
                   {RealEstate.selected[0].supply_size}
                   <br />
