@@ -35,12 +35,6 @@ function SearchBar() {
         <input type="text" />
       </SearchSection>
       <FilterSection>
-        <button
-          style={{ margin: '0 8px' }}
-          onClick={() => console.log(RealEstate)}
-        >
-          클릭
-        </button>
         <DropDown onClick={roomModalHandler}>
           <span onClick={roomModalHandler}>
             원룸, 투·쓰리룸, 오피스텔·도시형
@@ -56,7 +50,6 @@ function SearchBar() {
             </ModalPosition>
           )}
         </DropDown>
-
         <DropDown onClick={tradeModalHandler}>
           <span onClick={tradeModalHandler}> 월세, 전세</span>
           {tradeTypeModal ? (
@@ -94,12 +87,14 @@ const Wrapper = styled.div`
 const SearchSection = styled.div`
   display: flex;
   align-items: center;
-  width: 20rem;
+  width: 25rem;
   border-right: 1px solid rgb(205, 205, 205);
   .icon {
-    padding-left: 20px;
+    flex: 1;
+    padding-left: 10px;
   }
   input {
+    flex: 4;
     height: 36px;
     border: none;
     font-size: 1rem;
@@ -152,9 +147,9 @@ const Refresh = styled.div`
   text-align: end;
 `;
 const ModalPosition = styled.div`
-  width: 300px;
+  width: 400px;
   position: absolute;
-  top: 35px;
+  top: 50px;
   left: 0;
   pointer-events: painted;
 `;
