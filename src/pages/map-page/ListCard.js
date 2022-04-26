@@ -5,39 +5,62 @@ import { RealEstateContext } from './context';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 
 function ListCard({ data }) {
-  const [like, setLike] = useState(false);
-  const RealEstate = useContext(RealEstateContext);
+  const [like, setLike] = useState(data.isLike);
   const navigate = useNavigate();
-  const LikeHandler = () => {
-    setLike(!like);
+  const RealEstate = useContext(RealEstateContext);
+
+  const updateLike = () => {
+    setLike(like ? false : true);
+
+    fetch('매물 좋아요 업데이트 API', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        isLike: like,
+      }),
+    }).then(res => res.json());
   };
-
-  // 로그인돼있는 경우 'isLike : 1' => data.isLike == true
-  // 로그아웃 돼있는 경우 '' => data.isLike ===null
-  // 로그인된 상태에서 하트 클릭시 DB 값 변경
-
+  console.log('data.id', data.id);
+  console.log('data', data);
+  const updateRecentRoom = () => {
+    window.localStorage.setItem('id', JSON.stringify(data.id));
+    console.log('클릭하면 로컬스토리지에 id값을 저장');
+  };
   // 남은기능 : 지도페이지 첫 접속 시 화면 영역의 매물이 나오도록
-  // 하트 클릭시 1. 좋아요 상태 유지 =>  목데이터에 isLike 추가?
-  // 하트 클릭시 2. 관심목록에 데이터 전송
+  // 하트 클릭시 2. 관심목록에 해당 객체 데이터 전송
 
   return (
     <ListWrapper>
       {data.length === 0 ? null : (
         <CardWrapper>
-          <Card>
+          <Card onClick={updateRecentRoom}>
             <ImageWrapper>
               <img alt="이미지" src={data.image_url} />
-              {/* <Like>
-                {data.isLike ? (
-                  <IoMdHeart color="red" />
+
+              {/* 좋아요 버튼(API연결) */}
+              <Like>
+                {data.hasOwnProperty('isLike') ? (
+                  like ? (
+                    <IoMdHeart color="red" onClick={() => updateLike()} />
+                  ) : (
+                    <IoMdHeartEmpty
+                      color="white"
+                      onClick={() => updateLike()}
+                    />
+                  )
                 ) : (
-                  <IoMdHeartEmpty color="white" />
+                  <IoMdHeartEmpty
+                    color="white"
+                    onClick={() => navigate('/login')}
+                  />
                 )}
-              </Like> */}
+              </Like>
             </ImageWrapper>
             <InfoWrapper>
               <p class="price">
-                {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[1(월세),2(전세)]
+                {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
                   ? `전세 ${Math.floor(data.price_main / 10000)}억${
                       Math.floor(data.price_main) -
                         Math.floor(data.price_main / 10000) * 10000 ===
@@ -81,6 +104,7 @@ const Card = styled.div`
   display: flex;
   justify-content: flex-start;
   margin: 1rem;
+  cursor: pointer;
 `;
 const ImageWrapper = styled.div`
   position: relative;
