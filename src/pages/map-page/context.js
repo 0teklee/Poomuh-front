@@ -7,6 +7,8 @@ const initialRealEstate = {
   mapCenter: {},
   map: null,
   clusterer: null,
+  estateLog: null,
+  estateLat: null,
   clustererStyle: [
     {
       cursor: 'pointer',
@@ -39,6 +41,10 @@ function realEstateReducer(state, action) {
       return { ...state, map: action.map };
     case 'UPDATE_CLUSTERER':
       return { ...state, clusterer: action.clusterer };
+    case 'UPDATE_ESTATELOG':
+      return { ...state, estateLog: action.estateLog };
+    case 'UPDATE_ESTATELAT':
+      return { ...state, estateLat: action.estateLat };
     default:
       throw new Error('UNKNOWN ACTION TYPE', action.type);
   }

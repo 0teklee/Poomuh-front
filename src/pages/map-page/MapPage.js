@@ -31,8 +31,6 @@ function MapPage() {
     }
   };
 
-  //클릭 이벤트를 주면 원의 중심 좌표를 context에서 바꾼다
-
   //scrollHelper값이 0->1로 바뀌면 fetch
   useEffect(() => {
     fetchData();
@@ -55,8 +53,12 @@ function MapPage() {
           <SearchBar />
           <MapWrapper>
             <div className="list">
-              {estateList.map(data => (
-                <List longitude={data.longitude} latitude={data.latitude} />
+              {estateList.map((data, index) => (
+                <List
+                  longitude={data.longitude}
+                  latitude={data.latitude}
+                  key={index}
+                />
               ))}
               <div ref={target} className="targetElement">
                 <p>hi</p>

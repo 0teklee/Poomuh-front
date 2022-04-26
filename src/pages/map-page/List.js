@@ -3,20 +3,25 @@ import styled from 'styled-components';
 import { RealEstateContext, RealEstateContextDispatch } from './context';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 
-function List() {
+function List({ longitude, latitude }) {
   const RealEstate = useContext(RealEstateContext);
   const RealEstateDispatch = useContext(RealEstateContextDispatch);
   const [like, setLike] = useState(false);
-
   const LikeHandler = () => {
     setLike(!like);
   };
+  //호버 이벤트를 주면 해당 매물의 위도,경도로 원의 중심 좌표를 context에서 바꾼다.
+  const mouseOnEstate = () => {
+    RealEstateDispatch({ type: 'UPDATE_ESTATELOG', estateLog: longitude });
+    RealEstateDispatch({ type: 'UPDATE_ESTATELAT', estateLat: latitude });
+  };
+
   // console.log(RealEstate);
   // console.log(RealEstateDispatch);
   // console.log(RealEstate.selected[0]);
   // console.log(RealEstate.selected[0].description_title);
   return (
-    <ListWrapper>
+    <ListWrapper onMouseEnter={mouseOnEstate}>
       <CardWrapper>
         <Card>
           <ImageWrapper>
