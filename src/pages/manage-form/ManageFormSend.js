@@ -8,14 +8,56 @@ function ManageFormSend() {
   const [agree, setAgree] = useState(false);
   const handleAgree = () => {
     setAgree(prev => !prev);
-    console.log(Info);
   };
   const Info = useContext(InfoContext);
-
+  const navigate = useNavigate();
+  // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
   const sendInfo = () => {
     fetch('uri', { method: 'POST', body: JSON.stringify(Info) }).then();
   };
-  const navigate = useNavigate();
+
+  const verify = () => {
+    const {
+      address,
+      address_ho,
+      room_type,
+      building_type,
+      supply_size,
+      exclusive_size,
+      building_floor,
+      current_floor,
+      price_main,
+      price_deposit,
+      price_monthly,
+      heat_id,
+      available_date,
+      description_title,
+      description_detai,
+      trade_id,
+    } = Info;
+    if (
+      !address ||
+      !address_ho ||
+      !room_type ||
+      !building_type ||
+      !supply_size ||
+      !exclusive_size ||
+      !building_floor ||
+      !current_floor ||
+      !price_main ||
+      !(price_deposit && price_monthly) ||
+      !heat_id ||
+      !available_date ||
+      !description_title ||
+      !description_detai ||
+      !trade_id
+    ) {
+      alert('모든 정보를 입력해주세요');
+      return;
+    }
+    sendInfo();
+  };
+
   return (
     <FlexDiv>
       <Input>
@@ -35,11 +77,7 @@ function ManageFormSend() {
             value="취소"
             onClick={() => navigate('/manage/list')}
           />
-          <input
-            type="button"
-            value="매물등록"
-            onClick={() => console.log(Info)}
-          />
+          <input type="button" value="매물등록" onClick={() => verify()} />
         </FlexDiv>
       </Input>
     </FlexDiv>
@@ -50,6 +88,7 @@ const FlexDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50px;
 `;
 const Input = styled.div`
   .inputCheckbox {

@@ -134,6 +134,7 @@ function ManageFormTradeType() {
   const Info = useContext(InfoContext);
 
   const handleTradeType = e => {
+    console.log(Info);
     InfoDispatch({
       type: 'UPDATE_TRADE_ID',
       trade_id: [...Info.trade_id, e.target.id * 1],
@@ -217,7 +218,7 @@ const RowHead = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 11%;
+  width: 200px;
   padding: 2rem;
   text-align: center;
   font-weight: 700;
@@ -229,8 +230,8 @@ const RowHead = styled.div`
   }
 `;
 const RowContent = styled.div`
+  flex: 1;
   width: 80%;
-  padding: 20px;
   border-bottom: 1px solid rgb(226, 226, 226);
 `;
 
@@ -248,8 +249,7 @@ const RowInner = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    border-top: 1px solid rgb(226, 226, 226);
-    padding-top: 10px;
+    padding: 20px;
     button {
       all: unset;
       width: 100px;
@@ -275,7 +275,8 @@ const TradeWrapper = styled.div`
   display: flex;
   height: 46px;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 40px;
+  border-bottom: 1px solid rgb(226, 226, 226);
   .typeName {
     width: 50px;
     height: 26px;

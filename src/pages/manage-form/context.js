@@ -34,6 +34,8 @@ function infoReducer(state, action) {
       return { ...state, address: action.address };
     case 'UPDATE_JADDRESS':
       return { ...state, jaddress: action.jaddress };
+    case 'UPDATE_BUILDINGNAME':
+      return { ...state, buildingName: action.buildingName };
     case 'UPDATE_DONG':
       return { ...state, address_dong: action.dong };
     case 'UPDATE_HO':
