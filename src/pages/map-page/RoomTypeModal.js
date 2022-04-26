@@ -6,8 +6,6 @@ import { RealEstateContext, RealEstateContextDispatch } from './context';
 function RoomTypeModal() {
   const RealEstate = useContext(RealEstateContext);
   const RealEstateDispatch = useContext(RealEstateContextDispatch);
-  const kakaoClusterer = RealEstate.clusterer;
-  const kakaoMap = RealEstate.map;
   const [check, setCheck] = useState({
     원룸: { isOn: true, roomType: '원룸' },
     빌라: { isOn: true, roomType: '빌라' },
@@ -100,11 +98,11 @@ function RoomTypeModal() {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 300px;
   padding: 1.5rem;
   background: #fff;
   border: 1px solid rgb(226, 226, 226);
   border-radius: 5px;
-
   h1 {
     color: rgb(34, 34, 34);
     font-size: 18px;

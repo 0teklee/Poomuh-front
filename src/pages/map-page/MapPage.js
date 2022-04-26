@@ -9,7 +9,7 @@ import { GlobalContextProvider } from './context';
 
 function MapPage() {
   return (
-    <div>
+    <Container>
       <Header />
       <GlobalContextProvider>
         <Wrapper>
@@ -24,9 +24,19 @@ function MapPage() {
           </MapWrapper>
         </Wrapper>
       </GlobalContextProvider>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  overflow: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;

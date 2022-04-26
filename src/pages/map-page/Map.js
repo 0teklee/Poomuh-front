@@ -30,7 +30,7 @@ function Map() {
     })
       .then(res => res.json())
       // 에러 핸들링 추후에 수정
-      .catch(() => {
+      .catch(err => {
         RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: [] });
       })
       .then(data => {

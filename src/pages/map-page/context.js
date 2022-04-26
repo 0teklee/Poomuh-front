@@ -28,6 +28,14 @@ const initialRealEstate = {
     오피스텔: { isOn: true, roomType: '오피스텔' },
     아파트: { isOn: true, roomType: '아파트' },
   },
+  tradeTypeFilter: {
+    월세: false,
+    전세: false,
+    deposit: [20, 50],
+    monthly: [20, 50],
+    depositStep: 1,
+    monthlyStep: 1,
+  },
 };
 
 export const RealEstateContext = createContext();
@@ -49,6 +57,8 @@ function realEstateReducer(state, action) {
       return { ...state, marker: action.marker };
     case 'UPDATE_ROOM_TYPE_FILTER':
       return { ...state, roomTypeFilter: action.roomTypeFilter };
+    case 'UPDATE_TRADE_TYPE_FILTER':
+      return { ...state, tradeTypeFilter: action.tradeTypeFilter };
     default:
       throw new Error('UNKNOWN ACTION TYPE', action.type);
   }
