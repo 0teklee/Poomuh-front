@@ -8,8 +8,6 @@ import TradeTypeModal from './TradeTypeModal';
 import SearchModal from './SearchModal';
 
 function SearchBar() {
-  const RealEstate = useContext(RealEstateContext);
-  const RealEstateDispatch = useContext(RealEstateContextDispatch);
   const [roomTypeModal, setRoomTypeModal] = useState(false);
   const [tradeTypeModal, setTradeTypeModal] = useState(false);
   const [searchModal, setSearchModal] = useState({
