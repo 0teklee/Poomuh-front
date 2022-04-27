@@ -8,18 +8,16 @@ import NavBar from '../favorite-recent/NavBar';
 function FavoritePreempt() {
   const [preemptRoom, setPreemptRoom] = useState([]);
 
+  console.log(preemptRoom);
   useEffect(() => {
     // fetch('찜한방 API', {
     //   method: 'GET',
     //   headers: {
     //     'Content-Type': 'application/json',
     //   },
-    //   body: JSON.stringify({
-    //     recentRoom: localStorage.recentRoom,
-    //   }),
     // }).then(res => res.json());
 
-    //최근본방 목데이터 가져오기
+    //찜한방 목데이터
     fetch('/data/PreemptData.json')
       .then(res => res.json())
       .then(data => {

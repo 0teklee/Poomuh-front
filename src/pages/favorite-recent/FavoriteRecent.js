@@ -7,19 +7,17 @@ import NavBar from './NavBar';
 
 function FavoriteRecent() {
   const [recentRoom, setRecentRoom] = useState([]);
-
+  // console.log(typeof JSON.parse(localStorage.getItem('recentRoom')));
   useEffect(() => {
-    // fetch('최근본방 API', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     recentRoom: localStorage.recentRoom,
-    //   }),
-    // }).then(res => res.json());
+    fetch('최근본방 API', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Recent-Room': JSON.parse(localStorage.getItem('recentRoom')), //ex. "[3,4,1,2]" (string) => JSON.parse() 사용시 [3,4,1,2] (object)
+      },
+    }).then(res => res.json());
 
-    //최근본방 목데이터 가져오기
+    // 최근본방 목데이터 가져오기
     fetch('/data/RecentRoomData.json')
       .then(res => res.json())
       .then(data => {

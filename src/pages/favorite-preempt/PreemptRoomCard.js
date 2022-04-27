@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IoMdHeart } from 'react-icons/io';
 
 function PreemptRoomCard({ data }) {
-  // const [like, setLike] = useState(data.isLike);
-
   const updateLike = () => {
-    console.log('나를 누르면 찜한방에서 사라지지');
+    fetch('매물 좋아요 업데이트 API', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        isLike: null,
+      }),
+    }).then(res => res.json());
   };
+
   return (
     <>
       {data.length === 0 ? null : (
