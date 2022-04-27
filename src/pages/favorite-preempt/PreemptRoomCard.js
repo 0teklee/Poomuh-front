@@ -4,14 +4,21 @@ import { IoMdHeart } from 'react-icons/io';
 
 function PreemptRoomCard({ data }) {
   const updateLike = () => {
-    fetch('매물 좋아요 업데이트 API', {
+    fetch(`매물 좋아요 업데이트 API`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        isLike: null,
+        isLike: false,
       }),
+    }).then(res => res.json());
+
+    fetch(`찜한방 API http://localhost:3000/favorite/preempt-room/${data.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }).then(res => res.json());
   };
 
