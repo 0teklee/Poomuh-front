@@ -14,12 +14,12 @@ function PreemptRoomCard({ data }) {
       }),
     }).then(res => res.json());
 
-    fetch(`찜한방 API http://localhost:3000/favorite/preempt-room/${data.id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(res => res.json());
+    // fetch(`찜한방 API http://localhost:3000/favorite/preempt-room/${data.id}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // }).then(res => res.json());
   };
 
   return (
