@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RealEstateContext } from './context';
 import ListCard from './ListCard';
 
-function List({}) {
+function List() {
   const RealEstate = useContext(RealEstateContext);
   const { kakao } = window;
   const { map } = RealEstate;
@@ -40,9 +40,9 @@ function List({}) {
                   mouseOnEstate(data.latitude, data.longitude);
                 }}
                 onMouseLeave={() => mouseOutEstate()}
+                key={data.id}
               >
                 <ListCard
-                  key={data.id}
                   data={data}
                   onMouseEnter={mouseOnEstate}
                   onMouseLeave={mouseOutEstate}
@@ -55,9 +55,9 @@ function List({}) {
                   mouseOnEstate(data.latitude, data.longitude);
                 }}
                 onMouseLeave={() => mouseOutEstate()}
+                key={data.id}
               >
                 <ListCard
-                  key={data.id}
                   data={data}
                   onMouseEnter={mouseOnEstate}
                   onMouseLeave={mouseOutEstate}
