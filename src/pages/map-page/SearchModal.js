@@ -10,7 +10,6 @@ function ResultData({ address, buildingName, data }) {
   const { kakao } = window;
   const coords = (lat, lng) => new kakao.maps.LatLng(lat, lng);
   const RealEstate = useContext(RealEstateContext);
-  console.log(address);
   const { map } = RealEstate;
 
   // 백엔드 소통이후 전부 수정
@@ -38,7 +37,6 @@ function ResultData({ address, buildingName, data }) {
 }
 
 function SearchModal({ result, addressResult }) {
-  console.log(result);
   return (
     <Outer>
       {!result && !addressResult ? (
