@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { RealEstateContext } from './context';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 
-function ListCard({ data }) {
+function ListCard({ data, mouseOnEstate, mouseOutEstate }) {
   const [like, setLike] = useState(data.isLike);
   const navigate = useNavigate();
   const RealEstate = useContext(RealEstateContext);
 
+  // 86번째줄 데이터타입 없어서 주석처리 안하면 렌더링 안됨
   const updateLike = () => {
     setLike(like ? false : true);
 
@@ -43,10 +44,22 @@ function ListCard({ data }) {
   };
 
   return (
-    <ListWrapper>
+    <ListWrapper
+      onMouseEnter={() => mouseOnEstate(data.latitude, data.longitude)}
+      onMouseLeave={mouseOutEstate}
+    >
       {data.length === 0 ? null : (
-        <CardWrapper>
-          <Card onClick={() => updateRecentRoom()}>
+        <CardWrapper
+          onMouseEnter={() => mouseOnEstate(data.latitude, data.longitude)}
+          onMouseLeave={mouseOutEstate}
+        >
+          <Card
+            onClick={() => {
+              updateRecentRoom();
+            }}
+            onMouseEnter={() => mouseOnEstate(data.latitude, data.longitude)}
+            onMouseLeave={mouseOutEstate}
+          >
             <ImageWrapper>
               <img alt="이미지" src={data.image_url} />
 
@@ -70,8 +83,8 @@ function ListCard({ data }) {
               </Like>
             </ImageWrapper>
             <InfoWrapper>
-              {/* <p class="price">
-                {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
+              <p class="price">
+                {/* {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
                   ? `전세 ${Math.floor(data.price_main / 10000)}억${
                       Math.floor(data.price_main) -
                         Math.floor(data.price_main / 10000) * 10000 ===
@@ -81,12 +94,12 @@ function ListCard({ data }) {
                           Math.floor(data.price_main / 10000) * 10000
                     }`
                   : `월세
-                    ${data.price_deposit}/${data.price_monthly}`}
-              </p> */}
+                    ${data.price_deposit}/${data.price_monthly}`} */}
+              </p>
               <br />
-              <p class="type">{data.category_type}</p>
+              <p className="type">{data.category_type}</p>
               <br />
-              <p class="description">
+              <p className="description">
                 {`${data.current_floor},
               ${data.supply_size}`}
                 m<sup>2</sup>

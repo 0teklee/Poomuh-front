@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { RealEstateContext } from './context';
 import ListCard from './ListCard';
 
-function List({ longitude, latitude }) {
+function List({}) {
   const RealEstate = useContext(RealEstateContext);
   const { kakao } = window;
   const { map } = RealEstate;
 
   let circle = new kakao.maps.Circle({
-    center: new kakao.maps.LatLng(latitude, longitude), // 원의 중심좌표 입니다
+    center: new kakao.maps.LatLng(0, 0), // 원의 중심좌표 입니다
     radius: 50, // 미터 단위의 원의 반지름입니다
     strokeWeight: 0, // 선의 두께입니다
     strokeColor: '#E8630A', // 선의 색깔입니다
@@ -19,7 +19,7 @@ function List({ longitude, latitude }) {
     fillOpacity: 0.5, // 채우기 불투명도 입니다
   });
 
-  const mouseOnEstate = () => {
+  const mouseOnEstate = (latitude, longitude) => {
     let position = new kakao.maps.LatLng(latitude, longitude);
     circle.setPosition(position);
     circle.setMap(map);
@@ -30,38 +30,58 @@ function List({ longitude, latitude }) {
   };
 
   return (
-    <Wrapper>
-      <ListWrapper onMouseEnter={mouseOnEstate} onMouseLeave={mouseOutEstate}>
-        <CardWrapper>
-          <ListWrapper
-            onMouseEnter={mouseOnEstate}
-            onMouseLeave={mouseOutEstate}
-          >
-            <CardWrapper>
-              {RealEstate.selected.length === 0
-                ? RealEstate.realEstate.map(data => (
-                    <ListCard key={data.id} data={data} />
-                  ))
-                : RealEstate.selected.map(data => (
-                    <ListCard key={data.id} data={data} />
-                  ))}
-            </CardWrapper>
-          </ListWrapper>
-        </CardWrapper>
-      </ListWrapper>
-    </Wrapper>
+    // <Wrapper>
+    <ListWrapper>
+      <CardWrapper>
+        {RealEstate.selected.length === 0
+          ? RealEstate.realEstate.map(data => (
+              <div
+                onMouseEnter={() => {
+                  mouseOnEstate(data.latitude, data.longitude);
+                }}
+                onMouseLeave={() => mouseOutEstate()}
+              >
+                <ListCard
+                  key={data.id}
+                  data={data}
+                  onMouseEnter={mouseOnEstate}
+                  onMouseLeave={mouseOutEstate}
+                />
+              </div>
+            ))
+          : RealEstate.selected.map(data => (
+              <div
+                onMouseEnter={() => {
+                  mouseOnEstate(data.latitude, data.longitude);
+                }}
+                onMouseLeave={() => mouseOutEstate()}
+              >
+                <ListCard
+                  key={data.id}
+                  data={data}
+                  onMouseEnter={mouseOnEstate}
+                  onMouseLeave={mouseOutEstate}
+                />
+              </div>
+            ))}
+      </CardWrapper>
+    </ListWrapper>
+    // </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
-  margin-top: 45px;
-`;
+const Wrapper = styled.div``;
+
 const ListWrapper = styled.div`
+  margin-top: 65px;
   // background-color: yellow;
   // margin-top: 65px;
 `;
 const CardWrapper = styled.div`
   border: 1px solid transparent;
+  position: relative;
+
+  // background-color: yellow;
 `;
 
 export default List;
