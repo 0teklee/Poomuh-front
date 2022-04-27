@@ -134,7 +134,6 @@ function ManageFormTradeType() {
   const Info = useContext(InfoContext);
 
   const handleTradeType = e => {
-    console.log(Info);
     InfoDispatch({
       type: 'UPDATE_TRADE_ID',
       trade_id: [...Info.trade_id, e.target.id * 1],
