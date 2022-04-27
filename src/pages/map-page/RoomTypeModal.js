@@ -18,10 +18,16 @@ function RoomTypeModal() {
   }, []);
 
   useEffect(() => {
+    const filters = new URLSearchParams(RealEstate.roomTypeFilter).toString();
     RealEstateDispatch({
       type: 'UPDATE_ROOM_TYPE_FILTER',
       roomTypeFilter: check,
     });
+    fetch(`룸타입 필터링 URI/${filters}`, {
+      method: 'GET',
+      headers: { 'Content-type': 'application/json' },
+    });
+    // fetch('룸타입 필터링 URI', {method:"GET", headers:{'Content-type':'application/json'}})
   }, [check]);
 
   const handleCheck = e => {

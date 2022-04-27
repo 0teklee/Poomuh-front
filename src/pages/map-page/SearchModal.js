@@ -4,14 +4,16 @@ import { RealEstateContext } from './context';
 
 let resultKey = 0;
 
-function ResultData({ address, buildingName }) {
+function ResultData({ address, buildingName, data }) {
   // 백엔드와 소통 이후 수정 많이 할 것.
   // 결과 데이터가 지도 주소냐, 백엔에서 받아온 매물 데이터냐에 따라 다르게 컴포넌트 구현
   const { kakao } = window;
   const coords = (lat, lng) => new kakao.maps.LatLng(lat, lng);
   const RealEstate = useContext(RealEstateContext);
-
+  console.log(address);
   const { map } = RealEstate;
+
+  // 백엔드 소통이후 전부 수정
   let addressSpan = '';
   if (typeof address === 'object') {
     addressSpan = address.address_name;
@@ -24,7 +26,9 @@ function ResultData({ address, buildingName }) {
       onClick={() => {
         if (address.address) {
           map.setCenter(coords(address.address.y * 1, address.address.x * 1));
+          return;
         }
+        map.setCenter(coords(data.lat, data.lng));
       }}
     >
       <p>{buildingName}</p>
@@ -34,6 +38,7 @@ function ResultData({ address, buildingName }) {
 }
 
 function SearchModal({ result, addressResult }) {
+  console.log(result);
   return (
     <Outer>
       {!result && !addressResult ? (
@@ -68,6 +73,7 @@ function SearchModal({ result, addressResult }) {
                       buildingName={el.buildingName}
                       address={el.addressMain}
                       key={resultKey++}
+                      data={el}
                     />
                   );
                 })}
@@ -86,6 +92,7 @@ function SearchModal({ result, addressResult }) {
                       buildingName={el.buildingName}
                       address={el.addressMain}
                       key={resultKey++}
+                      data={el}
                     />
                   );
                 })}

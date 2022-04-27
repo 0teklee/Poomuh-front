@@ -129,9 +129,10 @@ function Map() {
       maxLevel: 7,
     };
     const map = new kakao.maps.Map(container, options);
-
     const zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
+
+    RealEstateDispatch({ type: 'UPDATE_MAP', map: map });
 
     kakao.maps.event.addListener(map, 'zoom_changed', () => {
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
@@ -139,7 +140,9 @@ function Map() {
     kakao.maps.event.addListener(map, 'dragend', () => {
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
     });
-    RealEstateDispatch({ type: 'UPDATE_MAP', map: map });
+    kakao.maps.event.addListener(map, 'click', () =>
+      RealEstateDispatch({ type: 'GET_SELECTED_ESTATE', selected: [] })
+    );
     return map;
   };
   return (

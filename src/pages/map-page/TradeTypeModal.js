@@ -17,26 +17,17 @@ function TradeTypeModal() {
     monthlyStep: 1,
   });
 
-  const handleCheck = e => {
-    const { id } = e.target;
-    setCheck({ ...check, [id]: !check[id] });
-  };
-
   // 필터의 state가 업데이트 될 때마다 Context의 지도 범위 내 매물 저장소 업데이트
   const sendFilter = () => {
+    const filter = new URLSearchParams(RealEstate.tradeTypeFilter).toString();
+    const mapRange = new URLSearchParams(RealEstate.mapBounds).toString();
     fetch(
-      // `/검색필터URI/endpoint?price-main=${check.monthly[0]}&price-monthly=${check.monthly[1]}&price-main=${check.deposit[0]}&price-main=${check.deposit[1]}`,
+      // `/검색필터URI/endpoint?${filter}&`${mapRange}`
       `/검색필터URI/endpoint`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          filtered: {
-            deposit: `${check.deposit}`,
-            monthly: `${check.monthly}`,
-            tradeType: `${check}`,
-          },
-          mapBounds: JSON.stringify(RealEstate.mapBounds),
         },
       }
     )
@@ -48,6 +39,12 @@ function TradeTypeModal() {
         });
       })
       .catch(err => console.log(err));
+  };
+
+  const handleCheck = e => {
+    const { id } = e.target;
+    setCheck({ ...check, [id]: !check[id] });
+    sendFilter();
   };
 
   const handleDeposit = e => {
@@ -118,9 +115,6 @@ function TradeTypeModal() {
 
   // filtered data get fetch 함수를 check 필터와 지도를 이동시켜
   // RealEstate를 업데이트될 때마다 요청한다.
-  useEffect(() => {
-    sendFilter();
-  }, [check, RealEstate.mapBounds]);
 
   return (
     <Wrapper>

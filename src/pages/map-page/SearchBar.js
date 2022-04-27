@@ -90,15 +90,15 @@ function SearchBar() {
 
   // 매물 검색 fetch
   const getSearchResult = () => {
-    // fetch('검색 URI/endpoint/search=`${searchModal.searchText}', {
+    const filter = new URLSearchParams(searchModal.search).toString;
+    // 한국어 검색어를 헤더에 넣어서 non ISO-8859-1 code point 에러 발생. / Esint가 자동으로 쉼표를 지우기 때문으로 추정
+    // 쿼리 스트링으로 대체
+    // fetch('검색 URI/endpoint/search=`${filter', {
     fetch('data/searchResult.json', {
       method: 'GET',
-      headers: new Headers({
+      headers: {
         'Content-type': 'application/json',
-        // 한국어 검색어를 헤더에 넣어서 non ISO-8859-1 code point 에러 발생.
-        // 쿼리 스트링으로 대체
-        // search: `${searchModal.searchText}`,
-      }),
+      },
     })
       .then(res => res.json())
       .then(data => setSearchModal({ ...searchModal, searchResult: data }))
@@ -122,7 +122,7 @@ function SearchBar() {
       <Wrapper>
         <SearchSection>
           <IoIosSearch size="20px" className="icon" />
-          <input type="text" onChange={searchTextHandler} />
+          <input type="text" onKeyUp={searchTextHandler} />
           {searchModal.isOn ? (
             <ModalPosition>
               <SearchModal
@@ -169,7 +169,6 @@ function SearchBar() {
     </div>
   );
 }
-const Outer = styled.div``;
 
 const Wrapper = styled.div`
   display: flex;
