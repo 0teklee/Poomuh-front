@@ -6,22 +6,41 @@ import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 function List({ longitude, latitude }) {
   const RealEstate = useContext(RealEstateContext);
   const RealEstateDispatch = useContext(RealEstateContextDispatch);
+  const { kakao } = window;
   const [like, setLike] = useState(false);
   const LikeHandler = () => {
     setLike(!like);
   };
+
+  const { map } = RealEstate;
+
+  let circle = new kakao.maps.Circle({
+    center: new kakao.maps.LatLng(latitude, longitude), // 원의 중심좌표 입니다
+    radius: 50, // 미터 단위의 원의 반지름입니다
+    strokeWeight: 0, // 선의 두께입니다
+    strokeColor: '#E8630A', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'dashed', // 선의 스타일 입니다
+    fillColor: '#E8630A', // 채우기 색깔입니다
+    fillOpacity: 0.5, // 채우기 불투명도 입니다
+  });
+
   //호버 이벤트를 주면 해당 매물의 위도,경도로 원의 중심 좌표를 context에서 바꾼다.
   const mouseOnEstate = () => {
-    RealEstateDispatch({ type: 'UPDATE_ESTATELOG', estateLog: longitude });
-    RealEstateDispatch({ type: 'UPDATE_ESTATELAT', estateLat: latitude });
+    let position = new kakao.maps.LatLng(latitude, longitude);
+    circle.setPosition(position);
+    circle.setMap(map);
   };
 
+  const mouseOutEstate = () => {
+    circle.setMap(null);
+  };
   // console.log(RealEstate);
   // console.log(RealEstateDispatch);
   // console.log(RealEstate.selected[0]);
   // console.log(RealEstate.selected[0].description_title);
   return (
-    <ListWrapper onMouseEnter={mouseOnEstate}>
+    <ListWrapper onMouseEnter={mouseOnEstate} onMouseLeave={mouseOutEstate}>
       <CardWrapper>
         <Card>
           <ImageWrapper>

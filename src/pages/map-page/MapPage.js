@@ -42,7 +42,6 @@ function MapPage() {
       observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
       observer.observe(target.current);
     }
-    return () => observer && observer.disconnenct(); //useEffct 함수에서 return은 새로 또 useEffect 하기 전에 이거 또 하는 것
   }, []);
 
   return (
