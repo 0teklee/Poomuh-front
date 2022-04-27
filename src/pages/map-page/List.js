@@ -36,6 +36,7 @@ function List() {
         {RealEstate.selected.length === 0
           ? RealEstate.realEstate.map(data => (
               <div
+                key={data.id}
                 onMouseEnter={() => {
                   mouseOnEstate(data.latitude, data.longitude);
                 }}
@@ -51,6 +52,7 @@ function List() {
             ))
           : RealEstate.selected.map(data => (
               <div
+                key={data.id}
                 onMouseEnter={() => {
                   mouseOnEstate(data.latitude, data.longitude);
                 }}
