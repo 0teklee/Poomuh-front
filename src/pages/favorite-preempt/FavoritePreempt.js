@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PreemptRoomCard from './PreemptRoomCard';
 import Header from '../../components/header/Header';
@@ -6,6 +6,26 @@ import Footer from '../../components/footer/Footer';
 import NavBar from '../favorite-recent/NavBar';
 
 function FavoritePreempt() {
+  const [preemptRoom, setPreemptRoom] = useState([]);
+
+  useEffect(() => {
+    // fetch('찜한방 API', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     recentRoom: localStorage.recentRoom,
+    //   }),
+    // }).then(res => res.json());
+
+    //최근본방 목데이터 가져오기
+    fetch('/data/PreemptData.json')
+      .then(res => res.json())
+      .then(data => {
+        setPreemptRoom(data);
+      });
+  }, []);
   return (
     <Wrapper>
       <Header />
@@ -16,14 +36,18 @@ function FavoritePreempt() {
         <NavBar select="preempt" />
         <CountInfoWrapper>
           <CountRecent>
-            총 <span>{'7개'}</span>의 찜한 방이 있습니다.
+            총 <span>{preemptRoom.length}</span>개의 찜한 방이 있습니다.
           </CountRecent>
         </CountInfoWrapper>
-        <CardWrapper>
-          {/* {recentRoom.map(data => (
-            <PreemptRoomCard key={data.id} data={data} />
-          ))} */}
-        </CardWrapper>
+        {preemptRoom.length === 0 ? (
+          <Notification>찜한 방이 없습니다.</Notification>
+        ) : (
+          <CardWrapper>
+            {preemptRoom.map(data => (
+              <PreemptRoomCard key={data.id} data={data} />
+            ))}
+          </CardWrapper>
+        )}
       </Main>
       <Footer />
     </Wrapper>
@@ -56,6 +80,11 @@ const CountRecent = styled.h2`
   span {
     color: #326cf9;
   }
+`;
+const Notification = styled.p`
+  margin: 5rem;
+  text-align: center;
+  color: rgb(202, 202, 202);
 `;
 const CardWrapper = styled.p`
   display: flex;

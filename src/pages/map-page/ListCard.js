@@ -22,20 +22,31 @@ function ListCard({ data }) {
       }),
     }).then(res => res.json());
   };
-  console.log('data.id', data.id);
-  console.log('data', data);
+
   const updateRecentRoom = () => {
-    window.localStorage.setItem('id', JSON.stringify(data.id));
-    console.log('클릭하면 로컬스토리지에 id값을 저장');
+    let arr = localStorage.getItem('recentRoom'); //로컬스토리지 값을 불러온다
+    //로컬스토리지에 데이터가 없을 경우 새로운 배열을 만들고, 데이터가 있을 경우 데이터를 풀어준다.
+    if (arr === null) {
+      arr = [];
+    } else {
+      arr = JSON.parse(arr);
+    }
+    //리스트의 매물을 클릭하면 선택한 매물의 id를 배열에 저장한다.
+    arr.push(data.id);
+
+    //중복된 데이터를 넣지 않는 set 자료형에 arr를 담으면 중복이 제거된다.
+    arr = new Set(arr);
+    //중복 제거된 set 자료형의 arr를 일반 배열로 변경한다.
+    arr = [...arr];
+    //로컬스토리지에 데이터를 JSON 자료형으로 저장한다.
+    localStorage.setItem('recentRoom', JSON.stringify(arr));
   };
-  // 남은기능 : 지도페이지 첫 접속 시 화면 영역의 매물이 나오도록
-  // 하트 클릭시 2. 관심목록에 해당 객체 데이터 전송
 
   return (
     <ListWrapper>
       {data.length === 0 ? null : (
         <CardWrapper>
-          <Card onClick={updateRecentRoom}>
+          <Card onClick={() => updateRecentRoom()}>
             <ImageWrapper>
               <img alt="이미지" src={data.image_url} />
 

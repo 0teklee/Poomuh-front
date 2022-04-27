@@ -14,7 +14,7 @@
     "image_url": "https://d1774jszgerdmk.cloudfront.net/512/954acfb5-256d-4d74-a4db-8f43ca08a3d5",
     "ableDate": "즉시입주",
     "tradeTypes": ["월세"],
-    "isLike": null
+    "isLike": 1
   },
   {
     "id": 2,
@@ -31,7 +31,7 @@
     "image_url": "https://d1774jszgerdmk.cloudfront.net/512/08f50010-a583-4fac-9793-4743546d0af5",
     "ableDate": "즉시입주",
     "tradeTypes": ["전세", "월세"],
-    "isLike": 1
+    "isLike": 2
   },
   {
     "id": 3,
@@ -47,7 +47,8 @@
     "description_title": "상갓집인줄 알았겠지만 수유리우동은 아파트 이름입니다",
     "image_url": "https://d1774jszgerdmk.cloudfront.net/512/ee54045f-f361-4990-bb02-82d2948aa74f",
     "ableDate": "즉시입주",
-    "tradeTypes": ["전세"]
+    "tradeTypes": ["전세"],
+    "isLike": 3
   },
   {
     "id": 4,
@@ -63,6 +64,7 @@
     "description_title": "전세 0억 로직이 너무 지저분한데; 제 코드 줄여주실분?",
     "image_url": "https://d1774jszgerdmk.cloudfront.net/512/681f27c7-3a4f-4a54-b665-ff2fee0addd0",
     "ableDate": "즉시입주",
-    "tradeTypes": ["월세"]
+    "tradeTypes": ["월세"],
+    "isLike": 4
   }
 ]
