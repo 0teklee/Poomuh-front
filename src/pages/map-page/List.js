@@ -33,13 +33,20 @@ function List({ longitude, latitude }) {
     <Wrapper>
       <ListWrapper onMouseEnter={mouseOnEstate} onMouseLeave={mouseOutEstate}>
         <CardWrapper>
-          {RealEstate.selected.length === 0
-            ? RealEstate.realEstate.map(data => (
-                <ListCard key={data.id} data={data} />
-              ))
-            : RealEstate.selected.map(data => (
-                <ListCard key={data.id} data={data} />
-              ))}
+          <ListWrapper
+            onMouseEnter={mouseOnEstate}
+            onMouseLeave={mouseOutEstate}
+          >
+            <CardWrapper>
+              {RealEstate.selected.length === 0
+                ? RealEstate.realEstate.map(data => (
+                    <ListCard key={data.id} data={data} />
+                  ))
+                : RealEstate.selected.map(data => (
+                    <ListCard key={data.id} data={data} />
+                  ))}
+            </CardWrapper>
+          </ListWrapper>
         </CardWrapper>
       </ListWrapper>
     </Wrapper>
@@ -47,7 +54,14 @@ function List({ longitude, latitude }) {
 }
 
 const Wrapper = styled.div`
-  margin-top: 65px;
+  margin-top: 45px;
+`;
+const ListWrapper = styled.div`
+  // background-color: yellow;
+  // margin-top: 65px;
+`;
+const CardWrapper = styled.div`
+  border: 1px solid transparent;
 `;
 
 export default List;
