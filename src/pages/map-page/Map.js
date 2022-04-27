@@ -120,34 +120,6 @@ function Map() {
     }
   }, [RealEstate.realEstate]);
 
-  // 지도에 표시할 원을 생성합니다
-  let circle = new kakao.maps.Circle({
-    center: new kakao.maps.LatLng(0, 0), // 원의 중심좌표 입니다
-    radius: 70, // 미터 단위의 원의 반지름입니다
-    strokeWeight: 0, // 선의 두께입니다
-    strokeColor: '#E8630A', // 선의 색깔입니다
-    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-    strokeStyle: 'dashed', // 선의 스타일 입니다
-    fillColor: '#E8630A', // 채우기 색깔입니다
-    fillOpacity: 0.5, // 채우기 불투명도 입니다
-  });
-
-  // useEffect(() => {
-  //   console.log(circle.getPosition(), center);
-  //   if (circle.getPosition() === center) {
-  //     console.log(circle.getPosition(), center, 'inside');
-  //     circle.setPosition(RealEstate.estateLat, RealEstate.estateLog);
-  //     circle.setMap(kakaoMap);
-  //     return;
-
-  //     //else {
-  //     //     circle.setMap(null);
-  //     //   }
-  //     //   circle.setPosition(RealEstate.estateLat, RealEstate.estateLog);
-  //     //   circle.setMap(kakaoMap);
-  //   }
-  // }, [RealEstate.estateLat, RealEstate.estateLog]);
-
   const mapscript = () => {
     let container = mapContainer.current;
     let options = {

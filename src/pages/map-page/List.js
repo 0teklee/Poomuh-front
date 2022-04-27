@@ -25,7 +25,6 @@ function List({ longitude, latitude }) {
     fillOpacity: 0.5, // 채우기 불투명도 입니다
   });
 
-  //호버 이벤트를 주면 해당 매물의 위도,경도로 원의 중심 좌표를 context에서 바꾼다.
   const mouseOnEstate = () => {
     let position = new kakao.maps.LatLng(latitude, longitude);
     circle.setPosition(position);

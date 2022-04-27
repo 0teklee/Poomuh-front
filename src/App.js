@@ -16,6 +16,7 @@ function App() {
         <Route path="/search" element={<MapPage />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/manage/form" element={<ManageForm />} />
+        <Route path="/manage/form/:id" element={<ManageForm />} />
         <Route path="/manage/list" element={<ManageList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
