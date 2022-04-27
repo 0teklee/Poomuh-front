@@ -21,6 +21,7 @@ const NavWrapper = styled.div`
   align-items: center;
   height: 48px;
   margin: 0px auto;
+  cursor: pointer;
 `;
 const Button = styled.button`
   all: unset;
@@ -37,7 +38,10 @@ const NavRecent = styled(Link)`
     props.select === 'recent' ? '#000' : 'rgb(202, 202, 202)'};
   border-bottom: ${props => (props.select === 'recent' ? '2px' : '1px')} solid
     ${props => (props.select === 'recent' ? '#000' : 'rgb(202, 202, 202)')};
-  cursor: pointer;
+  :hover {
+    color: ${props =>
+      props.select === 'recent' ? '#000' : 'rgb(202, 202, 202)'};
+  }
 `;
 const NavPreempt = styled(Link)`
   all: unset;
@@ -50,8 +54,10 @@ const NavPreempt = styled(Link)`
     props.select === 'preempt' ? '#000' : 'rgb(202, 202, 202)'};
   border-bottom: ${props => (props.select === 'preempt' ? '2px' : '1px')} solid
     ${props => (props.select === 'preempt' ? '#000' : 'rgb(202, 202, 202)')};
-
-  cursor: pointer;
+  :hover {
+    color: ${props =>
+      props.select === 'preempt' ? '#000' : 'rgb(202, 202, 202)'};
+  }
 `;
 
 export default NavBar;

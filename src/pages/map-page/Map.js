@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext, useMemo } from 'react';
+import React, { useEffect, useRef, useContext, useMemo, useState } from 'react';
 import { markerdata } from './markerData';
 import { RealEstateContext, RealEstateContextDispatch } from './context';
 
@@ -145,6 +145,7 @@ function Map() {
     );
     return map;
   };
+
   return (
     <div>
       <div

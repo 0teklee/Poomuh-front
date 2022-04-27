@@ -18,6 +18,7 @@ function App() {
         <Route path="/favorite/recent-room" element={<FavoriteRecent />} />
         <Route path="/favorite/preempt-room" element={<FavoritePreempt />} />
         <Route path="/manage/form" element={<ManageForm />} />
+        <Route path="/manage/form/:id" element={<ManageForm />} />
         <Route path="/manage/list" element={<ManageList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

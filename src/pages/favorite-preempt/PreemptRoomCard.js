@@ -1,41 +1,50 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
+import { IoMdHeart } from 'react-icons/io';
 
 function PreemptRoomCard({ data }) {
-  const [like, setLike] = useState(false);
+  // const [like, setLike] = useState(data.isLike);
 
-  const LikeHandler = () => {
-    setLike(!like);
+  const updateLike = () => {
+    console.log('나를 누르면 찜한방에서 사라지지');
   };
-  //하트 누르면 해당 페이지로 데이터 이동해야함
-  console.log(data);
-
   return (
-    <Wrapper>
-      <ImageWrapper>
-        <Image alt="image" src={data.image}></Image>
-        <Like onClick={LikeHandler}>
-          {like === false ? (
-            <IoMdHeartEmpty color="black" />
-          ) : (
-            <IoMdHeart color="red" />
-          )}
-        </Like>
-      </ImageWrapper>
-      <ContentWrapper>
-        <Type>{data.category_type}</Type>
-        <Price>
-          {data.trade_type === '월세'
-            ? `${data.trade_type} ${data.price_deposit}/${data.price_monthly}`
-            : `${data.trade_type} ${data.price_main}`}
-        </Price>
-        <Informations>
-          {data.current_floor}, {data.supply_size}m2 <br />
-          {data.description_title}
-        </Informations>
-      </ContentWrapper>
-    </Wrapper>
+    <>
+      {data.length === 0 ? null : (
+        <Wrapper>
+          <ImageWrapper>
+            <Image alt="image" src={data.image_url}></Image>
+
+            <Like>
+              <IoMdHeart color="red" onClick={updateLike} />
+            </Like>
+          </ImageWrapper>
+          <ContentWrapper>
+            <Type>{data.category_type}</Type>
+            <Price>
+              {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
+                ? `전세 ${Math.floor(data.price_main / 10000)}억${
+                    Math.floor(data.price_main) -
+                      Math.floor(data.price_main / 10000) * 10000 ===
+                    0
+                      ? ''
+                      : Math.floor(data.price_main) -
+                        Math.floor(data.price_main / 10000) * 10000
+                  }`
+                : `월세
+                    ${data.price_deposit}/${data.price_monthly}`}
+            </Price>
+            <Informations>
+              {`${data.current_floor},
+              ${data.supply_size}`}
+              m<sup>2</sup>
+              <br />
+              {data.description_title}
+            </Informations>
+          </ContentWrapper>
+        </Wrapper>
+      )}
+    </>
   );
 }
 const Wrapper = styled.div`
@@ -51,7 +60,12 @@ const ImageWrapper = styled.div`
   height: 186px;
   border-radius: 3px;
   overflow: hidden;
-  border: 1px solid black;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+  }
 `;
 const ContentWrapper = styled.div`
   width: 100%;
@@ -87,10 +101,15 @@ const Price = styled.div`
   font-size: 1.3rem;
 `;
 const Informations = styled.div`
-  white-space: nowrap;
   margin-top: 0.5rem;
   line-height: 1.2rem;
   font-weight: 300;
   font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  sup {
+    font-size: 0.5rem;
+  }
 `;
 export default PreemptRoomCard;
