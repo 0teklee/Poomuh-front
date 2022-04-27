@@ -70,7 +70,7 @@ function ListCard({ data }) {
               </Like>
             </ImageWrapper>
             <InfoWrapper>
-              <p class="price">
+              {/* <p class="price">
                 {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
                   ? `전세 ${Math.floor(data.price_main / 10000)}억${
                       Math.floor(data.price_main) -
@@ -82,7 +82,7 @@ function ListCard({ data }) {
                     }`
                   : `월세
                     ${data.price_deposit}/${data.price_monthly}`}
-              </p>
+              </p> */}
               <br />
               <p class="type">{data.category_type}</p>
               <br />

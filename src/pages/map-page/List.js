@@ -5,12 +5,14 @@ import ListCard from './ListCard';
 
 function List() {
   const RealEstate = useContext(RealEstateContext);
-  // console.log(RealEstate.realEstate);
+  console.log(RealEstate.mapBounds);
 
   return (
     <Wrapper>
       {RealEstate.selected.length === 0
-        ? null
+        ? RealEstate.realEstate.map(data => (
+            <ListCard key={data.id} data={data} />
+          ))
         : RealEstate.selected.map(data => (
             <ListCard key={data.id} data={data} />
           ))}
