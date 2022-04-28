@@ -236,11 +236,16 @@ const NextButton = styled.div`
   font-size: 13px;
   font-weight: 900;
   text-align: center;
-  :hover {
-    cursor: pointer;
-  }
+  border-radius: 2px;
+  transition: 0.15s;
   ${({ activeBtnCheck }) => {
-    return activeBtnCheck ? `background-color: #4379fa` : null;
+    return activeBtnCheck
+      ? `background-color: #4379fa;
+      cursor:pointer;  
+      :hover {
+      background-color: #0039bf;
+    }`
+      : null;
   }}
 `;
 export default CheckForSignUp;

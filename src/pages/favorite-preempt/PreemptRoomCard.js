@@ -39,7 +39,7 @@ function PreemptRoomCard({ data, updatePreempt }) {
           <ContentWrapper>
             <Type>{data.category_type}</Type>
             <Price>
-              {data.trade_types.length === 1 && data.trade_types[0] === '전세' //배열데이터[월세,전세] or [전세]
+              {data.trade_type.length === 1 && data.trade_type[0] === '전세' //배열데이터[월세,전세] or [전세]
                 ? `전세 ${Math.floor(data.price_main / 10000)}억${
                     Math.floor(data.price_main) -
                       Math.floor(data.price_main / 10000) * 10000 ===
@@ -70,6 +70,7 @@ const Wrapper = styled.div`
   margin-bottom: 4rem;
   // height: 342px;
   cursor: pointer;
+  margin-left: 15px;
 `;
 const ImageWrapper = styled.div`
   position: relative;
