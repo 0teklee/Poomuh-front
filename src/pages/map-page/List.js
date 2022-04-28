@@ -41,13 +41,8 @@ function List() {
                   mouseOnEstate(data.latitude, data.longitude);
                 }}
                 onMouseLeave={() => mouseOutEstate()}
-                key={data.id}
               >
-                <ListCard
-                  data={data}
-                  onMouseEnter={mouseOnEstate}
-                  onMouseLeave={mouseOutEstate}
-                />
+                <ListCard data={data} />
               </div>
             ))
           : RealEstate.selected.map(data => (
@@ -57,13 +52,8 @@ function List() {
                   mouseOnEstate(data.latitude, data.longitude);
                 }}
                 onMouseLeave={() => mouseOutEstate()}
-                key={data.id}
               >
-                <ListCard
-                  data={data}
-                  onMouseEnter={mouseOnEstate}
-                  onMouseLeave={mouseOutEstate}
-                />
+                <ListCard data={data} />
               </div>
             ))}
       </CardWrapper>
