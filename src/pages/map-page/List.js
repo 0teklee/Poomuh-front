@@ -13,44 +13,49 @@ function List() {
   const [estateList, setEstateList] = useState([]);
   const [scrollHelper, setScrollHelper] = useState(0);
   const target = useRef(null);
+  const [isUser, setIsUser] = useState('');
   //몇번째 페이지인지 알려주는 값
-  // const [offset, setOffset] = useState(0);
-  // const [isUser, setIsUser] = useState('');
+  const [offset, setOffset] = useState(0);
   // //localStorage에 토큰 저장
-  // const token = localStorage.getItem('access_token');
-  // const tradeTypeFilter = RealEstate.tradeTypeFilter;
+  const token = localStorage.getItem('access_token');
+  const tradeTypeFilter = RealEstate.tradeTypeFilter;
+  const tradeType = Object.entries(tradeTypeFilter)
+    .filter(el => el[1] === true)
+    .map(el => el[0])
+    .toString();
+  //list에 보여줄 데이터 fetch하기
+  const header = {
+    'Content-Type': 'application/json',
+    offset: offset,
+    LatLng: `${RealEstate.mapBounds}`,
+  };
 
-  // const tradeTypeQuery = Object.entries(tradeTypeFilter)
-  //   .filter(el => el[1] === true)
-  //   .map(el => el[0])
-  //   .toString();
-
-  //localStorage에 토큰이 있다면 isUser에 '/users'저장
   useEffect(() => {
-    // token ? setIsUser('/users') : setIsUser('');
-    fetch('/data/scrollList.json')
-      .then(res => res.json())
-      .then(data => {
-        setEstateList(data);
-      });
+    if (token) {
+      header.token = token;
+      setIsUser('users');
+    }
   }, []);
 
-  //list에 보여줄 데이터 fetch하기
   const fetchData = async () => {
     setTimeout(async () => {
-      //http://localhost:8000/estates/scroll?tradeType=${tradeType}&search=${search}
-      await fetch(`/data/scrollList.json`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          // token: token,
-          // offset: offset,
-        },
-      })
+      await fetch(
+        `http://localhost:8000/estates/scroll/${isUser}?tradeType=${tradeType}&search=`,
+        {
+          method: 'GET',
+          headers: header,
+        }
+      )
         .then(res => res.json())
         .then(data => {
-          setEstateList(estateList.concat(data));
-          setScrollHelper(0);
+          if (data.length < 2) {
+            setEstateList(estateList.concat(data));
+            setScrollHelper(1);
+          } else {
+            setEstateList(estateList.concat(data));
+            setScrollHelper(0);
+          }
+          setOffset(prev => prev + 1);
         });
     }, 700);
   };
@@ -59,13 +64,14 @@ function List() {
   const handleObserver = async ([entry], observer) => {
     if (entry.isIntersecting) {
       setScrollHelper(1);
-      // setOffset(prev => prev++);
     }
   };
 
   //scrollHelper값이 0->1로 바뀌면 fetch
   useEffect(() => {
-    fetchData();
+    if (scrollHelper === 1) {
+      fetchData();
+    }
   }, [scrollHelper]);
 
   useEffect(() => {
