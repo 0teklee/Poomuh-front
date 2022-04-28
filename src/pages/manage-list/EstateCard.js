@@ -6,8 +6,7 @@ const EstateCard = () => {
   const navigate = useNavigate();
 
   const deleteEstate = () => {
-    //택우는 똑똑이 -> 왜냐? 삭제해서 재랜더링 디펜던시는 그냥 fetch해온 배열의 값을 주면 되니까
-    fetch(`http://localhost:8000/delete?id=id`, {
+    fetch(`http://localhost:8000/:id`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
