@@ -16,7 +16,7 @@ function RecentRoomCard({ data }) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        token: token,
+        access_token: token,
       },
       // body: JSON.stringify({
       //   isLike: like,
