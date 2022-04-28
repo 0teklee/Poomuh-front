@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
 import { InfoContext } from './context';
@@ -9,9 +9,14 @@ function ManageFormSend() {
   const handleAgree = () => {
     setAgree(prev => !prev);
   };
+
+  useEffect(() => {
+    // const realEstateID = useParams();
+    fetch('uri');
+  }, []);
+
   const Info = useContext(InfoContext);
   const navigate = useNavigate();
-
   // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
   const sendInfo = () => {
     const token = localStorage.getItem('access_token');
@@ -61,6 +66,10 @@ function ManageFormSend() {
       !trade_id
     ) {
       alert('모든 정보를 입력해주세요');
+      return;
+    }
+    if (!agree) {
+      alert('매물관리규정에 동의해주세요');
       return;
     }
     sendInfo();

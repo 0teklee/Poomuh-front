@@ -7,6 +7,7 @@ import SignUp from './pages/signup/SignUp';
 import ManageForm from './pages/manage-form/ManageForm';
 import ManageList from './pages/manage-list/ManageList';
 import Favorite from './pages/favorite/Favorite';
+import ManageUpdate from './pages/manage-update/ManageForm';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/search" element={<MapPage />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/manage/form" element={<ManageForm />} />
+        <Route path="/manage/form/:id" element={<ManageUpdate />} />
         <Route path="/manage/list" element={<ManageList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
