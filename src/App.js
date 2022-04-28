@@ -6,7 +6,7 @@ import Login from './pages/login/Login';
 import SignUp from './pages/signup/SignUp';
 import ManageForm from './pages/manage-form/ManageForm';
 import ManageList from './pages/manage-list/ManageList';
-import ManageUpdate from './pages/manage-update/ManageForm';
+import ManageUpdate from './pages/manage-update/ManageUpdateWrapper';
 import FavoriteRecent from './pages/favorite-recent/FavoriteRecent';
 import FavoritePreempt from './pages/favorite-preempt/FavoritePreempt';
 

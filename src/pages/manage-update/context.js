@@ -19,6 +19,7 @@ const initialInfo = {
   description_title: '',
   description_detail: '',
   trade_id: [],
+  buildingName: '',
 };
 
 export const InfoContext = createContext();

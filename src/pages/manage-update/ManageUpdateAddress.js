@@ -1,15 +1,17 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
-import Map from './ManageFormMap';
-import ManageFormPostCode from './ManageFormPostCode';
+import Map from './ManageUpdateMap';
+import ManageFormPostCode from './ManageUpdatePostCode';
 import { InfoDispatchContext, InfoContext } from './context';
+import { useParams } from 'react-router-dom';
 
 function ManageFormAddress() {
   const [check, setCheck] = useState(false);
   const infoDispatch = useContext(InfoDispatchContext);
   const infoContext = useContext(InfoContext);
   const searchAddressValue = useRef('');
+  const RealEstateId = useParams();
 
   const handleCheck = () => {
     setCheck(prev => !prev);
