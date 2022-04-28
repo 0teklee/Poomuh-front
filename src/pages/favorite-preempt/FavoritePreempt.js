@@ -7,15 +7,17 @@ import NavBar from '../favorite-recent/NavBar';
 
 function FavoritePreempt() {
   const [preemptRoom, setPreemptRoom] = useState([]);
+  const [updatedPreemptRoom, setUpdatedPreemptRoom] = useState(false);
   const token = localStorage.getItem('access_token');
 
+  console.log(preemptRoom);
   useEffect(() => {
     //찜한방 API (회원만 가능, 로그인 토큰 필요)*******************************************************************
-    fetch('http://localhost:8000/favorite/likes', {
+    fetch('http://localhost:8000/favorites/likes', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        access_token: token,
+        token: token,
       },
     })
       .then(res => res.json())
@@ -30,7 +32,11 @@ function FavoritePreempt() {
     //   .then(data => {
     //     setPreemptRoom(data);
     //   });
-  }, []);
+  }, [updatedPreemptRoom]);
+
+  const updatePreempt = () => {
+    setUpdatedPreemptRoom(() => !updatedPreemptRoom);
+  };
 
   return (
     <Wrapper>
@@ -52,7 +58,11 @@ function FavoritePreempt() {
         ) : (
           <CardWrapper>
             {preemptRoom.map(data => (
-              <PreemptRoomCard key={data.id} data={data} />
+              <PreemptRoomCard
+                key={data.id}
+                data={data}
+                updatePreempt={updatePreempt}
+              />
             ))}
           </CardWrapper>
         )}
