@@ -34,16 +34,19 @@ function ListCard({ data }) {
     if (arr === null) {
       arr = [];
     } else {
+      //로컬스토리지에서 불러온 값은 스트링이므로 자바스크립트 형식으로 바꿔준다
       arr = JSON.parse(arr);
+      if (arr.length === 20) {
+        arr.shift();
+      }
     }
     //리스트의 매물을 클릭하면 선택한 매물의 id를 배열에 저장한다.
     arr.push(data.id);
-
     //중복된 데이터를 넣지 않는 set 자료형에 arr를 담으면 중복이 제거된다.
     arr = new Set(arr);
     //중복 제거된 set 자료형의 arr를 일반 배열로 변경한다.
     arr = [...arr];
-    //로컬스토리지에 데이터를 JSON 자료형으로 저장한다.
+    //로컬스토리지에 데이터를 문자형으로 저장한다.
     localStorage.setItem('recentRoom', JSON.stringify(arr));
   };
 

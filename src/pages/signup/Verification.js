@@ -28,7 +28,7 @@ const Verification = ({ setShow }) => {
         email: userInfo.email,
         nickname: userInfo.nickname,
         password: userInfo.password,
-        name: userInfo.name,
+        username: userInfo.username,
         phone_number: userInfo.phone_number,
       }),
     })
@@ -133,6 +133,12 @@ const Verification = ({ setShow }) => {
     let requiredResult = checkRequiredVerif();
     if (requiredResult === 3) {
       setShowVerif(true);
+<<<<<<< HEAD
+=======
+    } else setShowVerif(false);
+    const name = userInfo.name;
+    if (name && idNum && secDigit && requiredResult === 3) {
+>>>>>>> 07f527e9a7afed1b9a15e48d089d23dc278312e9
       setActiveBtnVerif(true);
     } else setShowVerif(false);
   }, [checksVerif]);

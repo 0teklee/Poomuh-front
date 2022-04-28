@@ -18,9 +18,13 @@ function Login() {
       .then(res => res.json())
       .then(res => {
         console.log(res.accessToken);
+<<<<<<< HEAD
         sessionStorage.setItem('access_token', res.accessToken);
         alert('로그인 되었습니다.');
         navigate('/');
+=======
+        localStorage.setItem('access_token', res.accessToken);
+>>>>>>> 07f527e9a7afed1b9a15e48d089d23dc278312e9
       });
   };
 
