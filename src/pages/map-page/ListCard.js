@@ -71,11 +71,7 @@ function ListCard({ data }) {
             </ImageWrapper>
             <InfoWrapper>
               <p className="price">
-<<<<<<< HEAD
-                {/* {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
-=======
                 {/* {data.trade_type.length === 1 && data.trade_type[0] === '전세' //배열데이터[월세,전세] or [전세]
->>>>>>> a05ee4bacd7de78ecc0efef6f76a5f78118988d3
                   ? `전세 ${Math.floor(data.price_main / 10000)}억${
                       Math.floor(data.price_main) -
                         Math.floor(data.price_main / 10000) * 10000 ===
