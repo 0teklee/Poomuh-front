@@ -15,10 +15,8 @@ function Login() {
     })
       .then(res => res.json())
       .then(res => {
-        if (res.token) {
-          console.log(res.accessToken);
-          sessionStorage.setItem('access_token', res.accessToken);
-        }
+        console.log(res.accessToken);
+        sessionStorage.setItem('access_token', res.accessToken);
       });
   };
 
