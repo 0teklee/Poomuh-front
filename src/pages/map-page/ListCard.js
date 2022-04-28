@@ -8,18 +8,23 @@ function ListCard({ data }) {
   const [like, setLike] = useState(data.isLike);
   const navigate = useNavigate();
   const RealEstate = useContext(RealEstateContext);
+  const token = localStorage.getItem('access_token');
 
+  // 86번째줄 데이터타입 없어서 주석처리 안하면 렌더링 안됨,
   const updateLike = () => {
     setLike(like ? false : true);
 
-    fetch('매물 좋아요 업데이트 API', {
-      method: 'POST',
+    //찜 변경 API(회원만 가능) *******************************************************************
+    //프론트 로직 : 하트 클릭시 state 값 변경 및 찜변경 API에 GET요청 ***isLike 값 안줘도 구현이 가능한지 궁금***
+    fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        token: token,
       },
-      body: JSON.stringify({
-        isLike: like,
-      }),
+      // body: JSON.stringify({
+      //   isLike: like,
+      // }),
     }).then(res => res.json());
   };
 
@@ -49,7 +54,11 @@ function ListCard({ data }) {
     <ListWrapper>
       {data.length === 0 ? null : (
         <CardWrapper>
-          <Card onClick={() => updateRecentRoom()}>
+          <Card
+            onClick={() => {
+              updateRecentRoom();
+            }}
+          >
             <ImageWrapper>
               <img alt="이미지" src={data.image_url} />
 
@@ -74,7 +83,7 @@ function ListCard({ data }) {
             </ImageWrapper>
             <InfoWrapper>
               <p class="price">
-                {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
+                {/* {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
                   ? `전세 ${Math.floor(data.price_main / 10000)}억${
                       Math.floor(data.price_main) -
                         Math.floor(data.price_main / 10000) * 10000 ===
@@ -84,12 +93,12 @@ function ListCard({ data }) {
                           Math.floor(data.price_main / 10000) * 10000
                     }`
                   : `월세
-                    ${data.price_deposit}/${data.price_monthly}`}
+                    ${data.price_deposit}/${data.price_monthly}`} */}
               </p>
               <br />
-              <p class="type">{data.category_type}</p>
+              <p className="type">{data.category_type}</p>
               <br />
-              <p class="description">
+              <p className="description">
                 {`${data.current_floor},
               ${data.supply_size}`}
                 m<sup>2</sup>

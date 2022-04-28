@@ -3,23 +3,28 @@ import styled from 'styled-components';
 import { IoMdHeart } from 'react-icons/io';
 
 function PreemptRoomCard({ data }) {
+  const token = localStorage.getItem('access_token');
   const updateLike = () => {
-    fetch(`매물 좋아요 업데이트 API`, {
-      method: 'POST',
+    //찜 변경 API (회원만 가능) *******************************************************************
+    fetch(`http://localhost:8000/favorites/likes/${data.id}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        access_token: token,
       },
-      body: JSON.stringify({
-        isLike: false,
-      }),
+      // body: JSON.stringify({
+      //   is_like: false,
+      // }),
     }).then(res => res.json());
 
-    // fetch(`찜한방 API http://localhost:3000/favorite/preempt-room/${data.id}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // }).then(res => res.json());
+    //찜한 방 API *******************************************************************
+    fetch('http://localhost:8000/favorites/likes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        access_token: token,
+      },
+    }).then(res => res.json());
   };
 
   return (
@@ -36,7 +41,7 @@ function PreemptRoomCard({ data }) {
           <ContentWrapper>
             <Type>{data.category_type}</Type>
             <Price>
-              {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
+              {data.trade_types.length === 1 && data.trade_types[0] === '전세' //배열데이터[월세,전세] or [전세]
                 ? `전세 ${Math.floor(data.price_main / 10000)}억${
                     Math.floor(data.price_main) -
                       Math.floor(data.price_main / 10000) * 10000 ===
