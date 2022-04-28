@@ -16,7 +16,7 @@ function Login() {
       .then(res => res.json())
       .then(res => {
         console.log(res.accessToken);
-        sessionStorage.setItem('access_token', res.accessToken);
+        localStorage.setItem('access_token', res.accessToken);
       });
   };
 
