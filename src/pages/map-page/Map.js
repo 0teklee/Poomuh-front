@@ -18,7 +18,6 @@ function Map() {
     .filter(el => el[1] === true)
     .map(el => el[0])
     .toString();
-  const searchText = RealEstate.searchText;
 
   // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
   useEffect(() => {
@@ -28,8 +27,10 @@ function Map() {
   // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 받는 fetch 함수
   const sendBoundGetItem = () => {
     // fetch('백엔드에서 좌표 범위 내의 매물을 요청하는 URI로 변경', {
+
     fetch(
-      `http://localhost:8000/estates?tradeType=${tradeTypeQuery}&search=${searchText}`,
+      // searchText 제거 수정
+      `http://localhost:8000/estates?tradeType=${tradeTypeQuery}`,
       {
         method: 'GET',
         headers: {
@@ -46,7 +47,6 @@ function Map() {
       .then(data => {
         // 해당 범위 내의 존재하는 매물이 없다면
         // 백엔드 상에서 realEstate에 빈 배열을 보내주도록 할 것.
-        console.log('searchText >>>>', searchText);
         if (
           Object.values(RealEstate.roomTypeFilter).filter(
             filter => filter.isOn === true
