@@ -18,24 +18,23 @@ function Map() {
 
   // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
   useEffect(() => {
-    if (
-      Object.entries(tradeTypeFilter).filter(el => el[1] === true).length === 0
-    ) {
-      tradeTypeQuery = 'no';
-      console.log(tradeTypeQuery);
-    } else {
-      tradeTypeQuery = Object.entries(tradeTypeFilter)
-        .filter(el => el[1] === true)
-        .map(el => el[0])
-        .toString();
-    }
     mapDOM.current = mapscript();
   }, []);
 
   // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 받는 fetch 함수
   const sendBoundGetItem = () => {
     // fetch('백엔드에서 좌표 범위 내의 매물을 요청하는 URI로 변경', {
-
+    console.log('지도이벤트 이후 mapBounds 몇번>>> ', RealEstate.mapBounds);
+    if (
+      Object.entries(tradeTypeFilter).filter(el => el[1] === true).length === 0
+    ) {
+      tradeTypeQuery = '';
+    } else {
+      tradeTypeQuery = Object.entries(tradeTypeFilter)
+        .filter(el => el[1] === true)
+        .map(el => el[0])
+        .toString();
+    }
     fetch(
       // searchText 제거 수정
       `http://localhost:8000/estates?tradeType=${tradeTypeQuery}`,
@@ -43,22 +42,24 @@ function Map() {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
-          LatLng: `${RealEstate.mapBounds}`,
+          LatLng: `${RealEstate.mapBounds.ha},${RealEstate.mapBounds.oa},${RealEstate.mapBounds.qa},${RealEstate.mapBounds.pa}`,
         },
       }
     )
       .then(res => {
-        if (!res.OK) {
+        if (!res.ok) {
+          console.log('res.ok = false');
           throw new Error(res.statusText);
         }
         return res.json();
       })
       .catch(err => {
-        console.log(err);
+        console.log('error>>>', err);
         RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: [] });
       })
       // 에러 핸들링 추후에 수정
       .then(data => {
+        console.log('right after fetch res.json 몇번', data);
         // 해당 범위 내의 존재하는 매물이 없다면
         // 백엔드 상에서 realEstate에 빈 배열을 보내주도록 할 것.
         if (
@@ -77,7 +78,12 @@ function Map() {
           });
           return;
         } else {
-          RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: data.map });
+          console.log('infetch after get data, data 몇번>>>', data);
+          RealEstateDispatch({
+            type: 'GET_REAL_ESTATE',
+            realEstate: data.clusters,
+          });
+          return;
         }
       });
   };
@@ -96,11 +102,11 @@ function Map() {
     const clusterStyle = RealEstate.clustererStyle;
 
     if (kakaoMap) {
-      console.log(RealEstate.realEstate);
+      console.log('클러스터', RealEstate.realEstate);
       const marker = RealEstate.realEstate.map(el => {
         return new kakao.maps.Marker({
           map: kakaoMap,
-          position: new kakao.maps.LatLng(el.latitude, el.longitude),
+          position: new kakao.maps.LatLng(el.lat, el.lng),
         });
       });
 
@@ -154,6 +160,7 @@ function Map() {
       level: 4,
       maxLevel: 7,
     };
+
     const map = new kakao.maps.Map(container, options);
     const zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
