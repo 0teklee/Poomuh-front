@@ -6,17 +6,21 @@ import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 function RecentRoomCard({ data }) {
   const [like, setLike] = useState(data.isLike);
   const navigate = useNavigate();
-
+  const token = localStorage.getItem('access_token');
   const updateLike = () => {
     setLike(like ? false : true);
-    fetch('매물 좋아요 업데이트 API', {
-      method: 'POST',
+
+    //찜 변경 API(회원만 가능) *******************************************************************
+    //프론트 로직 : 하트 클릭시 state 값 변경 및 찜변경 API에 GET요청 ***isLike 값 안줘도 구현이 가능한지 궁금***
+    fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        token: token,
       },
-      body: JSON.stringify({
-        isLike: like,
-      }),
+      // body: JSON.stringify({
+      //   isLike: like,
+      // }),
     }).then(res => res.json());
   };
 

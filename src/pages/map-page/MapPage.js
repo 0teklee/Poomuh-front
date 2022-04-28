@@ -11,11 +11,27 @@ function MapPage() {
   const [estateList, setEstateList] = useState([]);
   const [scrollHelper, setScrollHelper] = useState(0);
   const target = useRef(null);
+  //몇번째 페이지인지 알려주는 값
+  const [offset, setOffset] = useState(0);
+  const [isUser, setIsUser] = useState('');
+  //localStorage에 토큰 저장
+  const token = localStorage.getItem('access_token');
+
+  //localStorage에 토큰이 있다면 isUser
+  if (localStorage.getItem(token)) {
+    setIsUser('/users');
+  }
 
   //list에 보여줄 데이터 fetch하기
   const fetchData = async () => {
     setTimeout(async () => {
-      await fetch('data/scrollList.json')
+      await fetch(`http://localhost:8000/estates/scroll${isUser}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          token: token,
+        },
+      })
         .then(res => res.json())
         .then(data => {
           setEstateList(estateList.concat(data));
@@ -28,6 +44,8 @@ function MapPage() {
   const handleObserver = async ([entry], observer) => {
     if (entry.isIntersecting) {
       setScrollHelper(1);
+      setOffset(prev => prev++);
+      console.log('offset>>', offset);
     }
   };
 
