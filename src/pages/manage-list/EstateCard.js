@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const EstateCard = () => {
+  const navigate = useNavigate();
+
   const deleteEstate = () => {
     //택우는 똑똑이 -> 왜냐? 삭제해서 재랜더링 디펜던시는 그냥 fetch해온 배열의 값을 주면 되니까
     fetch(`http://localhost:8000/delete?id=id`, {
@@ -21,15 +24,6 @@ const EstateCard = () => {
       deleteEstate();
     }
   };
-
-  //수정 버튼 눌렀을 때
-  /*
-    수정 버튼을 누르면 해당 카드에 있는 매물의 id값이 
-    manage-form/:item_id 이런 식으로 전달이 되고
-    manage-form에는 item_id가 useParams로 받아오고
-    그 값에 따라 입력/ 수정 페이지를 다르게 해준다
-
-  */
 
   return (
     <Wrapper>
@@ -73,7 +67,7 @@ const EstateCard = () => {
                 </p>
               </div>
               <div className="buttons">
-                <button>수정</button>
+                <button onClick={() => navigate('/form/id')}>수정</button>
                 <button onClick={checkDelete}>삭제</button>
                 <button>광고 종료</button>
                 <button>거래 완료</button>

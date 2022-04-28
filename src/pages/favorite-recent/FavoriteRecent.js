@@ -7,17 +7,24 @@ import NavBar from './NavBar';
 
 function FavoriteRecent() {
   const [recentRoom, setRecentRoom] = useState([]);
-  //최근본방의 데이터 => 지도페이지에서 매물 클릭시 해당 데이터를 로컬스토리지에 저장, 최근본방에 가져오기?
 
-  //최근본방 목데이터 가져오기
   useEffect(() => {
-    fetch('/data/RecentRoomData.json')
-      .then(res => res.json())
-      .then(data => {
-        setRecentRoom(data);
-      });
-  }, []);
+    //최근본방 API (회원, 비회원 모두 가능)*******************************************************************
+    fetch('http://localhost:8000/favorite/recent', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        recent: JSON.parse(localStorage.recentRoom).join(), //배열 요소들을 string 형태로 보냅니다. ex. 3,4,1,2 (string)
+      },
+    }).then(res => res.json());
 
+    //최근본방 목데이터 가져오기
+    // fetch('/data/RecentRoomData.json')
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     setRecentRoom(data);
+    //   });
+  }, []);
   return (
     <Wrapper>
       <Header />
@@ -32,11 +39,15 @@ function FavoriteRecent() {
           </CountRecent>
           <CountInfo>최근 본 방은 20개까지 저장됩니다.</CountInfo>
         </CountInfoWrapper>
-        <CardWrapper>
-          {recentRoom.map(data => (
-            <RecentRoomCard key={data.id} data={data} />
-          ))}
-        </CardWrapper>
+        {recentRoom.length === 0 ? (
+          <Notification>최근에 본 방이 없습니다.</Notification>
+        ) : (
+          <CardWrapper>
+            {recentRoom.map(data => (
+              <RecentRoomCard key={data.id} data={data} />
+            ))}
+          </CardWrapper>
+        )}
       </Main>
       <Footer />
     </Wrapper>
@@ -54,7 +65,6 @@ const TitleWrapper = styled.header`
   align-items: center;
   justify-content: center;
   height: 200px;
-  // border: 1px solid black;
 `;
 const Title = styled.h1`
   font-size: 2rem;
@@ -74,7 +84,11 @@ const CountRecent = styled.h2`
 const CountInfo = styled.p`
   color: rgb(202, 202, 202);
 `;
-
+const Notification = styled.p`
+  margin: 5rem;
+  text-align: center;
+  color: rgb(202, 202, 202);
+`;
 const CardWrapper = styled.p`
   display: flex;
   justify-content: space-between;

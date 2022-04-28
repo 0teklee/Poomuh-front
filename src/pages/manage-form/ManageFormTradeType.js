@@ -48,7 +48,6 @@ function Trade({ name, close }) {
               if (sample.current.innerText === '(예 월세 1000만원/50만원)') {
                 sample.current.innerText = '';
               }
-
               if (e.target.value * 1 <= 9999) {
                 sampleMonthly.current.innerText = ` /  ${e.target.value} 만원`;
               } else if (e.target.value === '') {

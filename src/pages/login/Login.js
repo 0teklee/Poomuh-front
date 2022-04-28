@@ -17,7 +17,7 @@ function Login() {
       .then(res => {
         if (res.token) {
           console.log(res.accessToken);
-          sessionStorage.setItem('access_token', res.accessToken);
+          localStorage.setItem('access_token', res.accessToken);
         }
       });
   };
