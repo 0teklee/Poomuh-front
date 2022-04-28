@@ -27,7 +27,7 @@ function List() {
   const header = {
     'Content-Type': 'application/json',
     offset: offset,
-    LatLng: `${RealEstate.mapBounds}`,
+    LatLng: `${RealEstate.mapBounds.ha},${RealEstate.mapBounds.oa},${RealEstate.mapBounds.qa},${RealEstate.mapBounds.pa}`,
   };
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function List() {
   const fetchData = async () => {
     setTimeout(async () => {
       await fetch(
-        `http://localhost:8000/estates/scroll/${isUser}?tradeType=${tradeType}&search=`,
+        `http://localhost:8000/estates/scroll/${isUser}?tradeType=${tradeType}`,
         {
           method: 'GET',
           headers: header,
@@ -48,11 +48,11 @@ function List() {
       )
         .then(res => res.json())
         .then(data => {
-          if (data.length < 2) {
-            setEstateList(estateList.concat(data));
+          if (data.map.length < 5) {
+            setEstateList(estateList.concat(data.map));
             setScrollHelper(1);
           } else {
-            setEstateList(estateList.concat(data));
+            setEstateList(estateList.concat(data.map));
             setScrollHelper(0);
           }
           setOffset(prev => prev + 1);
@@ -66,6 +66,11 @@ function List() {
       setScrollHelper(1);
     }
   };
+
+  useEffect(() => {
+    setEstateList([]);
+    fetchData();
+  }, [RealEstate.mapBounds]);
 
   //scrollHelper값이 0->1로 바뀌면 fetch
   useEffect(() => {
@@ -97,6 +102,7 @@ function List() {
 
   const mouseOnEstate = useCallback(
     (latitude, longitude) => {
+      console.log(latitude, ':', longitude);
       let position = new kakao.maps.LatLng(latitude, longitude);
       circle.current.setPosition(position);
       circle.current.setMap(map);
