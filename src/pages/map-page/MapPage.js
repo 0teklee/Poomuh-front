@@ -1,13 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import List from './List';
 import Map from './Map';
 import SearchBar from './SearchBar';
 import Header from '../../components/header/Header';
 import { GlobalContextProvider } from './context';
+import { RealEstateContext } from './context';
+
 //Context API 사용
 
 function MapPage() {
+  const RealEstate = useContext(RealEstateContext);
+
   const [estateList, setEstateList] = useState([]);
   const [scrollHelper, setScrollHelper] = useState(0);
   const target = useRef(null);
@@ -16,6 +20,10 @@ function MapPage() {
   const [isUser, setIsUser] = useState('');
   //localStorage에 토큰 저장
   const token = localStorage.getItem('access_token');
+  const tradeType = RealEstate.tradeTypeFilter;
+  Object.keys(tradeType)
+    .entries(el => el.includes('월세' || '전세'))
+    .filter(el => el.includes(true));
 
   //localStorage에 토큰이 있다면 isUser
   if (localStorage.getItem(token)) {
@@ -25,11 +33,13 @@ function MapPage() {
   //list에 보여줄 데이터 fetch하기
   const fetchData = async () => {
     setTimeout(async () => {
-      await fetch(`http://localhost:8000/estates/scroll${isUser}`, {
+      await fetch(`/data/realEstate.json`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           token: token,
+          offset: offset,
+          limit: 4,
         },
       })
         .then(res => res.json())
@@ -45,7 +55,6 @@ function MapPage() {
     if (entry.isIntersecting) {
       setScrollHelper(1);
       setOffset(prev => prev++);
-      console.log('offset>>', offset);
     }
   };
 

@@ -8,7 +8,7 @@ import ManageForm from './pages/manage-form/ManageForm';
 import ManageList from './pages/manage-list/ManageList';
 import FavoriteRecent from './pages/favorite-recent/FavoriteRecent';
 import FavoritePreempt from './pages/favorite-preempt/FavoritePreempt';
-import Room from './pages/room/Room';
+// import Room from './pages/room/Room';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route path="/manage/form" element={<ManageForm />} />
         <Route path="/manage/form/:id" element={<ManageForm />} />
         <Route path="/manage/list" element={<ManageList />} />
-        <Route path="/room" element={<Room />} />
+        {/* <Route path="/room" element={<Room />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from '../../components/header/Header';
 function Login() {
   const onLogin = () => {
+    console.log('requestedUrl', requestedUrl);
     fetch(`http://localhost:8000/${requestedUrl}/login`, {
       method: 'POST',
       headers: {
@@ -15,10 +16,8 @@ function Login() {
     })
       .then(res => res.json())
       .then(res => {
-        if (res.token) {
-          console.log(res.accessToken);
-          localStorage.setItem('access_token', res.accessToken);
-        }
+        console.log(res.accessToken);
+        localStorage.setItem('access_token', res.accessToken);
       });
   };
 
