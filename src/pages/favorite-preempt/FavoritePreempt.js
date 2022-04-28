@@ -11,7 +11,7 @@ function FavoritePreempt() {
 
   useEffect(() => {
     //찜한방 API (회원만 가능, 로그인 토큰 필요)*******************************************************************
-    fetch('http://localhost:8000/favorite/likes', {
+    fetch('http://localhost:8000/favorites/likes', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
