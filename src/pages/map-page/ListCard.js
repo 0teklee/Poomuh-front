@@ -4,25 +4,27 @@ import styled from 'styled-components';
 import { RealEstateContext } from './context';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 
-function ListCard({ data, mouseOnEstate, mouseOutEstate }) {
+function ListCard({ data }) {
   const [like, setLike] = useState(data.isLike);
   const navigate = useNavigate();
   const RealEstate = useContext(RealEstateContext);
+  const token = localStorage.getItem('access_token');
 
   // 86번째줄 데이터타입 없어서 주석처리 안하면 렌더링 안됨,
   const updateLike = () => {
     setLike(like ? false : true);
 
-    //찜 변경 API(회원만 가능)
+    //찜 변경 API(회원만 가능) *******************************************************************
+    //프론트 로직 : 하트 클릭시 state 값 변경 및 찜변경 API에 GET요청 ***isLike 값 안줘도 구현이 가능한지 궁금***
     fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        token: 'token',
+        token: token,
       },
-      body: JSON.stringify({
-        isLike: like,
-      }),
+      // body: JSON.stringify({
+      //   isLike: like,
+      // }),
     }).then(res => res.json());
   };
 
@@ -46,21 +48,13 @@ function ListCard({ data, mouseOnEstate, mouseOutEstate }) {
   };
 
   return (
-    <ListWrapper
-      onMouseEnter={() => mouseOnEstate(data.latitude, data.longitude)}
-      onMouseLeave={mouseOutEstate}
-    >
+    <ListWrapper>
       {data.length === 0 ? null : (
-        <CardWrapper
-          onMouseEnter={() => mouseOnEstate(data.latitude, data.longitude)}
-          onMouseLeave={mouseOutEstate}
-        >
+        <CardWrapper>
           <Card
             onClick={() => {
               updateRecentRoom();
             }}
-            onMouseEnter={() => mouseOnEstate(data.latitude, data.longitude)}
-            onMouseLeave={mouseOutEstate}
           >
             <ImageWrapper>
               <img alt="이미지" src={data.image_url} />

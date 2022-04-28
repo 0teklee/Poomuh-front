@@ -3,29 +3,28 @@ import styled from 'styled-components';
 import { IoMdHeart } from 'react-icons/io';
 
 function PreemptRoomCard({ data }) {
+  const token = localStorage.getItem('access_token');
   const updateLike = () => {
-    // //찜 변경 API (회원만 가능)
-    // fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     token: 'token', //token key는 string이 안됨. ESLINT문제?
-    //   },
-    //   body: JSON.stringify({
-    //     recentRoom: localStorage.recentRoom,
-    //   }),
-    // }).then(res => res.json());
-    // //찜한 방 API
-    // fetch('http://localhost:8000/favorite/likes', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     token: 'token', //token key는 string이 안됨. ESLINT?
-    //   },
-    //   body: JSON.stringify({
-    //     recentRoom: localStorage.recentRoom,
-    //   }),
-    // }).then(res => res.json());
+    //찜 변경 API (회원만 가능) *******************************************************************
+    fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: token, //token key는 string이 안됨. ESLINT문제?
+      },
+      // body: JSON.stringify({
+      //   isLike: false,
+      // }),
+    }).then(res => res.json());
+
+    //찜한 방 API *******************************************************************
+    fetch('http://localhost:8000/favorite/likes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: token, //token key는 string이 안됨. ESLINT?
+      },
+    }).then(res => res.json());
   };
 
   return (

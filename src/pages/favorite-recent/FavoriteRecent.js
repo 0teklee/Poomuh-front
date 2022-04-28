@@ -9,23 +9,21 @@ function FavoriteRecent() {
   const [recentRoom, setRecentRoom] = useState([]);
 
   useEffect(() => {
-    //최근본방 API (회원, 비회원 모두 가능)
-    // fetch('http://localhost:8000/favorite/recent', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     recent: JSON.parse(localStorage.recentRoom).join(), //배열 요소들을 string 형태로 보냅니다. ex. 3,4,1,2 (string)
-    //   }),
-    // }).then(res => res.json());
+    //최근본방 API (회원, 비회원 모두 가능)*******************************************************************
+    fetch('http://localhost:8000/favorite/recent', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        recent: JSON.parse(localStorage.recentRoom).join(), //배열 요소들을 string 형태로 보냅니다. ex. 3,4,1,2 (string)
+      },
+    }).then(res => res.json());
 
     //최근본방 목데이터 가져오기
-    fetch('/data/RecentRoomData.json')
-      .then(res => res.json())
-      .then(data => {
-        setRecentRoom(data);
-      });
+    // fetch('/data/RecentRoomData.json')
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     setRecentRoom(data);
+    //   });
   }, []);
   return (
     <Wrapper>

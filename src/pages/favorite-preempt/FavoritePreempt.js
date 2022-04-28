@@ -7,26 +7,26 @@ import NavBar from '../favorite-recent/NavBar';
 
 function FavoritePreempt() {
   const [preemptRoom, setPreemptRoom] = useState([]);
-
+  const token = localStorage.getItem('access_token');
   useEffect(() => {
-    //찜한방 API (회원만 가능, 로그인 토큰 필요)
-    // fetch('http://localhost:8000/favorite/likes', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     token: 'token', //token key는 string이 안됨. ESLINT?
-    //   },
-    //   body: JSON.stringify({
-    //     recentRoom: localStorage.recentRoom,
-    //   }),
-    // }).then(res => res.json());
+    //찜한방 API (회원만 가능, 로그인 토큰 필요)*******************************************************************
+    fetch('http://localhost:8000/favorite/likes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: token, //token key는 string이 안됨. ESLINT?
+      },
+      body: JSON.stringify({
+        recentRoom: localStorage.recentRoom,
+      }),
+    }).then(res => res.json());
 
     //최근본방 목데이터 가져오기
-    fetch('/data/PreemptData.json')
-      .then(res => res.json())
-      .then(data => {
-        setPreemptRoom(data);
-      });
+    // fetch('/data/PreemptData.json')
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     setPreemptRoom(data);
+    //   });
   }, []);
 
   return (
