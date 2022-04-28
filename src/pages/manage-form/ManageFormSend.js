@@ -10,10 +10,15 @@ function ManageFormSend() {
     setAgree(prev => !prev);
   };
   const Info = useContext(InfoContext);
+  const token = localStorage.getItem('access_token');
   const navigate = useNavigate();
   // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
   const sendInfo = () => {
-    fetch('uri', { method: 'POST', body: JSON.stringify(Info) }).then();
+    fetch('http://localhost:8000/estates', {
+      method: 'POST',
+      body: JSON.stringify(Info),
+      token: token,
+    }).then();
   };
 
   const verify = () => {

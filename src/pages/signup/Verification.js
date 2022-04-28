@@ -28,7 +28,7 @@ const Verification = ({ setShow }) => {
         email: userInfo.email,
         nickname: userInfo.nickname,
         password: userInfo.password,
-        name: userInfo.name,
+        username: userInfo.username,
         phone_number: userInfo.phone_number,
       }),
     })
@@ -72,7 +72,6 @@ const Verification = ({ setShow }) => {
       type: 'UPDATE_USERNAME',
       username: e.target.value,
     });
-    console.log(userInfo.username);
   };
 
   //context에서 전화번호 저장
@@ -134,7 +133,6 @@ const Verification = ({ setShow }) => {
     let requiredResult = checkRequiredVerif();
     if (requiredResult === 3) {
       setShowVerif(true);
-      console.log('showVerif', showVerif);
     } else setShowVerif(false);
     const name = userInfo.name;
     if (name && idNum && secDigit && requiredResult === 3) {
