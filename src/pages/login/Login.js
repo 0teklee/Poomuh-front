@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from '../../components/header/Header';
 function Login() {
   const onLogin = () => {
+    console.log('requestedUrl', requestedUrl);
     fetch(`http://localhost:8000/${requestedUrl}/login`, {
       method: 'POST',
       headers: {

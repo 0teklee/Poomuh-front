@@ -18,6 +18,7 @@ const Verification = ({ setShow }) => {
   }, [userInfo.isAgent]);
 
   const onSignup = () => {
+    console.log('hi');
     fetch(`http://localhost:8000/${requestedUrl}`, {
       method: 'POST',
       headers: {
@@ -287,7 +288,7 @@ const Verification = ({ setShow }) => {
                 placeholder="인증번호 입력"
                 className="inputBox authBox"
               />
-              <AuthButton>인증번호 전송</AuthButton>
+              <AuthButton>인증번호 확인</AuthButton>
             </div>
           </div>
         </InputContainer>
