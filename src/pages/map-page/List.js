@@ -115,10 +115,10 @@ function List() {
   };
 
   return (
-    <ListWrapper>
+    <Wrapper>
       {estateList.map((data, index) => {
         return (
-          <CardWrapper>
+          <CardWrapper key={index}>
             <div
               onMouseEnter={() => {
                 mouseOnEstate(data.latitude, data.longitude);
@@ -133,20 +133,12 @@ function List() {
       <div ref={target} className="targetElement">
         <p>hi</p>
       </div>
-    </ListWrapper>
+    </Wrapper>
   );
 }
 
 const Wrapper = styled.div``;
 
-const ListWrapper = styled.div`
-  margin-top: 65px;
-  // background-color: yellow;
-  // margin-top: 65px;
-  .targetElement {
-    border: 1px solid pink;
-  }
-`;
 const CardWrapper = styled.div`
   border: 1px solid transparent;
   position: relative;

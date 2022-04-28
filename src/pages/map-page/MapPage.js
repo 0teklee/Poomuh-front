@@ -6,7 +6,6 @@ import SearchBar from './SearchBar';
 import Header from '../../components/header/Header';
 import { GlobalContextProvider } from './context';
 import { RealEstateContext } from './context';
-import ListWrapper from './ListWrapper';
 
 //Context API 사용
 
