@@ -10,10 +10,10 @@ function PreemptRoomCard({ data }) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        token: token, //token key는 string이 안됨. ESLINT문제?
+        token: token,
       },
       // body: JSON.stringify({
-      //   isLike: false,
+      //   is_like: false,
       // }),
     }).then(res => res.json());
 
@@ -22,7 +22,7 @@ function PreemptRoomCard({ data }) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        token: token, //token key는 string이 안됨. ESLINT?
+        token: token,
       },
     }).then(res => res.json());
   };
@@ -41,7 +41,7 @@ function PreemptRoomCard({ data }) {
           <ContentWrapper>
             <Type>{data.category_type}</Type>
             <Price>
-              {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
+              {data.trade_types.length === 1 && data.trade_types[0] === '전세' //배열데이터[월세,전세] or [전세]
                 ? `전세 ${Math.floor(data.price_main / 10000)}억${
                     Math.floor(data.price_main) -
                       Math.floor(data.price_main / 10000) * 10000 ===
