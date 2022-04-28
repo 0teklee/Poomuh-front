@@ -7,6 +7,7 @@ import NavBar from '../favorite-recent/NavBar';
 
 function FavoritePreempt() {
   const [preemptRoom, setPreemptRoom] = useState([]);
+  const [updatedPreemptRoom, setUpdatedPreemptRoom] = useState(false);
   const token = localStorage.getItem('access_token');
 
   console.log(preemptRoom);
@@ -16,7 +17,7 @@ function FavoritePreempt() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        access_token: token,
+        token: token,
       },
     })
       .then(res => res.json())
@@ -31,7 +32,11 @@ function FavoritePreempt() {
     //   .then(data => {
     //     setPreemptRoom(data);
     //   });
-  }, []);
+  }, [updatedPreemptRoom]);
+
+  const updatePreempt = () => {
+    setUpdatedPreemptRoom(() => !updatedPreemptRoom);
+  };
 
   return (
     <Wrapper>
@@ -53,7 +58,11 @@ function FavoritePreempt() {
         ) : (
           <CardWrapper>
             {preemptRoom.map(data => (
-              <PreemptRoomCard key={data.id} data={data} />
+              <PreemptRoomCard
+                key={data.id}
+                data={data}
+                updatePreempt={updatePreempt}
+              />
             ))}
           </CardWrapper>
         )}

@@ -11,16 +11,12 @@ function RecentRoomCard({ data }) {
     setLike(like ? false : true);
 
     //찜 변경 API(회원만 가능) *******************************************************************
-    //프론트 로직 : 하트 클릭시 state 값 변경 및 찜변경 API에 GET요청 ***isLike 값 안줘도 구현이 가능한지 궁금***
-    fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+    fetch(`http://localhost:8000/favorites/likes/${data.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        access_token: token,
+        token: token,
       },
-      // body: JSON.stringify({
-      //   isLike: like,
-      // }),
     }).then(res => res.json());
   };
 
@@ -48,7 +44,7 @@ function RecentRoomCard({ data }) {
           <ContentWrapper>
             <Type>{data.category_type}</Type>
             <Price>
-              {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
+              {data.trade_types.length === 1 && data.trade_types[0] === '전세' //배열데이터[월세,전세] or [전세]
                 ? `전세 ${Math.floor(data.price_main / 10000)}억${
                     Math.floor(data.price_main) -
                       Math.floor(data.price_main / 10000) * 10000 ===

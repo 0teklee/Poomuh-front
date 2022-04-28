@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IoMdHeart } from 'react-icons/io';
 
-function PreemptRoomCard({ data }) {
+function PreemptRoomCard({ data, updatePreempt }) {
   const token = localStorage.getItem('access_token');
   const updateLike = () => {
     //찜 변경 API (회원만 가능) *******************************************************************
@@ -10,21 +10,19 @@ function PreemptRoomCard({ data }) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        access_token: token,
+        token: token,
       },
-      // body: JSON.stringify({
-      //   is_like: false,
-      // }),
     }).then(res => res.json());
 
+    updatePreempt();
     //찜한 방 API *******************************************************************
-    fetch('http://localhost:8000/favorites/likes', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        access_token: token,
-      },
-    }).then(res => res.json());
+    // fetch('http://localhost:8000/favorites/likes', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     token: token,
+    //   },
+    // }).then(res => res.json());
   };
 
   return (
