@@ -134,7 +134,6 @@ const Verification = ({ setShow }) => {
     let requiredResult = checkRequiredVerif();
     if (requiredResult === 3) {
       setShowVerif(true);
-      console.log('showVerif', showVerif);
     } else setShowVerif(false);
     const name = userInfo.name;
     if (name && idNum && secDigit && requiredResult === 3) {
