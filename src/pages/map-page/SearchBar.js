@@ -1,23 +1,40 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import { IoIosSearch, IoMdRefresh } from 'react-icons/io';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import { RealEstateContext, RealEstateContextDispatch } from './context';
 import RoomTypeModal from './RoomTypeModal';
 import TradeTypeModal from './TradeTypeModal';
+import SearchModal from './SearchModal';
 
 function SearchBar() {
-  const RealEstate = useContext(RealEstateContext);
-  const RealEstateDispatch = useContext(RealEstateContextDispatch);
   const [roomTypeModal, setRoomTypeModal] = useState(false);
   const [tradeTypeModal, setTradeTypeModal] = useState(false);
+  const [searchModal, setSearchModal] = useState({
+    searchText: '',
+    isOn: false,
+    addressModalOn: false,
+    estateModalOn: false,
+    searchResult: '',
+    addressResult: [],
+  });
 
+  const { kakao } = window;
+  const geocoder = new kakao.maps.services.Geocoder();
+  // 주소 검색 콜백 함수
+  const geoSearch = (result, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      setSearchModal({ ...searchModal, addressResult: result });
+      return;
+    }
+  };
   const tradeModalHandler = e => {
     if (e.target !== e.currentTarget) {
       return;
     }
     setTradeTypeModal(prev => !prev);
     setRoomTypeModal(false);
+    setSearchModal({ ...searchModal, isOn: false });
   };
 
   const roomModalHandler = e => {
@@ -26,60 +43,132 @@ function SearchBar() {
     }
     setRoomTypeModal(prev => !prev);
     setTradeTypeModal(false);
+    setSearchModal({ ...searchModal, isOn: false });
   };
 
-  return (
-    <Wrapper>
-      <SearchSection>
-        <IoIosSearch size="20px" className="icon" />
-        <input type="text" />
-      </SearchSection>
-      <FilterSection>
-        <button
-          style={{ margin: '0 8px' }}
-          onClick={() => console.log(RealEstate)}
-        >
-          클릭
-        </button>
-        <DropDown onClick={roomModalHandler}>
-          <span onClick={roomModalHandler}>
-            원룸, 투·쓰리룸, 오피스텔·도시형
-          </span>
-          {roomTypeModal ? (
-            <BsChevronUp size="16px" />
-          ) : (
-            <BsChevronDown size="16px" />
-          )}
-          {roomTypeModal && (
-            <ModalPosition>
-              <RoomTypeModal />
-            </ModalPosition>
-          )}
-        </DropDown>
+  const CloseHandler = () => {
+    setRoomTypeModal(false);
+    setTradeTypeModal(false);
+    setSearchModal({ ...searchModal, isOn: false });
+  };
 
-        <DropDown onClick={tradeModalHandler}>
-          <span onClick={tradeModalHandler}> 월세, 전세</span>
-          {tradeTypeModal ? (
-            <BsChevronUp size="16px" />
-          ) : (
-            <BsChevronDown size="16px" />
-          )}
-          {tradeTypeModal && (
+  const useOutSideRef = () => {
+    const ref = useRef('');
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          CloseHandler();
+        }
+      }
+      document.addEventListener('click', handleClickOutside);
+      return () => {
+        document.removeEventListener('click', handleClickOutside);
+      };
+    });
+    return ref;
+  };
+  const outerRef = useOutSideRef('');
+
+  const searchTextHandler = ({ target }) => {
+    if (2 <= target.value.length) {
+      setSearchModal({ ...searchModal, isOn: true, searchText: target.value });
+      setTradeTypeModal(false);
+      setRoomTypeModal(false);
+      // 검색 시 주소 검색 결과 배열 state 추가
+      geocoder.addressSearch(target.value, geoSearch);
+    } else {
+      setSearchModal({
+        ...searchModal,
+        isOn: false,
+        searchText: null,
+        addressResult: [],
+      });
+    }
+  };
+
+  // 매물 검색 fetch
+  const getSearchResult = () => {
+    const filter = new URLSearchParams(searchModal.search).toString;
+    // 한국어 검색어를 헤더에 넣어서 non ISO-8859-1 code point 에러 발생. / Esint가 자동으로 쉼표를 지우기 때문으로 추정
+    // 쿼리 스트링으로 대체
+    // fetch('검색 URI/endpoint/search=`${filter', {
+    fetch('data/searchResult.json', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(data => setSearchModal({ ...searchModal, searchResult: data }))
+      .catch(err => {
+        setSearchModal({ ...searchModal, searchResult: false });
+      });
+  };
+
+  // 매물 검색 업데이트 useEffect
+  useEffect(() => {
+    if (!searchModal.searchText || searchModal.searchText.length < 2) {
+      return;
+    }
+    getSearchResult();
+  }, [searchModal.searchText]);
+
+  useEffect(() => {}, []);
+
+  return (
+    <div ref={outerRef}>
+      <Wrapper>
+        <SearchSection>
+          <IoIosSearch size="20px" className="icon" />
+          <input type="text" onKeyUp={searchTextHandler} />
+          {searchModal.isOn ? (
             <ModalPosition>
-              <TradeTypeModal />
+              <SearchModal
+                result={searchModal.searchResult}
+                addressResult={searchModal.addressResult}
+              />
             </ModalPosition>
-          )}
-        </DropDown>
-        <Refresh>
-          <IoMdRefresh />
-        </Refresh>
-      </FilterSection>
-    </Wrapper>
+          ) : null}
+        </SearchSection>
+        <FilterSection>
+          <DropDown onClick={roomModalHandler}>
+            <span id="roomModalBtn" onClick={roomModalHandler}>
+              원룸, 투·쓰리룸, 오피스텔·도시형
+            </span>
+            {roomTypeModal ? (
+              <BsChevronUp size="16px" onClick={roomModalHandler} />
+            ) : (
+              <BsChevronDown size="16px" onClick={roomModalHandler} />
+            )}
+            {roomTypeModal && (
+              <ModalPosition>
+                <RoomTypeModal />
+              </ModalPosition>
+            )}
+          </DropDown>
+          <DropDown onClick={tradeModalHandler}>
+            <span onClick={tradeModalHandler}> 월세, 전세</span>
+            {tradeTypeModal ? (
+              <BsChevronUp size="16px" onClick={tradeModalHandler} />
+            ) : (
+              <BsChevronDown size="16px" onClick={tradeModalHandler} />
+            )}
+            {tradeTypeModal && (
+              <ModalPosition>
+                <TradeTypeModal />
+              </ModalPosition>
+            )}
+          </DropDown>
+          <Refresh>
+            <IoMdRefresh />
+          </Refresh>
+        </FilterSection>
+      </Wrapper>
+    </div>
   );
 }
 
 const Wrapper = styled.div`
-  flex: 0 0 auto;
   display: flex;
   width: 100%;
   height: 64px;
@@ -89,17 +178,22 @@ const Wrapper = styled.div`
   top: 10;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 9999;
 `;
+
 const SearchSection = styled.div`
   display: flex;
+  position: relative;
+  width: 25rem;
   align-items: center;
-  width: 20rem;
   border-right: 1px solid rgb(205, 205, 205);
+
   .icon {
-    padding-left: 20px;
+    flex: 1;
+    padding-left: 10px;
   }
   input {
+    flex: 5;
     height: 36px;
     border: none;
     font-size: 1rem;
@@ -114,7 +208,7 @@ const FilterSection = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 0 0.5rem 0.5rem;
   position: relative;
 `;
 
@@ -134,7 +228,6 @@ const DropDown = styled.button`
   font-weight: 700;
   position: relative;
   cursor: pointer;
-
   &:hover {
     background: rgb(205, 205, 205);
   }
@@ -148,15 +241,15 @@ const DropDown = styled.button`
 `;
 const Refresh = styled.div`
   flex: 1;
-  width: 80%;
   text-align: end;
+  position: relative;
+  right: 10px;
 `;
+
 const ModalPosition = styled.div`
-  width: 300px;
   position: absolute;
-  top: 35px;
+  top: 50px;
   left: 0;
   pointer-events: painted;
 `;
-
 export default SearchBar;
