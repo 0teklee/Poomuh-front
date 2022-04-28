@@ -21,7 +21,7 @@ function Map() {
   // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 받는 fetch 함수
   const sendBoundGetItem = () => {
     // fetch('백엔드에서 좌표 범위 내의 매물을 요청하는 URI로 변경', {
-    fetch('data/realEstate.json', {
+    fetch(`http://localhost:8000/estate`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -52,7 +52,7 @@ function Map() {
           });
           return;
         } else {
-          RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: data });
+          RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: data.map });
         }
       });
   };
@@ -133,6 +133,7 @@ function Map() {
     map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
 
     RealEstateDispatch({ type: 'UPDATE_MAP', map: map });
+    RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
 
     kakao.maps.event.addListener(map, 'zoom_changed', () => {
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
