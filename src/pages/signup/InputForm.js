@@ -160,7 +160,7 @@ const InputhtmlForm = ({ setShow }) => {
             onChange={onChangePassword}
           />
           {passwordError && (
-            <div class="checkValid">
+            <div className="checkValid">
               비밀번호는 문자,숫자,특수문자를 포함하여 8~20자 이내로 입력하세요.
             </div>
           )}
@@ -241,9 +241,12 @@ const NextButton = styled.div`
   font-size: 13px;
   font-weight: 900;
   text-align: center;
-  ${({ activeBtnInput }) => {
-    return activeBtnInput ? `background-color: #4379fa; cursor:pointer` : null;
-  }}
+  transition: all 150ms ease-out 0s
+    ${({ activeBtnInput }) => {
+      return activeBtnInput
+        ? `background-color: #4379fa; cursor:pointer`
+        : null;
+    }};
 `;
 
 export default InputhtmlForm;
