@@ -241,12 +241,16 @@ const NextButton = styled.div`
   font-size: 13px;
   font-weight: 900;
   text-align: center;
-  transition: all 150ms ease-out 0s
-    ${({ activeBtnInput }) => {
-      return activeBtnInput
-        ? `background-color: #4379fa; cursor:pointer`
-        : null;
-    }};
+  border-radius: 2px;
+  transition: 0.15s;
+  ${({ activeBtnInput }) => {
+    return activeBtnInput
+      ? `background-color: #4379fa; cursor:pointer;      
+      :hover {
+      background-color: #0039bf;
+    }`
+      : null;
+  }};
 `;
 
 export default InputhtmlForm;
