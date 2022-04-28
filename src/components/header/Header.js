@@ -11,7 +11,7 @@ function Header() {
       </LogoWrapper>
       <MenuWrapper>
         <Link onClick={() => navigate('/search')}>지도</Link>
-        <Link onClick={() => navigate('/favorite/recent-room')}>관심목록</Link>
+        <Link onClick={() => navigate('/favorites/recent-room')}>관심목록</Link>
         <Link onClick={() => navigate('/manage/form')}>방내놓기</Link>
         <Button onClick={() => navigate('/login')}>
           <Login>로그인</Login>
