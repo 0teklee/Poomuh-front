@@ -355,9 +355,11 @@ const Inputs = styled.div`
 
   .inputBox {
     padding: 10px;
-    margin-top: 10px;
     border: 1px solid #f2f2f2;
     border-radius: 3px;
+    input {
+      margin-top: 10px;
+    }
   }
   .inputBox::placeholder {
     font-size: 11px;
@@ -382,8 +384,12 @@ const Inputs = styled.div`
     }
   }
   .authWrapper {
+    // background-color: yellow;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
     .authBox {
-      width: 75%;
+      width: 73%;
     }
   }
 `;
@@ -416,9 +422,9 @@ const CheckBoxes = styled.div`
 `;
 
 const AuthButton = styled.span`
-  width: 35%;
+  width: 25%;
   padding: 12px;
-  margin-left: 5px;
+  // margin-left: 5px;
   color: white;
   background-color: #dfdfdf;
   border-radius: 3px;
