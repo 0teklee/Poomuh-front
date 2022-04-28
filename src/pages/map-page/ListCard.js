@@ -79,7 +79,7 @@ function ListCard({ data }) {
               </Like>
             </ImageWrapper>
             <InfoWrapper>
-              <p class="price">
+              <p className="price">
                 {/* {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
                   ? `전세 ${Math.floor(data.price_main / 10000)}억${
                       Math.floor(data.price_main) -

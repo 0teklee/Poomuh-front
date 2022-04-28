@@ -5,6 +5,7 @@ import Map from './Map';
 import SearchBar from './SearchBar';
 import Header from '../../components/header/Header';
 import { GlobalContextProvider } from './context';
+
 //Context API 사용
 
 function MapPage() {
