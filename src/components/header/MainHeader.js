@@ -13,7 +13,7 @@ function MainHeader() {
         </LogoWrapper>
         <MenuWrapper>
           <Link onClick={() => navigate('/search')}>지도</Link>
-          <Link onClick={() => navigate('/favorite/recent-room')}>
+          <Link onClick={() => navigate('/favorites/recent-room')}>
             관심목록
           </Link>
           <Link onClick={() => navigate('/manage/form')}>방내놓기</Link>

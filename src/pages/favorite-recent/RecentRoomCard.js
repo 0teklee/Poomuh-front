@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 
 function RecentRoomCard({ data }) {
-  const [like, setLike] = useState(data.isLike);
+  const [like, setLike] = useState(data.is_like);
   const navigate = useNavigate();
   const token = localStorage.getItem('access_token');
+
   const updateLike = () => {
     setLike(like ? false : true);
 
@@ -27,7 +28,7 @@ function RecentRoomCard({ data }) {
           <ImageWrapper>
             <Image alt="image" src={data.image_url}></Image>
             <Like>
-              {data.hasOwnProperty('isLike') ? (
+              {token ? (
                 like ? (
                   <IoMdHeart color="red" onClick={() => updateLike()} />
                 ) : (
@@ -39,12 +40,24 @@ function RecentRoomCard({ data }) {
                   onClick={() => navigate('/login')}
                 />
               )}
+              {/* {data.hasOwnProperty('is_like') ? (
+                like ? (
+                  <IoMdHeart color="red" onClick={() => updateLike()} />
+                ) : (
+                  <IoMdHeartEmpty color="white" onClick={() => updateLike()} />
+                )
+              ) : (
+                <IoMdHeartEmpty
+                  color="white"
+                  onClick={() => navigate('/login')}
+                />
+              )} */}
             </Like>
           </ImageWrapper>
           <ContentWrapper>
             <Type>{data.category_type}</Type>
             <Price>
-              {data.trade_types.length === 1 && data.trade_types[0] === '전세' //배열데이터[월세,전세] or [전세]
+              {data.trade_type.length === 1 && data.trade_type[0] === '전세' //배열데이터[월세,전세] or [전세]
                 ? `전세 ${Math.floor(data.price_main / 10000)}억${
                     Math.floor(data.price_main) -
                       Math.floor(data.price_main / 10000) * 10000 ===
@@ -58,7 +71,7 @@ function RecentRoomCard({ data }) {
             </Price>
             <Informations>
               {`${data.current_floor},
-              ${data.supply_size}`}
+              ${data.exclusive_size}`}
               m<sup>2</sup>
               <br />
               {data.description_title}
