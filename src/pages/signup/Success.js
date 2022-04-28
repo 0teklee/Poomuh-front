@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { UserInfoContext } from './signupContext';
 
 const Success = () => {
+  const userInfo = useContext(UserInfoContext);
+  const user = userInfo.nickname;
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
       <Heading>가입완료</Heading>
       <Contents>
-        <span className="nickname">Hani 님</span>
+        <span>{user}님</span>
         <span>환영합니다.</span>
       </Contents>
-      <SuccessButton>
+      <SuccessButton onClick={() => navigate('/login')}>
         <span>확인</span>
       </SuccessButton>
     </Wrapper>

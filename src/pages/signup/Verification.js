@@ -138,7 +138,7 @@ const Verification = ({ setShow }) => {
     const name = userInfo.name;
     if (name && idNum && secDigit && requiredResult === 3) {
       setActiveBtnVerif(true);
-    } else setActiveBtnVerif(false);
+    } else setShowVerif(false);
   }, [checksVerif]);
 
   return (
