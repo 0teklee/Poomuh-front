@@ -9,10 +9,12 @@ function FavoritePreempt() {
   const [preemptRoom, setPreemptRoom] = useState([]);
 
   useEffect(() => {
-    // fetch('찜한방 API', {
+    //찜한방 API (회원만 가능, 로그인 토큰 필요)
+    // fetch('http://localhost:8000/favorite/likes', {
     //   method: 'GET',
     //   headers: {
     //     'Content-Type': 'application/json',
+    //     token: 'token', //token key는 string이 안됨. ESLINT?
     //   },
     //   body: JSON.stringify({
     //     recentRoom: localStorage.recentRoom,
@@ -26,6 +28,7 @@ function FavoritePreempt() {
         setPreemptRoom(data);
       });
   }, []);
+
   return (
     <Wrapper>
       <Header />

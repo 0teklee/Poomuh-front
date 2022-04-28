@@ -41,7 +41,6 @@ function List() {
                   mouseOnEstate(data.latitude, data.longitude);
                 }}
                 onMouseLeave={() => mouseOutEstate()}
-                key={data.id}
               >
                 <ListCard
                   data={data}
@@ -57,7 +56,6 @@ function List() {
                   mouseOnEstate(data.latitude, data.longitude);
                 }}
                 onMouseLeave={() => mouseOutEstate()}
-                key={data.id}
               >
                 <ListCard
                   data={data}

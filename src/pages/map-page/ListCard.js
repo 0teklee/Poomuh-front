@@ -9,14 +9,16 @@ function ListCard({ data, mouseOnEstate, mouseOutEstate }) {
   const navigate = useNavigate();
   const RealEstate = useContext(RealEstateContext);
 
-  // 86번째줄 데이터타입 없어서 주석처리 안하면 렌더링 안됨
+  // 86번째줄 데이터타입 없어서 주석처리 안하면 렌더링 안됨,
   const updateLike = () => {
     setLike(like ? false : true);
 
-    fetch('매물 좋아요 업데이트 API', {
-      method: 'POST',
+    //찜 변경 API(회원만 가능)
+    fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        token: 'token',
       },
       body: JSON.stringify({
         isLike: like,

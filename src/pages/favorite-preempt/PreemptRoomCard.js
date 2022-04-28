@@ -3,11 +3,31 @@ import styled from 'styled-components';
 import { IoMdHeart } from 'react-icons/io';
 
 function PreemptRoomCard({ data }) {
-  // const [like, setLike] = useState(data.isLike);
-
   const updateLike = () => {
-    console.log('나를 누르면 찜한방에서 사라지지');
+    // //찜 변경 API (회원만 가능)
+    // fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     token: 'token', //token key는 string이 안됨. ESLINT문제?
+    //   },
+    //   body: JSON.stringify({
+    //     recentRoom: localStorage.recentRoom,
+    //   }),
+    // }).then(res => res.json());
+    // //찜한 방 API
+    // fetch('http://localhost:8000/favorite/likes', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     token: 'token', //token key는 string이 안됨. ESLINT?
+    //   },
+    //   body: JSON.stringify({
+    //     recentRoom: localStorage.recentRoom,
+    //   }),
+    // }).then(res => res.json());
   };
+
   return (
     <>
       {data.length === 0 ? null : (
