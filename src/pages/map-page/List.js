@@ -48,7 +48,7 @@ function List() {
       )
         .then(res => res.json())
         .then(data => {
-          if (data.map.length < 5) {
+          if (data.map.length < 4) {
             setEstateList(estateList.concat(data.map));
             setScrollHelper(1);
           } else {
@@ -82,7 +82,7 @@ function List() {
   useEffect(() => {
     let observer;
     if (target.current) {
-      observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
+      observer = new IntersectionObserver(handleObserver, { threshold: 0.2 });
       observer.observe(target.current);
     }
   }, []);
@@ -102,7 +102,6 @@ function List() {
 
   const mouseOnEstate = useCallback(
     (latitude, longitude) => {
-      console.log(latitude, ':', longitude);
       let position = new kakao.maps.LatLng(latitude, longitude);
       circle.current.setPosition(position);
       circle.current.setMap(map);
@@ -130,14 +129,17 @@ function List() {
           </CardWrapper>
         );
       })}
-      <div ref={target} className="targetElement">
-        <p>hi</p>
-      </div>
+      <div ref={target} className="targetElement" />
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  .targetElement {
+    height: 10px;
+    border: 1px solid white;
+  }
+`;
 
 const CardWrapper = styled.div`
   border: 1px solid transparent;
