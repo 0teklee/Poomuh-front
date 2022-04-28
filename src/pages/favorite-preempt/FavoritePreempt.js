@@ -16,9 +16,6 @@ function FavoritePreempt() {
         'Content-Type': 'application/json',
         token: token, //token key는 string이 안됨. ESLINT?
       },
-      body: JSON.stringify({
-        recentRoom: localStorage.recentRoom,
-      }),
     }).then(res => res.json());
 
     //최근본방 목데이터 가져오기
