@@ -22,7 +22,7 @@ function FavoritePreempt() {
     })
       .then(res => res.json())
       .then(data => {
-        setPreemptRoom(data);
+        setPreemptRoom(data.likeEstates);
       })
       .then(console.log(preemptRoom));
 
@@ -33,6 +33,7 @@ function FavoritePreempt() {
     //     setPreemptRoom(data);
     //   });
   }, [updatedPreemptRoom]);
+  // updatedPreemptRoom]);
 
   const updatePreempt = () => {
     setUpdatedPreemptRoom(() => !updatedPreemptRoom);
@@ -104,10 +105,12 @@ const Notification = styled.p`
   text-align: center;
   color: rgb(202, 202, 202);
 `;
-const CardWrapper = styled.p`
+const CardWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 7rem;
+  margin-left: -15px;
 `;
+
 export default FavoritePreempt;
