@@ -5,10 +5,6 @@ import Map from './Map';
 import SearchBar from './SearchBar';
 import Header from '../../components/header/Header';
 import { GlobalContextProvider } from './context';
-<<<<<<< HEAD
-import { RealEstateContext } from './context';
-=======
->>>>>>> a05ee4bacd7de78ecc0efef6f76a5f78118988d3
 
 //Context API 사용
 
