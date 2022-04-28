@@ -14,13 +14,21 @@ function Map() {
   const kakaoMap = mapDOM.current;
   const kakaoClusterer = clustererDOM.current;
   const tradeTypeFilter = RealEstate.tradeTypeFilter;
-  const tradeTypeQuery = Object.entries(tradeTypeFilter)
-    .filter(el => el[1] === true)
-    .map(el => el[0])
-    .toString();
+  let tradeTypeQuery;
 
   // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
   useEffect(() => {
+    if (
+      Object.entries(tradeTypeFilter).filter(el => el[1] === true).length === 0
+    ) {
+      tradeTypeQuery = 'no';
+      console.log(tradeTypeQuery);
+    } else {
+      tradeTypeQuery = Object.entries(tradeTypeFilter)
+        .filter(el => el[1] === true)
+        .map(el => el[0])
+        .toString();
+    }
     mapDOM.current = mapscript();
   }, []);
 
@@ -39,11 +47,17 @@ function Map() {
         },
       }
     )
-      .then(res => res.json())
-      // 에러 핸들링 추후에 수정
+      .then(res => {
+        if (!res.OK) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
       .catch(err => {
+        console.log(err);
         RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: [] });
       })
+      // 에러 핸들링 추후에 수정
       .then(data => {
         // 해당 범위 내의 존재하는 매물이 없다면
         // 백엔드 상에서 realEstate에 빈 배열을 보내주도록 할 것.
@@ -82,6 +96,7 @@ function Map() {
     const clusterStyle = RealEstate.clustererStyle;
 
     if (kakaoMap) {
+      console.log(RealEstate.realEstate);
       const marker = RealEstate.realEstate.map(el => {
         return new kakao.maps.Marker({
           map: kakaoMap,
