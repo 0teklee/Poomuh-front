@@ -13,6 +13,13 @@ function Map() {
   const markerDOM = useRef('');
   const kakaoMap = mapDOM.current;
   const kakaoClusterer = clustererDOM.current;
+  const tradeTypeFilter = RealEstate.tradeTypeFilter;
+  const tradeTypeQuery = Object.entries(tradeTypeFilter)
+    .filter(el => el[1] === true)
+    .map(el => el[0])
+    .toString();
+  const searchText = RealEstate.searchText;
+
   // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
   useEffect(() => {
     mapDOM.current = mapscript();
@@ -21,13 +28,16 @@ function Map() {
   // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 받는 fetch 함수
   const sendBoundGetItem = () => {
     // fetch('백엔드에서 좌표 범위 내의 매물을 요청하는 URI로 변경', {
-    fetch(`http://localhost:8000/estate`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        LatLng: `${RealEstate.mapBounds}`,
-      },
-    })
+    fetch(
+      `http://localhost:8000/estates?tradeType=${tradeTypeQuery}&search=${searchText}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          LatLng: `${RealEstate.mapBounds}`,
+        },
+      }
+    )
       .then(res => res.json())
       // 에러 핸들링 추후에 수정
       .catch(err => {
@@ -36,6 +46,7 @@ function Map() {
       .then(data => {
         // 해당 범위 내의 존재하는 매물이 없다면
         // 백엔드 상에서 realEstate에 빈 배열을 보내주도록 할 것.
+        console.log('searchText >>>>', searchText);
         if (
           Object.values(RealEstate.roomTypeFilter).filter(
             filter => filter.isOn === true
@@ -60,7 +71,7 @@ function Map() {
   // 지도의 범위가 바뀔 때마다 fetch함수가 실행, Context에 범위 내 매물 저장
   useEffect(() => {
     sendBoundGetItem();
-  }, [RealEstate.mapBounds, RealEstate.roomTypeFilter]);
+  }, [RealEstate.mapBounds, RealEstate.roomTypeFilter, tradeTypeFilter]);
 
   // 현재 좌표 범위 내의 매물들이 로드 되고 난 후, 클러스터만 다시 렌더링
 
