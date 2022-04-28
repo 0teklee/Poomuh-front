@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
 function Login() {
+  const navigate = useNavigate();
   const onLogin = () => {
     fetch(`http://localhost:8000/${requestedUrl}/login`, {
       method: 'POST',
@@ -17,6 +19,8 @@ function Login() {
       .then(res => {
         console.log(res.accessToken);
         sessionStorage.setItem('access_token', res.accessToken);
+        alert('로그인 되었습니다.');
+        navigate('/');
       });
   };
 

@@ -72,7 +72,6 @@ const Verification = ({ setShow }) => {
       type: 'UPDATE_USERNAME',
       username: e.target.value,
     });
-    console.log(userInfo.username);
   };
 
   //context에서 전화번호 저장
@@ -128,19 +127,14 @@ const Verification = ({ setShow }) => {
 
   //체크 개수를 확인해서 전체 체크가 되면 모두 동의 체크하기
   useEffect(() => {
-    console.log(checksVerif);
     let checkAllresult = checkAllBtnVerif();
     checkAllresult === 4 ? setTotalCheckVerif(true) : setTotalCheckVerif(false);
     //체크된 필수 사항 개수 구하기
     let requiredResult = checkRequiredVerif();
     if (requiredResult === 3) {
       setShowVerif(true);
-      console.log('showVerif', showVerif);
-    } else setShowVerif(false);
-    const name = userInfo.name;
-    if (name && idNum && secDigit && requiredResult === 3) {
       setActiveBtnVerif(true);
-    } else setActiveBtnVerif(false);
+    } else setShowVerif(false);
   }, [checksVerif]);
 
   return (
