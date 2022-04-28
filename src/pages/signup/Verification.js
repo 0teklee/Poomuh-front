@@ -128,6 +128,7 @@ const Verification = ({ setShow }) => {
 
   //체크 개수를 확인해서 전체 체크가 되면 모두 동의 체크하기
   useEffect(() => {
+    console.log(checksVerif);
     let checkAllresult = checkAllBtnVerif();
     checkAllresult === 4 ? setTotalCheckVerif(true) : setTotalCheckVerif(false);
     //체크된 필수 사항 개수 구하기

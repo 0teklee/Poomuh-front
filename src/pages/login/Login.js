@@ -71,7 +71,7 @@ function Login() {
         <WelcomeMessage>푸망 서비스 이용을 위해 로그인해주세요.</WelcomeMessage>
         <Inputs>
           <div className="inputWrapper">
-            <label for="email">아이디</label>
+            <label htmlFor="email">아이디</label>
             <input
               type="text"
               id="email"
@@ -83,7 +83,7 @@ function Login() {
           </div>
 
           <div className="inputWrapper">
-            <label for="password">비밀번호</label>
+            <label htmlFor="password">비밀번호</label>
             <input
               type="password"
               id="password"
@@ -93,7 +93,7 @@ function Login() {
               ref={pwdInput}
             />
           </div>
-          <label for="remembetId" className="rememberId">
+          <label htmlFor="remembetId" className="rememberId">
             <input type="checkbox" id="rememberId" />
             아이디 저장
           </label>
@@ -102,7 +102,7 @@ function Login() {
           <span>로그인</span>
         </LoginButton>
         <AgentCheckBox>
-          <label for="forAgent" name="중개사 가입">
+          <label htmlFor="forAgent" name="중개사 가입">
             <input type="checkbox" id="forAgent" onClick={onClickAgent} />
             중개인으로 로그인하기
           </label>
