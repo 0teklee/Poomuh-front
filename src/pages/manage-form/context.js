@@ -1,7 +1,7 @@
 import { createContext, useReducer } from 'react';
 
 const initialInfo = {
-  address: '',
+  address_main: '',
   jaddress: '',
   address_dong: '',
   address_ho: '',
@@ -19,6 +19,8 @@ const initialInfo = {
   description_title: '',
   description_detail: '',
   trade_id: [],
+  latitude: '',
+  longitude: '',
 };
 
 export const InfoContext = createContext();
@@ -31,7 +33,7 @@ function infoReducer(state, action) {
     case 'UPDATE_BUILDING_TYPE':
       return { ...state, building_type: action.buildingType };
     case 'UPDATE_ADDRESS':
-      return { ...state, address: action.address };
+      return { ...state, address_main: action.address };
     case 'UPDATE_JADDRESS':
       return { ...state, jaddress: action.jaddress };
     case 'UPDATE_BUILDINGNAME':
@@ -64,6 +66,10 @@ function infoReducer(state, action) {
       return { ...state, price_monthly: action.price_monthly };
     case 'UPDATE_TRADE_ID':
       return { ...state, trade_id: action.trade_id };
+    case 'UPDATE_LONGITUDE':
+      return { ...state, longitude: action.longitude };
+    case 'UPDATE_LATITUDE':
+      return { ...state, latitude: action.latitude };
     default:
       throw new Error(`Unknown action type : ${action.type}`);
   }
