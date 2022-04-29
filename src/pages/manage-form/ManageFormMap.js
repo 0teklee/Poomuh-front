@@ -6,7 +6,7 @@ function ManageFormMap() {
   const { kakao } = window;
   const infoContext = useContext(InfoContext);
   const infoDispatch = useContext(InfoDispatchContext);
-  const Address = infoContext.address;
+  const Address = infoContext.address_main;
   let Lat = 0;
   let Lng = 0;
   const geocoder = new kakao.maps.services.Geocoder();
@@ -29,14 +29,14 @@ function ManageFormMap() {
         if (status === kakao.maps.services.Status.OK) {
           const result = results[0];
           const coords = new kakao.maps.LatLng(result.y, result.x);
-          infoDispatch({ type: 'UPDATE_LATITUDE', latitude: result.y });
-          infoDispatch({ type: 'UPDATE_LONGITUDE', longitude: result.x });
           map.setCenter(coords);
           marker.setPosition(coords);
+          console.log(result.y, result.x);
+          infoDispatch({ type: 'UPDATE_LATITUDE', latitude: result.y });
+          infoDispatch({ type: 'UPDATE_LONGITUDE', longitude: result.x });
         }
       }
     );
-
     return () => {};
   }, [Address]);
   return (
