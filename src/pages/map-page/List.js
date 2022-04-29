@@ -38,10 +38,13 @@ function List() {
   }, []);
 
   const fetchData = () => {
-    fetch(`http://localhost:8000/estates/scroll${isUser}?tradeType=`, {
-      method: 'GET',
-      headers: header,
-    })
+    fetch(
+      `http://localhost:8000/estates/scroll${isUser}?tradeType=${tradeType}`,
+      {
+        method: 'GET',
+        headers: header,
+      }
+    )
       .then(res => res.json())
       .then(data => {
         console.log('data.map :', data.map);
