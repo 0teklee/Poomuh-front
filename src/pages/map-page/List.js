@@ -33,43 +33,41 @@ function List() {
   useEffect(() => {
     if (token) {
       header.token = token;
-      setIsUser('users');
+      setIsUser('/users');
     }
   }, []);
 
-  const fetchData = async () => {
-    setTimeout(async () => {
-      await fetch(
-        `http://localhost:8000/estates/scroll/${isUser}?tradeType=${tradeType}`,
-        {
-          method: 'GET',
-          headers: header,
+  const fetchData = () => {
+    fetch(`http://localhost:8000/estates/scroll${isUser}?tradeType=`, {
+      method: 'GET',
+      headers: header,
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log('data.map :', data.map);
+        if (data.map.length < 4) {
+          setEstateList(estateList.concat(data.map));
+          setScrollHelper(1);
+        } else {
+          setEstateList(estateList.concat(data.map));
+          setScrollHelper(0);
         }
-      )
-        .then(res => res.json())
-        .then(data => {
-          if (data.map.length < 5) {
-            setEstateList(estateList.concat(data.map));
-            setScrollHelper(1);
-          } else {
-            setEstateList(estateList.concat(data.map));
-            setScrollHelper(0);
-          }
-          setOffset(prev => prev + 1);
-        });
-    }, 700);
+      });
   };
 
   //스크롤이 마지막에 도착하면 scrollHelper를 truthy로 변경
   const handleObserver = async ([entry], observer) => {
     if (entry.isIntersecting) {
+      setOffset(prev => prev + 1);
       setScrollHelper(1);
     }
   };
 
   useEffect(() => {
     setEstateList([]);
+    setOffset(0);
     fetchData();
+    console.log('mapBounds :', header.LatLng);
   }, [RealEstate.mapBounds]);
 
   //scrollHelper값이 0->1로 바뀌면 fetch
@@ -90,7 +88,7 @@ function List() {
   let circle = useRef(
     new kakao.maps.Circle({
       center: new kakao.maps.LatLng(0, 0), // 원의 중심좌표 입니다
-      radius: 50, // 미터 단위의 원의 반지름입니다
+      radius: 300, // 미터 단위의 원의 반지름입니다
       strokeWeight: 0, // 선의 두께입니다
       strokeColor: '#E8630A', // 선의 색깔입니다
       strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -100,15 +98,11 @@ function List() {
     })
   );
 
-  const mouseOnEstate = useCallback(
-    (latitude, longitude) => {
-      console.log(latitude, ':', longitude);
-      let position = new kakao.maps.LatLng(latitude, longitude);
-      circle.current.setPosition(position);
-      circle.current.setMap(map);
-    },
-    [kakao.maps.LatLng, map]
-  );
+  const mouseOnEstate = (latitude, longitude) => {
+    let position = new kakao.maps.LatLng(latitude, longitude);
+    circle.current.setPosition(position);
+    circle.current.setMap(map);
+  };
 
   const mouseOutEstate = () => {
     circle.current.setMap(null);
@@ -121,7 +115,7 @@ function List() {
           <CardWrapper key={index}>
             <div
               onMouseEnter={() => {
-                mouseOnEstate(data.latitude, data.longitude);
+                mouseOnEstate(data.lat, data.lng);
               }}
               onMouseLeave={mouseOutEstate}
             >
@@ -130,14 +124,17 @@ function List() {
           </CardWrapper>
         );
       })}
-      <div ref={target} className="targetElement">
-        <p>hi</p>
-      </div>
+      <div ref={target} className="targetElement" />
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  .targetElement {
+    height: 30px;
+    border: 1px solid white;
+  }
+`;
 
 const CardWrapper = styled.div`
   border: 1px solid transparent;
