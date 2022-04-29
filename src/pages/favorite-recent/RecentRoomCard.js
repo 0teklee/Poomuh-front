@@ -88,12 +88,13 @@ const Wrapper = styled.div`
   width: 280px;
   margin-bottom: 4rem;
   cursor: pointer;
+  margin-left: 15px;
 `;
 const ImageWrapper = styled.div`
   position: relative;
   width: 280px;
   height: 186px;
-
+  border-radius: 3px;
   img {
     object-fit: cover;
     width: 100%;

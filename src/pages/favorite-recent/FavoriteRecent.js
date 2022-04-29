@@ -114,8 +114,9 @@ const Notification = styled.p`
 `;
 const CardWrapper = styled.p`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 7rem;
+  margin-left: -15px;
 `;
 export default FavoriteRecent;
