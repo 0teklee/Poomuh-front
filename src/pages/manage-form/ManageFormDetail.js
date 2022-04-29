@@ -19,7 +19,7 @@ function ManageFormDetail() {
       <RowWrapper>
         <RowHead>제목</RowHead>
         <RowContent>
-          <textarea
+          <input
             className="title"
             placeholder="예 ) 신논현역 도보 5분거리, 혼자 살기 좋은 방입니다."
             onChange={handleTitle}
@@ -77,20 +77,24 @@ const RowHead = styled.div`
   }
 `;
 const RowContent = styled.div`
+  flex: 1;
   width: 80%;
   padding: 20px;
   border-bottom: 1px solid rgb(226, 226, 226);
-  textarea {
+  textarea,
+  input {
     width: -webkit-fill-available;
     border: 1px solid rgb(226, 226, 226);
     color: rgb(76, 76, 76);
     font-size: 14px;
     &::placeholder {
+      line-height: 2;
       color: #888888;
     }
     resize: none;
   }
-  textarea:focus {
+  textarea:focus,
+  input:focus {
     outline: none;
     border: 1px solid rgb(50, 108, 249);
   }

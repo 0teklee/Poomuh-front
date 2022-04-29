@@ -17,23 +17,25 @@ function ManageForm() {
   // map 라이브러리 사용하여 refactor
   // css 하드코딩 된 부분 수정 22/04/22
   return (
-    <Wrapper>
+    <>
       <Header />
-      <TitleWrapper>
-        <Title>방내놓기</Title>
-      </TitleWrapper>
-      <ManageNav select="form" />
-      <GlobalContextProvider>
-        <ManageFormNotice />
-        <ManageFormRoomType />
-        <ManageFormAddress />
-        <ManageFormTradeType />
-        <ManageFormRoomInfo />
-        <ManageFormDetail />
-        <ManageFormSend />
-      </GlobalContextProvider>
+      <Wrapper>
+        <TitleWrapper>
+          <Title>방내놓기</Title>
+        </TitleWrapper>
+        <ManageNav select="form" />
+        <GlobalContextProvider>
+          <ManageFormNotice />
+          <ManageFormRoomType />
+          <ManageFormAddress />
+          <ManageFormTradeType />
+          <ManageFormRoomInfo />
+          <ManageFormDetail />
+          <ManageFormSend />
+        </GlobalContextProvider>
+      </Wrapper>
       <Footer />
-    </Wrapper>
+    </>
   );
 }
 

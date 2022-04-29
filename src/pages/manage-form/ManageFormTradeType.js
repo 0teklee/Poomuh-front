@@ -6,9 +6,16 @@ function Trade({ name, close }) {
   const sample = useRef('');
   const sampleMonthly = useRef('');
   const InfoDispatch = useContext(InfoDispatchContext);
+  const Info = useContext(InfoContext);
 
   const handlePriceMain = e => {
     InfoDispatch({ type: 'UPDATE_PRICE_MAIN', price_main: e.target.value * 1 });
+  };
+  const handlePriceDeposit = e => {
+    InfoDispatch({
+      type: 'UPDATE_PRICE_DEPOSIT',
+      price_deposit: e.target.value * 1,
+    });
   };
   const handlePriceMonthly = e => {
     InfoDispatch({
@@ -16,15 +23,26 @@ function Trade({ name, close }) {
       price_monthly: e.target.value * 1,
     });
   };
+
+  const handleDeleteTradeId = e => {
+    InfoDispatch({
+      type: 'UPDATE_TRADE_ID',
+      trade_id: Info.trade_id.filter(id => id !== e.target.id * 1),
+    });
+  };
   const updateSample = (e, targetRef) => {
-    if (e.target.value * 1 <= 9999) {
+    if (e.target.value.length < 5) {
       targetRef.current.innerText = e.target.value + '만원';
     } else {
-      targetRef.current.innerText =
-        (e.target.value / 10000).toFixed(0) +
-        '억' +
-        (e.target.value - (e.target.value / 10000).toFixed(0) * 10000) +
-        '만원';
+      targetRef.current.innerText = ` ${Math.floor(e.target.value / 10000)}억${
+        Math.floor(e.target.value) -
+          Math.floor(e.target.value / 10000) * 10000 ===
+        0
+          ? ''
+          : Math.floor(e.target.value) -
+            Math.floor(e.target.value / 10000) * 10000 +
+            ' 만원'
+      }`;
     }
   };
   return (
@@ -35,7 +53,7 @@ function Trade({ name, close }) {
           <input
             type="number"
             onChange={e => {
-              handlePriceMain(e);
+              handlePriceDeposit(e);
               updateSample(e, sample);
             }}
             placeholder="보증금"
@@ -50,16 +68,19 @@ function Trade({ name, close }) {
               }
               if (e.target.value * 1 <= 9999) {
                 sampleMonthly.current.innerText = ` /  ${e.target.value} 만원`;
-              } else if (e.target.value === '') {
-                sampleMonthly.current.value = ' / ';
+                return;
               } else {
-                sampleMonthly.current.innerText = ` /  ${(
+                sampleMonthly.current.innerText = ` ${Math.floor(
                   e.target.value / 10000
-                ).toFixed(0)} 억
-                  ${
-                    e.target.value - (e.target.value / 10000).toFixed(0) * 10000
-                  }
-                  만원`;
+                )}억${
+                  Math.floor(e.target.value) -
+                    Math.floor(e.target.value / 10000) * 10000 ===
+                  0
+                    ? ''
+                    : Math.floor(e.target.value) -
+                      Math.floor(e.target.value / 10000) * 10000 +
+                      ' 만원'
+                }`;
               }
             }}
             placeholder="월세"
@@ -85,7 +106,14 @@ function Trade({ name, close }) {
         </>
       )}
 
-      <button className="closeBtn" onClick={close}>
+      <button
+        className="closeBtn"
+        onClick={e => {
+          close(e);
+          handleDeleteTradeId(e);
+        }}
+        id={name === '월세' ? 1 : 2}
+      >
         X
       </button>
     </TradeWrapper>
@@ -97,6 +125,15 @@ function ManageFormTradeType() {
   const [trade, setTrade] = useState([]);
   const deleteCompo = e => {
     setTrade(trade.filter(el => el.key !== e.key));
+  };
+  const InfoDispatch = useContext(InfoDispatchContext);
+  const Info = useContext(InfoContext);
+
+  const handleTradeType = e => {
+    InfoDispatch({
+      type: 'UPDATE_TRADE_ID',
+      trade_id: [...Info.trade_id, e.target.id * 1],
+    });
   };
   return (
     <Wrapper>
@@ -116,7 +153,9 @@ function ManageFormTradeType() {
                 ))}
             <div className="selectButton">
               <button
-                onClick={() => {
+                id={1}
+                onClick={e => {
+                  handleTradeType(e);
                   setTrade([
                     ...trade,
                     {
@@ -130,7 +169,9 @@ function ManageFormTradeType() {
                 월세
               </button>
               <button
-                onClick={() => {
+                id={2}
+                onClick={e => {
+                  handleTradeType(e);
                   setTrade([
                     ...trade,
                     {
@@ -143,9 +184,6 @@ function ManageFormTradeType() {
               >
                 전세
               </button>
-              <input type="checkbox" id="shortTerm" />
-              <label htmlFor="shortTerm" />
-              단기가능
             </div>
           </RowInner>
         </RowContent>
@@ -175,7 +213,7 @@ const RowHead = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 11%;
+  width: 200px;
   padding: 2rem;
   text-align: center;
   font-weight: 700;
@@ -187,8 +225,8 @@ const RowHead = styled.div`
   }
 `;
 const RowContent = styled.div`
+  flex: 1;
   width: 80%;
-  padding: 20px;
   border-bottom: 1px solid rgb(226, 226, 226);
 `;
 
@@ -206,8 +244,7 @@ const RowInner = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    border-top: 1px solid rgb(226, 226, 226);
-    padding-top: 10px;
+    padding: 20px;
     button {
       all: unset;
       width: 100px;
@@ -233,7 +270,8 @@ const TradeWrapper = styled.div`
   display: flex;
   height: 46px;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 40px;
+  border-bottom: 1px solid rgb(226, 226, 226);
   .typeName {
     width: 50px;
     height: 26px;
