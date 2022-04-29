@@ -38,11 +38,15 @@ function List() {
   }, []);
 
   const fetchData = async () => {
+    console.log('header>>', header);
     setTimeout(async () => {
-      await fetch(`http://localhost:8000/estates/users?tradeType=`, {
-        method: 'GET',
-        headers: header,
-      })
+      await fetch(
+        `http://localhost:8000/estates/scroll${isUser}?tradeType=${tradeType}`,
+        {
+          method: 'GET',
+          headers: header,
+        }
+      )
         .then(res => res.json())
         .then(data => {
           if (data.map.length < 5) {
