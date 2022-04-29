@@ -40,18 +40,6 @@ function RecentRoomCard({ data }) {
                   onClick={() => navigate('/login')}
                 />
               )}
-              {/* {data.hasOwnProperty('is_like') ? (
-                like ? (
-                  <IoMdHeart color="red" onClick={() => updateLike()} />
-                ) : (
-                  <IoMdHeartEmpty color="white" onClick={() => updateLike()} />
-                )
-              ) : (
-                <IoMdHeartEmpty
-                  color="white"
-                  onClick={() => navigate('/login')}
-                />
-              )} */}
             </Like>
           </ImageWrapper>
           <ContentWrapper>
