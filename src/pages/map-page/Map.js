@@ -156,7 +156,7 @@ function Map() {
   const mapscript = () => {
     let container = mapContainer.current;
     let options = {
-      center: new kakao.maps.LatLng(37.624915253753194, 127.15122688059974),
+      center: new kakao.maps.LatLng(37.507454314288054, 127.03402073986199),
       level: 4,
       maxLevel: 7,
     };
