@@ -16,6 +16,7 @@ function ManageFormSend() {
   const sendInfo = () => {
     fetch('http://localhost:8000/estates', {
       method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(Info),
       token: token,
     }).then(alert('매물이 등록되었습니다.'));
@@ -23,7 +24,7 @@ function ManageFormSend() {
 
   const verify = () => {
     const {
-      address,
+      address_main,
       address_ho,
       category_id,
       supply_size,
@@ -40,7 +41,7 @@ function ManageFormSend() {
       trade_id,
     } = Info;
     if (
-      !address ||
+      !address_main ||
       !address_ho ||
       !category_id ||
       !supply_size ||
@@ -57,6 +58,7 @@ function ManageFormSend() {
       alert('모든 정보를 입력해주세요');
       return;
     }
+    console.log(Info);
     sendInfo();
   };
 
