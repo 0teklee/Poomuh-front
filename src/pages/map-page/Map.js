@@ -24,7 +24,7 @@ function Map() {
   // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 받는 fetch 함수
   const sendBoundGetItem = () => {
     // fetch('백엔드에서 좌표 범위 내의 매물을 요청하는 URI로 변경', {
-    console.log('지도이벤트 이후 mapBounds 몇번>>> ', RealEstate.mapBounds);
+    console.log('지도이벤트 이후 mapBounds : ', RealEstate.mapBounds);
     if (
       Object.entries(tradeTypeFilter).filter(el => el[1] === true).length === 0
     ) {
