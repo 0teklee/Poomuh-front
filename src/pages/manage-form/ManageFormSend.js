@@ -16,9 +16,8 @@ function ManageFormSend() {
   const sendInfo = () => {
     fetch('http://localhost:8000/estates', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-type': 'application/json', token: token },
       body: JSON.stringify(Info),
-      token: token,
     }).then(alert('매물이 등록되었습니다.'));
   };
 
