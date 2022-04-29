@@ -18,15 +18,14 @@ function ManageFormSend() {
       method: 'POST',
       body: JSON.stringify(Info),
       token: token,
-    }).then();
+    }).then(alert('매물이 등록되었습니다.'));
   };
 
   const verify = () => {
     const {
       address,
       address_ho,
-      room_type,
-      building_type,
+      category_id,
       supply_size,
       exclusive_size,
       building_floor,
@@ -37,24 +36,22 @@ function ManageFormSend() {
       heat_id,
       available_date,
       description_title,
-      description_detai,
+      description_detail,
       trade_id,
     } = Info;
     if (
       !address ||
       !address_ho ||
-      !room_type ||
-      !building_type ||
+      !category_id ||
       !supply_size ||
       !exclusive_size ||
       !building_floor ||
       !current_floor ||
-      !price_main ||
-      !(price_deposit && price_monthly) ||
+      !(price_main || (price_deposit && price_monthly)) ||
       !heat_id ||
       !available_date ||
       !description_title ||
-      !description_detai ||
+      !description_detail ||
       !trade_id
     ) {
       alert('모든 정보를 입력해주세요');
