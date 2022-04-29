@@ -37,25 +37,23 @@ function List() {
     }
   }, []);
 
-  const fetchData = () => {
-    fetch(
-      `http://localhost:8000/estates/scroll${isUser}?tradeType=${tradeType}`,
-      {
+  const fetchData = async () => {
+    setTimeout(async () => {
+      await fetch(`http://localhost:8000/estates/users?tradeType=`, {
         method: 'GET',
         headers: header,
-      }
-    )
-      .then(res => res.json())
-      .then(data => {
-        console.log('data.map :', data.map);
-        if (data.map.length < 4) {
-          setEstateList(estateList.concat(data.map));
-          setScrollHelper(1);
-        } else {
-          setEstateList(estateList.concat(data.map));
-          setScrollHelper(0);
-        }
-      });
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.map.length < 5) {
+            setEstateList(estateList.concat(data.map));
+            setScrollHelper(1);
+          } else {
+            setEstateList(estateList.concat(data.map));
+            setScrollHelper(0);
+          }
+        });
+    }, 700);
   };
 
   //스크롤이 마지막에 도착하면 scrollHelper를 truthy로 변경
