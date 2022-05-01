@@ -21,6 +21,7 @@ const initialInfo = {
   trade_id: [],
   latitude: '',
   longitude: '',
+  real_estate_agent_id: 0,
 };
 
 export const InfoContext = createContext();
@@ -70,6 +71,8 @@ function infoReducer(state, action) {
       return { ...state, longitude: action.longitude };
     case 'UPDATE_LATITUDE':
       return { ...state, latitude: action.latitude };
+    case 'UPDATE_REAL_ESTATE_AGENT_ID':
+      return { ...state, real_estate_agent_id: action.real_estate_agent_id };
     default:
       throw new Error(`Unknown action type : ${action.type}`);
   }
