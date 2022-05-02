@@ -6,7 +6,8 @@ import Login from './pages/login/Login';
 import SignUp from './pages/signup/SignUp';
 import ManageForm from './pages/manage-form/ManageForm';
 import ManageList from './pages/manage-list/ManageList';
-import Favorite from './pages/favorite/Favorite';
+import FavoriteRecent from './pages/favorite-recent/FavoriteRecent';
+import FavoritePreempt from './pages/favorite-preempt/FavoritePreempt';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/search" element={<MapPage />} />
-        <Route path="/favorite" element={<Favorite />} />
+        <Route path="/favorites/recent-room" element={<FavoriteRecent />} />
+        <Route path="/favorites/preempt-room" element={<FavoritePreempt />} />
         <Route path="/manage/form" element={<ManageForm />} />
         <Route path="/manage/list" element={<ManageList />} />
         <Route path="/login" element={<Login />} />

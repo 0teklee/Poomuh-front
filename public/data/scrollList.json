@@ -1,0 +1,34 @@
+[
+  {
+    "title": "콜드스퀘어",
+    "category_id": "원룸",
+    "latitude": 37.62197524055062,
+    "longitude": 127.16017523675508,
+    "supply_size": 34.4,
+    "current_floor": "3층",
+    "price_main": 0,
+    "price_deposit": 0,
+    "price_monthly": 0,
+    "description_title": "!!!!콜드스퀘어 3층 깔끔 개별난방 싸진않음 햇빛은 잘들어옴 입주협의"
+  },
+  {
+    "title": "하남돼지집",
+    "latitude": 37.620842424005616,
+    "longitude": 127.1583774403176
+  },
+  {
+    "title": "수유리우동",
+    "latitude": 37.624915253753194,
+    "longitude": 127.15122688059974
+  },
+  {
+    "title": "수유리우동",
+    "latitude": 37.624915253753194,
+    "longitude": 127.15122688059974
+  },
+  {
+    "title": "수유리우동",
+    "latitude": 37.624915253753194,
+    "longitude": 127.15122688059974
+  }
+]
