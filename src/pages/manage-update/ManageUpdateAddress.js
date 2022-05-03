@@ -11,7 +11,6 @@ function ManageFormAddress() {
   const infoDispatch = useContext(InfoDispatchContext);
   const infoContext = useContext(InfoContext);
   const searchAddressValue = useRef('');
-  const RealEstateId = useParams();
 
   const handleCheck = () => {
     setCheck(prev => !prev);
@@ -35,7 +34,7 @@ function ManageFormAddress() {
   const handleShowModal = () => {
     setShowModal(prev => !prev);
   };
-
+  useEffect(() => {}, []);
   return (
     <Wrapper>
       {showModal && (

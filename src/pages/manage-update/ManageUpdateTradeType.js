@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { InfoContext, InfoDispatchContext } from './context';
 
@@ -7,6 +7,9 @@ function Trade({ name, close }) {
   const sampleMonthly = useRef('');
   const InfoDispatch = useContext(InfoDispatchContext);
   const Info = useContext(InfoContext);
+  const depositRef = useRef('');
+  const monthlyRef = useRef('');
+  const priceMainRef = useRef('');
 
   const handlePriceMain = e => {
     InfoDispatch({ type: 'UPDATE_PRICE_MAIN', price_main: e.target.value * 1 });
@@ -45,6 +48,12 @@ function Trade({ name, close }) {
       }`;
     }
   };
+  useEffect(() => {
+    // depositRef.current.value = Info.price_deposit;
+    // monthlyRef.current.value = Info.price_monthly;
+    // priceMainRef.current.value = Info.price_main;
+    console.log('asd', depositRef.current.value);
+  }, []);
   return (
     <TradeWrapper>
       <span className="typeName">{name}</span>
@@ -57,6 +66,7 @@ function Trade({ name, close }) {
               updateSample(e, sample);
             }}
             placeholder="보증금"
+            ref={depositRef}
           />
           <span>/</span>
           <input
@@ -88,6 +98,7 @@ function Trade({ name, close }) {
               }
             }}
             placeholder="월세"
+            ref={monthlyRef}
           />
           <span className="info" ref={sample}>
             (예 월세 1000만원/50만원)
@@ -103,6 +114,7 @@ function Trade({ name, close }) {
               updateSample(e, sample);
             }}
             placeholder="전세"
+            ref={priceMainRef}
           />
           <span className="info" ref={sample}>
             (예 전세 2000만원)
@@ -139,6 +151,12 @@ function ManageFormTradeType() {
       trade_id: [...Info.trade_id, e.target.id * 1],
     });
   };
+  useEffect(() => {
+    setTrade([
+      { name: '월세', key: tradeKey++ },
+      { name: '전세', key: tradeKey++ },
+    ]);
+  }, []);
   return (
     <Wrapper>
       <Title>거래 정보</Title>

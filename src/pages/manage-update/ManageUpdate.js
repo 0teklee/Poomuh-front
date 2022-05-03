@@ -16,7 +16,6 @@ import ManageUpdateTradeType from './ManageUpdateTradeType';
 function ManageUpdate() {
   // 유효성 검사 추가. 검증 실패시 해당 ref 위치로 스크롤
   // map 라이브러리 사용하여 refactor
-  // css 하드코딩 된 부분 수정 22/04/22
   const RealEstateId = useParams();
   const token = localStorage.getItem('access_token');
 

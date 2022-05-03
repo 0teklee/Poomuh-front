@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { InfoDispatchContext, InfoContext } from './context';
 
@@ -10,6 +10,24 @@ function ManageFormRoomType() {
   const handleSelectRoom = e => {
     infoDispatch({ type: 'UPDATE_CATEGORY', category_id: e.target.value * 1 });
   };
+  useEffect(() => {
+    switch (Info.category_id) {
+      case 1:
+        setSelectBuilding('원룸');
+        break;
+      case 2:
+        setSelectBuilding('빌라');
+        break;
+      case 3:
+        setSelectBuilding('오피스텔');
+        break;
+      case 4:
+        setSelectBuilding('아파트');
+        break;
+      default:
+        return;
+    }
+  }, []);
 
   return (
     <Wrapper>
@@ -32,26 +50,26 @@ function ManageFormRoomType() {
             </li>
             <li>
               <RadioBtn
-                id="투룸/쓰리룸"
-                name="투룸/쓰리룸"
+                id="빌라"
+                name="빌라"
                 value={2}
                 checked={Info.category_id === 2}
                 onChange={e => handleSelectRoom(e)}
               />
-              <Label htmlFor="투룸/쓰리룸">
-                <p>투룸/쓰리룸</p>
+              <Label htmlFor="빌라">
+                <p>빌라</p>
               </Label>
             </li>
             <li>
               <RadioBtn
-                id="빌라"
-                name="빌라"
+                id="오피스텔"
+                name="오피스텔"
                 value={3}
                 checked={Info.category_id === 3}
                 onChange={e => handleSelectRoom(e)}
               />
-              <Label htmlFor="빌라">
-                <p>빌라</p>
+              <Label htmlFor="오피스텔">
+                <p>오피스텔</p>
               </Label>
             </li>
             <li>
