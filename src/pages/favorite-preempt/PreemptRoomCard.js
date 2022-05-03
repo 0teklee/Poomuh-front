@@ -1,30 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IoMdHeart } from 'react-icons/io';
 
-function PreemptRoomCard({ data }) {
+function PreemptRoomCard({ data, updatePreempt }) {
   const token = localStorage.getItem('access_token');
   const updateLike = () => {
     //찜 변경 API (회원만 가능) *******************************************************************
-    fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+    fetch(`http://localhost:8000/favorites/likes/${data.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        token: token, //token key는 string이 안됨. ESLINT문제?
+        token: token,
       },
-      // body: JSON.stringify({
-      //   isLike: false,
-      // }),
     }).then(res => res.json());
 
-    //찜한 방 API *******************************************************************
-    fetch('http://localhost:8000/favorite/likes', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        token: token, //token key는 string이 안됨. ESLINT?
-      },
-    }).then(res => res.json());
+    updatePreempt();
   };
 
   return (
@@ -41,7 +31,7 @@ function PreemptRoomCard({ data }) {
           <ContentWrapper>
             <Type>{data.category_type}</Type>
             <Price>
-              {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
+              {data.trade_type.length === 1 && data.trade_type[0] === '전세' //배열데이터[월세,전세] or [전세]
                 ? `전세 ${Math.floor(data.price_main / 10000)}억${
                     Math.floor(data.price_main) -
                       Math.floor(data.price_main / 10000) * 10000 ===
@@ -55,7 +45,7 @@ function PreemptRoomCard({ data }) {
             </Price>
             <Informations>
               {`${data.current_floor},
-              ${data.supply_size}`}
+              ${data.exclusive_size}`}
               m<sup>2</sup>
               <br />
               {data.description_title}
@@ -72,6 +62,7 @@ const Wrapper = styled.div`
   margin-bottom: 4rem;
   // height: 342px;
   cursor: pointer;
+  margin-left: 15px;
 `;
 const ImageWrapper = styled.div`
   position: relative;

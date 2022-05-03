@@ -5,10 +5,10 @@ import styled from 'styled-components';
 function NavBar({ select }) {
   return (
     <NavWrapper>
-      <NavRecent to="/favorite/recent-room" select={select}>
+      <NavRecent to="/favorites/recent-room" select={select}>
         <Button>최근 본 방</Button>
       </NavRecent>
-      <NavPreempt to="/favorite/preempt-room" select={select}>
+      <NavPreempt to="/favorites/preempt-room" select={select}>
         <Button>찜한 방</Button>
       </NavPreempt>
     </NavWrapper>

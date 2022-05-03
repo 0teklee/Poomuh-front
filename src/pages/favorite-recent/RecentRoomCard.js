@@ -4,23 +4,20 @@ import styled from 'styled-components';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 
 function RecentRoomCard({ data }) {
-  const [like, setLike] = useState(data.isLike);
+  const [like, setLike] = useState(data.is_like);
   const navigate = useNavigate();
   const token = localStorage.getItem('access_token');
+
   const updateLike = () => {
     setLike(like ? false : true);
 
     //찜 변경 API(회원만 가능) *******************************************************************
-    //프론트 로직 : 하트 클릭시 state 값 변경 및 찜변경 API에 GET요청 ***isLike 값 안줘도 구현이 가능한지 궁금***
-    fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+    fetch(`http://localhost:8000/favorites/likes/${data.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         token: token,
       },
-      // body: JSON.stringify({
-      //   isLike: like,
-      // }),
     }).then(res => res.json());
   };
 
@@ -31,7 +28,7 @@ function RecentRoomCard({ data }) {
           <ImageWrapper>
             <Image alt="image" src={data.image_url}></Image>
             <Like>
-              {data.hasOwnProperty('isLike') ? (
+              {token ? (
                 like ? (
                   <IoMdHeart color="red" onClick={() => updateLike()} />
                 ) : (
@@ -48,7 +45,7 @@ function RecentRoomCard({ data }) {
           <ContentWrapper>
             <Type>{data.category_type}</Type>
             <Price>
-              {data.tradeTypes.length === 1 && data.tradeTypes[0] === '전세' //배열데이터[월세,전세] or [전세]
+              {data.trade_type.length === 1 && data.trade_type[0] === '전세' //배열데이터[월세,전세] or [전세]
                 ? `전세 ${Math.floor(data.price_main / 10000)}억${
                     Math.floor(data.price_main) -
                       Math.floor(data.price_main / 10000) * 10000 ===
@@ -62,7 +59,7 @@ function RecentRoomCard({ data }) {
             </Price>
             <Informations>
               {`${data.current_floor},
-              ${data.supply_size}`}
+              ${data.exclusive_size}`}
               m<sup>2</sup>
               <br />
               {data.description_title}

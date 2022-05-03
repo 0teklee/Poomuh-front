@@ -10,26 +10,23 @@ function ManageFormSend() {
     setAgree(prev => !prev);
   };
   const Info = useContext(InfoContext);
+  const token = localStorage.getItem('access_token');
   const navigate = useNavigate();
 
   // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
   const sendInfo = () => {
-    const token = localStorage.getItem('access_token');
-    fetch('uri', {
+    fetch('http://localhost:8000/estates', {
       method: 'POST',
-      headers: { 'Cotent-type': 'application/json', token: token },
+      headers: { 'Content-type': 'application/json', token: token },
       body: JSON.stringify(Info),
-    })
-      .then(res => res.json())
-      .catch(err => console.log(err));
+    }).then(alert('매물이 등록되었습니다.'));
   };
 
   const verify = () => {
     const {
-      address,
+      address_main,
       address_ho,
-      room_type,
-      building_type,
+      category_id,
       supply_size,
       exclusive_size,
       building_floor,
@@ -40,29 +37,28 @@ function ManageFormSend() {
       heat_id,
       available_date,
       description_title,
-      description_detai,
+      description_detail,
       trade_id,
     } = Info;
     if (
-      !address ||
+      !address_main ||
       !address_ho ||
-      !room_type ||
-      !building_type ||
+      !category_id ||
       !supply_size ||
       !exclusive_size ||
       !building_floor ||
       !current_floor ||
-      !price_main ||
-      !(price_deposit && price_monthly) ||
+      !(price_main || (price_deposit && price_monthly)) ||
       !heat_id ||
       !available_date ||
       !description_title ||
-      !description_detai ||
+      !description_detail ||
       !trade_id
     ) {
       alert('모든 정보를 입력해주세요');
       return;
     }
+    console.log(Info);
     sendInfo();
   };
 
