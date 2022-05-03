@@ -49,10 +49,11 @@ function Trade({ name, close }) {
     }
   };
   useEffect(() => {
-    // depositRef.current.value = Info.price_deposit;
-    // monthlyRef.current.value = Info.price_monthly;
-    // priceMainRef.current.value = Info.price_main;
-    console.log('asd', depositRef.current.value);
+    if (depositRef.current && monthlyRef.current && priceMainRef.current) {
+      depositRef.current.value = Info.price_deposit;
+      monthlyRef.current.value = Info.price_monthly;
+      priceMainRef.current.value = Info.price_main;
+    }
   }, []);
   return (
     <TradeWrapper>

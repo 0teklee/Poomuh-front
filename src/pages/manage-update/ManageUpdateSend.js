@@ -10,18 +10,14 @@ function ManageFormSend() {
     setAgree(prev => !prev);
   };
 
-  useEffect(() => {
-    // const realEstateID = useParams();
-    fetch('uri');
-  }, []);
-
   const Info = useContext(InfoContext);
   const navigate = useNavigate();
+  const RealEstateId = useParams();
   // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
   const sendInfo = () => {
     const token = localStorage.getItem('access_token');
-    fetch('uri', {
-      method: 'POST',
+    fetch(`http://localhost:8000/estates/${RealEstateId.id}`, {
+      method: 'PUT',
       headers: { 'Cotent-type': 'application/json', token: token },
       body: JSON.stringify(Info),
     })
