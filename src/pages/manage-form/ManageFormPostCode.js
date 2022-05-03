@@ -15,6 +15,10 @@ function ManageFormPostCode({ handle, val }) {
   const handleAddress = data => {
     infoDispatch({ type: 'UPDATE_ADDRESS', address: data.address });
     infoDispatch({ type: 'UPDATE_JADDRESS', jaddress: data.jibunAddress });
+    infoDispatch({
+      type: 'UPDATE_BUILDINGNAME',
+      buildingName: data.buildingName,
+    });
     val.value = data.address;
   };
 

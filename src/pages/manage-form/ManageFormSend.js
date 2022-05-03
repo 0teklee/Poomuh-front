@@ -8,14 +8,59 @@ function ManageFormSend() {
   const [agree, setAgree] = useState(false);
   const handleAgree = () => {
     setAgree(prev => !prev);
-    console.log(Info);
   };
   const Info = useContext(InfoContext);
-
-  const sendInfo = () => {
-    fetch('uri', { method: 'POST', body: JSON.stringify(Info) }).then();
-  };
+  const token = localStorage.getItem('access_token');
   const navigate = useNavigate();
+  // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
+  const sendInfo = () => {
+    fetch('http://localhost:8000/estates', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json', token: token },
+      body: JSON.stringify(Info),
+    }).then(alert('매물이 등록되었습니다.'));
+  };
+
+  const verify = () => {
+    const {
+      address_main,
+      address_ho,
+      category_id,
+      supply_size,
+      exclusive_size,
+      building_floor,
+      current_floor,
+      price_main,
+      price_deposit,
+      price_monthly,
+      heat_id,
+      available_date,
+      description_title,
+      description_detail,
+      trade_id,
+    } = Info;
+    if (
+      !address_main ||
+      !address_ho ||
+      !category_id ||
+      !supply_size ||
+      !exclusive_size ||
+      !building_floor ||
+      !current_floor ||
+      !(price_main || (price_deposit && price_monthly)) ||
+      !heat_id ||
+      !available_date ||
+      !description_title ||
+      !description_detail ||
+      !trade_id
+    ) {
+      alert('모든 정보를 입력해주세요');
+      return;
+    }
+    console.log(Info);
+    sendInfo();
+  };
+
   return (
     <FlexDiv>
       <Input>
@@ -35,11 +80,7 @@ function ManageFormSend() {
             value="취소"
             onClick={() => navigate('/manage/list')}
           />
-          <input
-            type="button"
-            value="매물등록"
-            onClick={() => console.log(Info)}
-          />
+          <input type="button" value="매물등록" onClick={() => verify()} />
         </FlexDiv>
       </Input>
     </FlexDiv>
@@ -50,6 +91,7 @@ const FlexDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50px;
 `;
 const Input = styled.div`
   .inputCheckbox {

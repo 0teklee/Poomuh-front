@@ -6,6 +6,7 @@ function ManageFormRoomInfo() {
   // 258번째줄 REFACTOR
   const Info = useContext(InfoContext);
   const InfoDispatch = useContext(InfoDispatchContext);
+  const { exclusive_size, supply_size, current_floor, building_floor } = Info;
 
   const SelectOption = num => {
     let result = [];
@@ -41,6 +42,11 @@ function ManageFormRoomInfo() {
     });
   };
   const handleExclusive = e => {
+    if (supply_size < e) {
+      exclusiveSizeMRef.current.value = '';
+      alert('전용 면적은 공급 면적보다 클 수 없습니다.');
+      return;
+    }
     InfoDispatch({
       type: 'UPDATE_EXCLUSIVE_SIZE',
       exclusive_size: e * 1,
@@ -120,12 +126,12 @@ function ManageFormRoomInfo() {
               <Select
                 name="buildingFloor"
                 required
-                onChange={e =>
+                onChange={e => {
                   InfoDispatch({
                     type: 'UPDATE_BUILDING_FLOOR',
                     building_floor: e.target.value,
-                  })
-                }
+                  });
+                }}
               >
                 <option defaultValue style={{ display: 'none' }}>
                   건물 층수 선택
@@ -140,12 +146,20 @@ function ManageFormRoomInfo() {
               <Select
                 name="currentFloor"
                 required
-                onChange={e =>
+                onChange={e => {
+                  if (
+                    building_floor.slice(0, -1) * 1 <
+                    e.target.value.slice(0, -1) * 1
+                  ) {
+                    e.target.value = '';
+                    alert('건물 층수보다 높을 수 없습니다.');
+                    return;
+                  }
                   InfoDispatch({
                     type: 'UPDATE_CURRENT_FLOOR',
                     current_floor: e.target.value,
-                  })
-                }
+                  });
+                }}
               >
                 <option defaultValue style={{ display: 'none' }}>
                   해당 층수 선택
@@ -250,19 +264,19 @@ const FlexDiv = styled.div`
   .size,
   .story {
     display: flex;
-    flex: 1;
     .title {
       display: flex;
       justify-content: center;
+      width: 200px;
       align-items: center;
       padding: 2rem 0;
-      width: 284px;
       text-align: center;
       font-weight: 700;
       background: #fdfdfd;
       border-right: 1px solid rgb(226, 226, 226);
       border-bottom: 1px solid rgb(226, 226, 226);
       div {
+        width: 200px;
         line-height: 1.2;
         p {
           color: #888888;
@@ -272,11 +286,11 @@ const FlexDiv = styled.div`
     }
 
     .inner {
+      /* flex: 0; */
       width: 100%;
       display: flex;
       flex-direction: column;
       div {
-        flex: 1;
         padding: 1rem;
         border-bottom: 1px solid rgb(226, 226, 226);
       }
@@ -307,6 +321,7 @@ const FlexDiv = styled.div`
     }
   }
   .size {
+    flex: 1;
     border-right: 1px solid rgb(226, 226, 226);
   }
   .radioWrapper {
@@ -330,6 +345,7 @@ const RowHead = styled.div`
   }
 `;
 const RowContent = styled.div`
+  flex: 1;
   width: 80%;
   padding: 20px;
   border-bottom: 1px solid rgb(226, 226, 226);
@@ -358,11 +374,12 @@ const RowWrapper = styled.div`
   }
 `;
 const RadioBtn = styled.input`
-display: none;
-&:checked + label {
-  background: rgb(50, 108, 249);
-  border: 1px solid rgb(50, 108, 249);
-  color: rgb(255, 255, 255);
+  display: none;
+  &:checked + label {
+    background: rgb(50, 108, 249);
+    border: 1px solid rgb(50, 108, 249);
+    color: rgb(255, 255, 255);
+  }
 `;
 
 const Label = styled.label`

@@ -18,28 +18,7 @@ function TradeTypeModal() {
   });
 
   // 필터의 state가 업데이트 될 때마다 Context의 지도 범위 내 매물 저장소 업데이트
-  const sendFilter = () => {
-    const filter = new URLSearchParams(RealEstate.tradeTypeFilter).toString();
-    const mapRange = new URLSearchParams(RealEstate.mapBounds).toString();
-    fetch(
-      // `/검색필터URI/endpoint?${filter}&`${mapRange}`
-      `/검색필터URI/endpoint`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-      .then(res => res.json())
-      .then(data => {
-        RealEstateDispatch({
-          type: 'GET_REAL_ESTATE',
-          realEstate: data,
-        });
-      })
-      .catch(err => console.log(err));
-  };
+  const sendFilter = () => {};
 
   const handleCheck = e => {
     const { id } = e.target;

@@ -67,7 +67,11 @@ function ManageFormAddress() {
               <div className="addressText" onChange={e => console.log(e)}>
                 {' '}
                 <span>도로명 : </span>
-                {infoContext.address}
+                {`${infoContext.address_main} ${
+                  infoContext.buildingName
+                    ? `(${infoContext.buildingName})`
+                    : ''
+                }`}
               </div>
               <div className="addressText">
                 <span>지 번 : </span>
