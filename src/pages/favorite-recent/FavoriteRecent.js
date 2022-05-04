@@ -8,34 +8,39 @@ import NavBar from './NavBar';
 function FavoriteRecent() {
   const token = localStorage.getItem('access_token');
   const [recentRoom, setRecentRoom] = useState([]);
+  let arr = localStorage.getItem('recentRoom');
 
   useEffect(() => {
-    //최근본방 API (회원/비회원 분리)*******************************************************************
-    if (token) {
-      fetch('http://localhost:8000/favorites/users/recent', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          recent: JSON.parse(localStorage.recentRoom).join(), //배열 요소들을 string 형태로 보냅니다. ex. 3,4,1,2 (string)
-          token: token,
-          state: 'recent',
-        },
-      })
-        .then(res => res.json())
-        .then(data => setRecentRoom(data.recent))
-        .then(console.log(recentRoom));
+    //최근본방 API (회원/비회원 분리)*****ISSUE: fetch함수 살리면 렌더링안됨**************************************************************
+    if (arr === null) {
+      arr = [];
     } else {
-      fetch('http://localhost:8000/favorites/recent', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          recent: JSON.parse(localStorage.recentRoom).join(),
-          state: 'recent',
-        },
-      })
-        .then(res => res.json())
-        .then(data => setRecentRoom(data.recent))
-        .then(console.log(recentRoom));
+      if (token) {
+        fetch('http://localhost:8000/favorites/users/recent', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            recent: JSON.parse(localStorage.recentRoom).join(), //배열 요소들을 string 형태로 보냅니다. ex. 3,4,1,2 (string)
+            token: token,
+            state: 'recent',
+          },
+        })
+          .then(res => res.json())
+          .then(data => setRecentRoom(data.recent))
+          .then(console.log(recentRoom));
+      } else {
+        fetch('http://localhost:8000/favorites/recent', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            recent: JSON.parse(localStorage.recentRoom).join(),
+            state: 'recent',
+          },
+        })
+          .then(res => res.json())
+          .then(data => setRecentRoom(data.recent))
+          .then(console.log(recentRoom));
+      }
     }
 
     //최근본방 목데이터 API
