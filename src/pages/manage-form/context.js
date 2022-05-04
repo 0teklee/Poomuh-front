@@ -10,6 +10,7 @@ const initialInfo = {
   supply_size: 0,
   exclusive_size: 0,
   building_floor: '',
+  building_name: '',
   current_floor: '',
   price_main: 0,
   price_deposit: 0,
@@ -21,6 +22,7 @@ const initialInfo = {
   trade_id: [],
   latitude: '',
   longitude: '',
+  real_estate_agent_id: 0,
 };
 
 export const InfoContext = createContext();
@@ -37,7 +39,7 @@ function infoReducer(state, action) {
     case 'UPDATE_JADDRESS':
       return { ...state, jaddress: action.jaddress };
     case 'UPDATE_BUILDINGNAME':
-      return { ...state, buildingName: action.buildingName };
+      return { ...state, building_name: action.building_name };
     case 'UPDATE_DONG':
       return { ...state, address_dong: action.dong };
     case 'UPDATE_HO':
@@ -70,6 +72,8 @@ function infoReducer(state, action) {
       return { ...state, longitude: action.longitude };
     case 'UPDATE_LATITUDE':
       return { ...state, latitude: action.latitude };
+    case 'UPDATE_REAL_ESTATE_AGENT_ID':
+      return { ...state, real_estate_agent_id: action.real_estate_agent_id };
     default:
       throw new Error(`Unknown action type : ${action.type}`);
   }
