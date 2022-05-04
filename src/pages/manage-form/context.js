@@ -10,6 +10,7 @@ const initialInfo = {
   supply_size: 0,
   exclusive_size: 0,
   building_floor: '',
+  building_name: '',
   current_floor: '',
   price_main: 0,
   price_deposit: 0,
@@ -38,7 +39,7 @@ function infoReducer(state, action) {
     case 'UPDATE_JADDRESS':
       return { ...state, jaddress: action.jaddress };
     case 'UPDATE_BUILDINGNAME':
-      return { ...state, buildingName: action.buildingName };
+      return { ...state, building_name: action.building_name };
     case 'UPDATE_DONG':
       return { ...state, address_dong: action.dong };
     case 'UPDATE_HO':
