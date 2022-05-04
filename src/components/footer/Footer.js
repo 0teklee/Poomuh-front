@@ -69,7 +69,6 @@ function Footer() {
           </FooterBodyRight>
         </FooterBody>
       </FooterInner>
-      {/* <TopButton>Top</TopButton> */}
     </FooterContainer>
   );
 }
@@ -81,7 +80,6 @@ const FooterContainer = styled.div`
   height: 20rem;
   color: rgb(170, 170, 170);
   background-color: rgb(55, 55, 55);
-  // font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 `;
 
 const FooterInner = styled.div`
@@ -147,12 +145,3 @@ const IconWrap = styled.div`
   font-size: 1.5rem;
   color: white;
 `;
-// const TopButton = styled.button`
-//   position: fixed;
-//   width: 3rem;
-//   height: 3rem;
-//   right: 1rem;
-//   bottom: 1rem;
-//   border: none;
-//   // border-radius: 50%;
-// `;
