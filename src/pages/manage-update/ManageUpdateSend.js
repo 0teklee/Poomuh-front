@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useNavigate } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
@@ -22,6 +22,10 @@ function ManageFormSend() {
       body: JSON.stringify(Info),
     })
       .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        navigate('/manage/list', { replace: true });
+      })
       .catch(err => console.log(err));
   };
 
