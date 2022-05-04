@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 function MainHeader() {
   const navigate = useNavigate();
   const token = localStorage.getItem('access_token');
+  const userType = localStorage.getItem('user_type');
+
   const Logout = () => {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('user_type');
     window.location.reload();
-    console.log('로그아웃!');
   };
   return (
     <Wrapper>
@@ -18,9 +20,13 @@ function MainHeader() {
         </LogoWrapper>
         <MenuWrapper>
           <Link onClick={() => navigate('/search')}>지도</Link>
-          <Link onClick={() => navigate('/favorites/recent-room')}>
-            관심목록
-          </Link>
+          {userType === 'agents' ? (
+            ''
+          ) : (
+            <Link onClick={() => navigate('/favorites/recent-room')}>
+              관심목록
+            </Link>
+          )}
           <Link onClick={() => navigate('/manage/form')}>방내놓기</Link>
           {token ? (
             <>

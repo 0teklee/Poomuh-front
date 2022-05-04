@@ -20,6 +20,7 @@ function Login() {
       .then(res => {
         console.log(res.accessToken);
         localStorage.setItem('access_token', res.accessToken);
+        localStorage.setItem('user_type', res.usertype);
         navigate('/');
       });
   };
