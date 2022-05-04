@@ -15,14 +15,6 @@ function PreemptRoomCard({ data, updatePreempt }) {
     }).then(res => res.json());
 
     updatePreempt();
-    //찜한 방 API *******************************************************************
-    // fetch('http://localhost:8000/favorites/likes', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     token: token,
-    //   },
-    // }).then(res => res.json());
   };
 
   return (
@@ -53,7 +45,7 @@ function PreemptRoomCard({ data, updatePreempt }) {
             </Price>
             <Informations>
               {`${data.current_floor},
-              ${data.supply_size}`}
+              ${data.exclusive_size}`}
               m<sup>2</sup>
               <br />
               {data.description_title}

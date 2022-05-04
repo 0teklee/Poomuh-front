@@ -103,6 +103,7 @@ function ListCard({ data }) {
 const ListWrapper = styled.div`
   border-bottom: 1px solid rgb(231, 231, 231);
   transition: 0.3s;
+
   :hover {
     background-color: #f0f4fa;
   }
