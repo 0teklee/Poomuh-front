@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
 import { InfoContext } from './context';
@@ -9,24 +9,31 @@ function ManageFormSend() {
   const handleAgree = () => {
     setAgree(prev => !prev);
   };
-  const Info = useContext(InfoContext);
-  const token = localStorage.getItem('access_token');
-  const navigate = useNavigate();
 
+  const Info = useContext(InfoContext);
+  const navigate = useNavigate();
+  const RealEstateId = useParams();
   // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
   const sendInfo = () => {
-    fetch('http://localhost:8000/estates', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json', token: token },
+    const token = localStorage.getItem('access_token');
+    fetch(`http://localhost:8000/estates/${RealEstateId.id}`, {
+      method: 'PUT',
+      headers: { 'Cotent-type': 'application/json', token: token },
       body: JSON.stringify(Info),
-    }).then(alert('매물이 등록되었습니다.'));
+    })
+      .then(res => res.json())
+      .then(data => {
+        navigate('/manage/list', { replace: true });
+      })
+      .catch(err => console.log(err));
   };
 
   const verify = () => {
     const {
-      address_main,
+      address,
       address_ho,
-      category_id,
+      room_type,
+      building_type,
       supply_size,
       exclusive_size,
       building_floor,
@@ -37,28 +44,33 @@ function ManageFormSend() {
       heat_id,
       available_date,
       description_title,
-      description_detail,
+      description_detai,
       trade_id,
     } = Info;
     if (
-      !address_main ||
+      !address ||
       !address_ho ||
-      !category_id ||
+      !room_type ||
+      !building_type ||
       !supply_size ||
       !exclusive_size ||
       !building_floor ||
       !current_floor ||
-      !(price_main || (price_deposit && price_monthly)) ||
+      !price_main ||
+      !(price_deposit && price_monthly) ||
       !heat_id ||
       !available_date ||
       !description_title ||
-      !description_detail ||
+      !description_detai ||
       !trade_id
     ) {
       alert('모든 정보를 입력해주세요');
       return;
     }
-    console.log(Info);
+    if (!agree) {
+      alert('매물관리규정에 동의해주세요');
+      return;
+    }
     sendInfo();
   };
 

@@ -1,30 +1,99 @@
-import React, { useContext, useMemo, useState, useEffect } from 'react';
+import React, { useContext, useMemo, useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BsCheck } from 'react-icons/bs';
 import { Slider } from 'antd';
 import 'antd/dist/antd.css';
+import { RealEstateContextDispatch, RealEstateContext } from './context';
 
 function TradeTypeModal() {
+  const RealEstateDispatch = useContext(RealEstateContextDispatch);
+  const RealEstate = useContext(RealEstateContext);
   const [check, setCheck] = useState({
     월세: false,
     전세: false,
+    depositStep: 1,
+    deposit: [20, 50],
+    monthly: [20, 50],
+    monthlyStep: 1,
   });
+
+  // 필터의 state가 업데이트 될 때마다 Context의 지도 범위 내 매물 저장소 업데이트
+  const sendFilter = () => {};
+
   const handleCheck = e => {
     const { id } = e.target;
     setCheck({ ...check, [id]: !check[id] });
+    sendFilter();
   };
-
-  const [rangeVal, setRangeVal] = useState({
-    deposit: [20, 50],
-    monthly: [20, 50],
-  });
 
   const handleDeposit = e => {
-    setRangeVal({ ...rangeVal, deposit: e });
+    setCheck({ ...check, deposit: e });
   };
   const handleMonthly = e => {
-    setRangeVal({ ...rangeVal, monthly: e });
+    setCheck({ ...check, monthly: e });
   };
+
+  const handelDepositStep = () => {
+    const cur = check.deposit[1];
+    if (cur < 50) {
+      setCheck({ ...check, depositStep: 1 });
+    } else if (50 <= cur && cur <= 100) {
+      setCheck({ ...check, depositStep: 5 });
+      setCheck({ ...check, depositStep: 10 });
+    }
+  };
+
+  const handelMonthlyStep = () => {
+    const cur = check.monthly[1];
+    if (cur < 70) {
+      setCheck({ ...check, monthlyStep: 1 });
+    } else if (70 < cur && cur < 100) {
+      setCheck({ ...check, monthlyStep: 5 });
+    } else if (100 <= cur) {
+      setCheck({ ...check, monthlyStep: 10 });
+    }
+  };
+
+  const trackStyle = {
+    background: 'rgb(50, 108, 249)',
+    border: '2px solid rgb(50, 108, 249)',
+    top: '5px',
+  };
+  const handleStyle = {
+    border: '1px solid rgb(226, 226, 226)',
+    width: '20px',
+    height: '20px',
+    top: '0',
+  };
+
+  const depositMark = {
+    0: '0',
+    150: '1억 5천만원',
+    300: '무제한',
+  };
+  const monthlyMark = { 0: '0', 100: '100만원', 200: '무제한' };
+
+  useEffect(() => {
+    handelMonthlyStep();
+  }, [check.monthly]);
+
+  useEffect(() => {
+    handelDepositStep();
+  }, [check.deposit]);
+
+  useEffect(() => {
+    setCheck(RealEstate.tradeTypeFilter);
+  }, []);
+
+  useEffect(() => {
+    RealEstateDispatch({
+      type: 'UPDATE_TRADE_TYPE_FILTER',
+      tradeTypeFilter: check,
+    });
+  }, [check]);
+
+  // filtered data get fetch 함수를 check 필터와 지도를 이동시켜
+  // RealEstate를 업데이트될 때마다 요청한다.
 
   return (
     <Wrapper>
@@ -32,6 +101,7 @@ function TradeTypeModal() {
         <h1>거래유형</h1>
         <p>중복선택이 가능합니다.</p>
       </div>
+
       <Input>
         <div className="inputCheckbox" id="월세" onClick={e => handleCheck(e)}>
           <input id="월세" type="checkbox" checked={check.월세} readOnly />
@@ -54,39 +124,84 @@ function TradeTypeModal() {
           <div className="rangeWrapper">
             <div className="priceInfo">
               <p>보증금/전세가</p>
-              <span>{`${rangeVal.deposit[0] * 100} 만원 ~ ${
-                rangeVal.deposit[1] === 500
+              <span>{`${
+                check.deposit[0] === 300
                   ? '무제한'
-                  : rangeVal.deposit[1] + ' 만원'
-              } `}</span>
+                  : check.deposit[0] === 0
+                  ? ''
+                  : check.deposit[0] < 100
+                  ? check.deposit[0] * 100 + ' 만원 ~ '
+                  : check.deposit[0] -
+                      Math.floor(check.deposit[0] / 100) * 100 !==
+                    0
+                  ? Math.floor(check.deposit[0] / 100) +
+                    '억' +
+                    (check.deposit[0] -
+                      Math.floor(check.deposit[0] / 100) * 100) *
+                      100 +
+                    ' 만원  ~ '
+                  : Math.floor(check.deposit[0] / 100) + '억 ~ '
+              }${
+                check.deposit[1] === 300
+                  ? '무제한'
+                  : check.deposit[1] < 100
+                  ? check.deposit[1] * 100 + '만원'
+                  : check.deposit[1] -
+                      Math.floor(check.deposit[1] / 100) * 100 !==
+                    0
+                  ? Math.floor(check.deposit[1] / 100) +
+                    ' 억 ' +
+                    (check.deposit[1] -
+                      Math.floor(check.deposit[1] / 100) * 100) *
+                      100 +
+                    ' 만원'
+                  : Math.floor(check.deposit[1] / 100) + '억'
+              }`}</span>
             </div>
             <Slider
               range
-              defaultValue={[20, 50]}
-              min={1}
-              max={500}
+              tipFormatter={null}
+              defaultValue={RealEstate.tradeTypeFilter.deposit}
+              min={0}
+              max={300}
+              step={check.depositStep}
               onChange={handleDeposit}
+              onAfterChange={sendFilter}
+              trackStyle={trackStyle}
+              handleStyle={handleStyle}
+              marks={depositMark}
             />
           </div>
           <div className="rangeWrapper">
             <div className="priceInfo">
               <p>월세</p>
-              <span>{`${rangeVal.monthly[0]} 만원 ~ ${
-                rangeVal.monthly[1] === 200
+              <span>{`${
+                check.monthly[0] === 200
                   ? '무제한'
-                  : rangeVal.monthly[1] + ' 만원'
+                  : check.monthly[0] === 0
+                  ? ''
+                  : check.monthly[0] + ' 만원  ~ '
+              }${
+                check.monthly[1] === 200
+                  ? '무제한'
+                  : check.monthly[1] === 0
+                  ? ''
+                  : check.monthly[1] + ' 만원'
               }`}</span>
             </div>
             <Slider
               range
-              defaultValue={[20, 50]}
-              // tipFormatter={null}
-              max={300}
-              min={10}
+              defaultValue={RealEstate.tradeTypeFilter.monthly}
+              tipFormatter={null}
+              max={200}
+              min={0}
               draggableTrack={false}
               onChange={handleMonthly}
-              step={5}
-              id="monthly"
+              onAfterChange={sendFilter}
+              step={check.monthlyStep}
+              trackStyle={trackStyle}
+              handleStyle={handleStyle}
+              marks={monthlyMark}
             />
           </div>
         </div>
@@ -98,9 +213,10 @@ function TradeTypeModal() {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background: #fff;
+  width: 400px;
   border: 1px solid rgb(226, 226, 226);
   border-radius: 5px;
+  background: #fff;
   .title {
     padding: 1.5rem;
     h1 {
@@ -154,8 +270,9 @@ const Input = styled.div`
   }
   .rangeWrapper {
     &:first-child {
-      border-bottom: 1px solid rgb(226, 226, 226);
+      padding-bottom: 15px;
       margin-bottom: 10px;
+      border-bottom: 1px solid rgb(226, 226, 226);
     }
     .priceInfo {
       display: flex;

@@ -1,9 +1,10 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
-import Map from './ManageFormMap';
-import ManageFormPostCode from './ManageFormPostCode';
+import Map from './ManageUpdateMap';
+import ManageFormPostCode from './ManageUpdatePostCode';
 import { InfoDispatchContext, InfoContext } from './context';
+import { useParams } from 'react-router-dom';
 
 function ManageFormAddress() {
   const [check, setCheck] = useState(false);
@@ -33,7 +34,7 @@ function ManageFormAddress() {
   const handleShowModal = () => {
     setShowModal(prev => !prev);
   };
-
+  useEffect(() => {}, []);
   return (
     <Wrapper>
       {showModal && (
@@ -64,12 +65,12 @@ function ManageFormAddress() {
               <ButtonInput value="주소검색" onClick={handleShowModal} />
             </SearchAddressBox>
             <BorderBox>
-              <div className="addressText">
+              <div className="addressText" onChange={e => console.log(e)}>
                 {' '}
                 <span>도로명 : </span>
-                {`${infoContext.address_main} ${
-                  infoContext.building_name
-                    ? `(${infoContext.building_name})`
+                {`${infoContext.address} ${
+                  infoContext.buildingName
+                    ? `(${infoContext.buildingName})`
                     : ''
                 }`}
               </div>

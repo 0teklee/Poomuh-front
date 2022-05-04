@@ -7,6 +7,13 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
     box-sizing: border-box;
   }
+  * {
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+  display: none;
+    }
+  }
+
   `;
 
 export default GlobalStyle;

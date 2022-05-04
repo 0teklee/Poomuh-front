@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const EstateCard = () => {
   const navigate = useNavigate();
 
-  //만료일 저장하는 상태값
-  const [expirationDate, setExpirationDate] = useState(0);
-  //광고 상태를 저장하는 상태값
-  const [advertising, setAdvertising] = useState(true);
-  //거래 상태를 저장하는 상태값
-  const [isSealed, setIsSealed] = useState(true);
-
   const deleteEstate = () => {
-    //택우는 똑똑이 -> 왜냐? 삭제해서 재랜더링 디펜던시는 그냥 fetch해온 배열의 값을 주면 되니까
-    fetch(`http://localhost:8000/delete?id=id`, {
+    fetch(`http://localhost:8000/:id`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -31,28 +24,6 @@ const EstateCard = () => {
       deleteEstate();
     }
   };
-
-  //수정 버튼 눌렀을 때
-  /*
-    수정 버튼을 누르면 해당 카드에 있는 매물의 id값이 
-    manage-form/:item_id 이런 식으로 전달이 되고
-    manage-form에는 item_id가 useParams로 받아오고
-    그 값에 따라 입력/ 수정 페이지를 다르게 해준다
-  */
-
-  //시간 계산해주는 함수
-  const getExpirationDate = () => {
-    let created = new Date('2022-04-24 22:59:52'); //DATAFETCH
-    let today = new Date();
-
-    let milliSecond = created - today;
-    let day = Math.floor(milliSecond / 1000 / 60 / 60 / 24);
-    setExpirationDate(29 + day);
-  };
-
-  useEffect(() => {
-    getExpirationDate();
-  }, []);
 
   return (
     <Wrapper>
@@ -105,33 +76,12 @@ const EstateCard = () => {
                   찜 <span className="count">0</span>
                 </p>
               </div>
-              {!advertising ? (
-                <div className="Btns">
-                  <button onClick={() => navigate('/manage/form:1')}>
-                    수정
-                  </button>
-                  <button onClick={checkDelete}>삭제</button>
-                  <button onClick={() => setAdvertising(true)}>
-                    광고 재등록
-                  </button>
-                </div>
-              ) : !isSealed ? (
-                <div className="Btns">
-                  <button onClick={checkDelete}>삭제</button>
-                  <button onClick={() => setIsSealed(true)}>광고 재등록</button>
-                </div>
-              ) : (
-                <div className="Btns">
-                  <button onClick={() => navigate('/manage/form:1')}>
-                    수정
-                  </button>
-                  <button onClick={checkDelete}>삭제</button>
-                  <button onClick={() => setAdvertising(false)}>
-                    광고 종료
-                  </button>
-                  <button onClick={() => setIsSealed(false)}>거래 완료</button>
-                </div>
-              )}
+              <div className="buttons">
+                <button onClick={() => navigate('/form/id')}>수정</button>
+                <button onClick={checkDelete}>삭제</button>
+                <button>광고 종료</button>
+                <button>거래 완료</button>
+              </div>
             </div>
           </Buttons>
         </DescriptionBox>

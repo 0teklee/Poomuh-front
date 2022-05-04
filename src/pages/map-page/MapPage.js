@@ -1,15 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import List from './List';
 import Map from './Map';
 import SearchBar from './SearchBar';
 import Header from '../../components/header/Header';
 import { GlobalContextProvider } from './context';
+
 //Context API 사용
 
 function MapPage() {
   return (
-    <div>
+    <Container>
       <Header />
       <GlobalContextProvider>
         <Wrapper>
@@ -24,14 +25,27 @@ function MapPage() {
           </MapWrapper>
         </Wrapper>
       </GlobalContextProvider>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  overflow: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 90vh;
+  .list {
+    margin-top: 65px;
+  }
 `;
 
 const MapWrapper = styled.div`
@@ -40,6 +54,8 @@ const MapWrapper = styled.div`
   .list {
     width: 25rem;
     border-right: 1px solid rgb(205, 205, 205);
+    max-height: 750px;
+    overflow-y: scroll;
   }
   .map {
     flex: 1;

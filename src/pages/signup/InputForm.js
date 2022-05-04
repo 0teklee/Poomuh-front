@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import { UserInfoContext, UserInfoDispatchContext } from './signupContext';
 
-const InputForm = ({ setShow }) => {
+const InputhtmlForm = ({ setShow }) => {
   //context 사용
   const userInfo = useContext(UserInfoContext);
   const userInfoDispatch = useContext(UserInfoDispatchContext);
@@ -12,7 +12,7 @@ const InputForm = ({ setShow }) => {
 
   const [nicknameError, setNickNameError] = useState(false);
 
-  const [pwdForCheck, SetPwdForCheck] = useState('');
+  const [pwdhtmlForCheck, SetPwdhtmlForCheck] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordCheckError, setPasswordCheckError] = useState(false);
 
@@ -33,7 +33,7 @@ const InputForm = ({ setShow }) => {
     if (
       email &&
       nickname &&
-      pwdForCheck &&
+      pwdhtmlForCheck &&
       !emailError &&
       !nicknameError &&
       !passwordError &&
@@ -48,7 +48,7 @@ const InputForm = ({ setShow }) => {
   //input값 바뀔 때 마다 확인하기
   useEffect(() => {
     isFilledAll();
-  }, [email, nickname, pwdForCheck]);
+  }, [email, nickname, pwdhtmlForCheck]);
 
   //다음 버튼으로 넘어가는 함수
   const clickNext = () => {
@@ -100,7 +100,7 @@ const InputForm = ({ setShow }) => {
     ) {
       setPasswordCheckError(false);
     } else setPasswordCheckError(true);
-    SetPwdForCheck(e.target.value);
+    SetPwdhtmlForCheck(e.target.value);
   };
 
   //비밀번호 값 담기
@@ -121,7 +121,7 @@ const InputForm = ({ setShow }) => {
       </WelcomeMessage>
       <Inputs>
         <div className="inputWrapper">
-          <label for="email">아이디</label>
+          <label htmlFor="email">아이디</label>
           <input
             type="text"
             id="email"
@@ -135,7 +135,7 @@ const InputForm = ({ setShow }) => {
         </div>
 
         <div className="inputWrapper">
-          <label for="nickname">닉네임</label>
+          <label htmlFor="nickname">닉네임</label>
           <input
             type="text"
             id="nickname"
@@ -149,7 +149,7 @@ const InputForm = ({ setShow }) => {
         </div>
 
         <div className="inputWrapper">
-          <label for="password">비밀번호</label>
+          <label htmlFor="password">비밀번호</label>
           <input
             type="password"
             id="password"
@@ -160,7 +160,7 @@ const InputForm = ({ setShow }) => {
             onChange={onChangePassword}
           />
           {passwordError && (
-            <div class="checkValid">
+            <div className="checkValid">
               비밀번호는 문자,숫자,특수문자를 포함하여 8~20자 이내로 입력하세요.
             </div>
           )}
@@ -241,9 +241,16 @@ const NextButton = styled.div`
   font-size: 13px;
   font-weight: 900;
   text-align: center;
+  border-radius: 2px;
+  transition: 0.15s;
   ${({ activeBtnInput }) => {
-    return activeBtnInput ? `background-color: #4379fa; cursor:pointer` : null;
-  }}
+    return activeBtnInput
+      ? `background-color: #4379fa; cursor:pointer;      
+      :hover {
+      background-color: #0039bf;
+    }`
+      : null;
+  }};
 `;
 
-export default InputForm;
+export default InputhtmlForm;
