@@ -11,7 +11,7 @@ function FavoriteRecent() {
   let arr = localStorage.getItem('recentRoom');
 
   useEffect(() => {
-    //최근본방 API (회원/비회원 분리)*****ISSUE: fetch함수 살리면 렌더링안됨**************************************************************
+    //최근본방 API (회원/비회원 분리)******************************************************************
     if (arr === null) {
       arr = [];
     } else {
@@ -26,8 +26,7 @@ function FavoriteRecent() {
           },
         })
           .then(res => res.json())
-          .then(data => setRecentRoom(data.recent))
-          .then(console.log(recentRoom));
+          .then(data => setRecentRoom(data.recent));
       } else {
         fetch('http://localhost:8000/favorites/recent', {
           method: 'GET',
@@ -38,8 +37,7 @@ function FavoriteRecent() {
           },
         })
           .then(res => res.json())
-          .then(data => setRecentRoom(data.recent))
-          .then(console.log(recentRoom));
+          .then(data => setRecentRoom(data.recent));
       }
     }
 
