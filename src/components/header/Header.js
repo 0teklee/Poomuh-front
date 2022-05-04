@@ -1,9 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function Header() {
   const navigate = useNavigate();
-
+  const token = localStorage.getItem('access_token');
+  const Logout = () => {
+    localStorage.removeItem('access_token');
+    window.location.reload();
+    console.log('로그아웃!');
+  };
   return (
     <Wrapper>
       <LogoWrapper onClick={() => navigate('/')}>
@@ -13,12 +18,22 @@ function Header() {
         <Link onClick={() => navigate('/search')}>지도</Link>
         <Link onClick={() => navigate('/favorites/recent-room')}>관심목록</Link>
         <Link onClick={() => navigate('/manage/form')}>방내놓기</Link>
-        <Button onClick={() => navigate('/login')}>
-          <Login>로그인</Login>
-        </Button>
-        <Button onClick={() => navigate('/signup')}>
-          <SignUp>회원가입</SignUp>
-        </Button>
+        {token ? (
+          <>
+            <Button onClick={() => Logout()}>
+              <Login>로그아웃</Login>
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button onClick={() => navigate('/login')}>
+              <Login>로그인</Login>
+            </Button>
+            <Button onClick={() => navigate('/signup')}>
+              <SignUp>회원가입</SignUp>
+            </Button>
+          </>
+        )}
       </MenuWrapper>
     </Wrapper>
   );
