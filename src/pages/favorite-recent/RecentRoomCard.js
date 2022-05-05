@@ -76,11 +76,16 @@ const Wrapper = styled.div`
   margin-bottom: 4rem;
   margin-left: 15px;
   cursor: pointer;
+  margin-left: 15px;
 `;
 const ImageWrapper = styled.div`
   position: relative;
   width: 280px;
   height: 186px;
+<<<<<<< HEAD
+  border-radius: 3px;
+=======
+>>>>>>> develop
   img {
     object-fit: cover;
     width: 100%;

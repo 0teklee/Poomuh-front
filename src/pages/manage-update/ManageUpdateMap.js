@@ -4,8 +4,8 @@ import { InfoContext } from './context';
 function ManageFormMap() {
   const container = useRef(null); //지도를 담을 영역의 DOM 레퍼런스
   const { kakao } = window;
-  const infoContext = useContext(InfoContext);
-  const Address = infoContext.address;
+  const Info = useContext(InfoContext);
+  const { address_main } = Info;
   let Lat = 0;
   let Lng = 0;
   const geocoder = new kakao.maps.services.Geocoder();
@@ -21,7 +21,7 @@ function ManageFormMap() {
   useEffect(() => {
     const map = new kakao.maps.Map(container.current, options);
     marker.setMap(map);
-    geocoder.addressSearch(infoContext.address, function (results, status) {
+    geocoder.addressSearch(address_main, function (results, status) {
       if (status === kakao.maps.services.Status.OK) {
         const result = results[0];
         const coords = new kakao.maps.LatLng(result.y, result.x);
@@ -31,7 +31,7 @@ function ManageFormMap() {
     });
 
     return () => {};
-  }, [Address]);
+  }, [address_main]);
   return (
     <div
       id="mapDiv"

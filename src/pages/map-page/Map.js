@@ -132,6 +132,7 @@ function Map() {
         overlay.style.color = '#fff';
       });
       kakao.maps.event.addListener(clusterer, 'clusterclick', cluster => {
+        console.log(cluster);
         RealEstateDispatch({
           type: 'GET_SELECTED_ESTATE',
           selected: RealEstate.realEstate.filter(estate => {
@@ -140,8 +141,8 @@ function Map() {
               .map(x => x.getPosition())
               .find(
                 qa =>
-                  estate.latitude.toFixed(12) === qa.Ma.toFixed(12) &&
-                  estate.longitude.toFixed(12) === qa.La.toFixed(12)
+                  estate.lat.toFixed(12) === qa.Ma.toFixed(12) &&
+                  estate.lng.toFixed(12) === qa.La.toFixed(12)
               );
           }),
         });
@@ -169,9 +170,13 @@ function Map() {
     RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
 
     kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      console.log('ZoomMapBounds>>', RealEstate.mapBounds);
+
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
     });
     kakao.maps.event.addListener(map, 'dragend', () => {
+      console.log('DragMapBounds>>', RealEstate.mapBounds);
+
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
     });
     kakao.maps.event.addListener(map, 'click', () =>

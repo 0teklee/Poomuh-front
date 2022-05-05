@@ -79,7 +79,7 @@ function ManageFormRoomInfo() {
     if (heatRef.current) {
       heatRef.current.value = heat_id;
     }
-  }, []);
+  }, [Info]);
   return (
     <Wrapper>
       <Title>기본 정보</Title>
