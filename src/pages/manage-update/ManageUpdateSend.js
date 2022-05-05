@@ -13,7 +13,7 @@ function ManageFormSend() {
   const Info = useContext(InfoContext);
   const navigate = useNavigate();
   const RealEstateId = useParams();
-  // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
+  // 로컬스토리지의 토큰을 함께 전달/
   const sendInfo = () => {
     const token = localStorage.getItem('access_token');
     fetch(`http://localhost:8000/estates/${RealEstateId.id}`, {
