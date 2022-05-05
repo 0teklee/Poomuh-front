@@ -18,6 +18,8 @@ function List() {
   const [offset, setOffset] = useState(0);
   // //localStorage에 토큰 저장
   const token = localStorage.getItem('access_token');
+  const userType = localStorage.getItem('user_type');
+
   const tradeTypeFilter = RealEstate.tradeTypeFilter;
   const tradeType = Object.entries(tradeTypeFilter)
     .filter(el => el[1] === true)
@@ -31,7 +33,7 @@ function List() {
   };
 
   const fetchData = async () => {
-    if (token) {
+    if (token && userType === 'user') {
       header.token = token;
       setIsUser('/users');
     }
