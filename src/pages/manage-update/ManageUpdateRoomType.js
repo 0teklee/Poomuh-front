@@ -27,7 +27,7 @@ function ManageFormRoomType() {
       default:
         return;
     }
-  }, []);
+  }, [Info]);
 
   return (
     <Wrapper>

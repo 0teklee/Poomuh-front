@@ -62,7 +62,7 @@ function Trade({ name, close }) {
       monthlyRef.current.value = price_monthly;
       priceMainRef.current.value = price_main;
     }
-  }, []);
+  }, [Info]);
   return (
     <TradeWrapper>
       <span className="typeName">{name}</span>
@@ -161,11 +161,11 @@ function ManageFormTradeType() {
     });
   };
   useEffect(() => {
-    setTrade([
-      { name: '월세', key: tradeKey++ },
-      { name: '전세', key: tradeKey++ },
-    ]);
-  }, []);
+    if() {
+      
+    }
+
+  }, [Info]);
   return (
     <Wrapper>
       <Title>거래 정보</Title>

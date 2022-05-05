@@ -49,7 +49,7 @@ function ManageFormAddress() {
       dongRef.current.value = address_dong;
       hoRef.current.value = address_ho;
     }
-  }, []);
+  }, [Info]);
   return (
     <Wrapper>
       {showModal && (
