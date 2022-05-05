@@ -19,7 +19,7 @@ function Login() {
       .then(res => res.json())
       .then(res => {
         if (res.accessToken === undefined) {
-          alert('중개사 회원은 중개인으로 로그인하기를 체크해 주세요');
+          alert('아이디 혹은 비밀번호를 확인해 주세요.');
           navigate('/login');
         } else {
           localStorage.setItem('access_token', res.accessToken);
