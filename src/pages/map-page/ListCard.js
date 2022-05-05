@@ -9,7 +9,7 @@ function ListCard({ data }) {
   const navigate = useNavigate();
   const RealEstate = useContext(RealEstateContext);
   const token = localStorage.getItem('access_token');
-
+  const userType = localStorage.getItem('user_type');
   const updateLike = () => {
     setLike(like ? false : true);
 
@@ -48,19 +48,14 @@ function ListCard({ data }) {
           >
             <ImageWrapper>
               <img alt="이미지" src={data.image_url} />
-
-              {/* 좋아요 버튼(API연결) */}
               <Like>
-                {data.hasOwnProperty('is_like') ? (
+                {userType === 'user' ? (
                   like ? (
-                    <IoMdHeart color="red" onClick={() => updateLike()} />
+                    <IoMdHeart color="red" onClick={updateLike} />
                   ) : (
-                    <IoMdHeartEmpty
-                      color="white"
-                      onClick={() => updateLike()}
-                    />
+                    <IoMdHeartEmpty color="white" onClick={updateLike} />
                   )
-                ) : (
+                ) : userType === 'agent' ? null : (
                   <IoMdHeartEmpty
                     color="white"
                     onClick={() => navigate('/login')}

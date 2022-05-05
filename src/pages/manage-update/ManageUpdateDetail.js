@@ -7,7 +7,7 @@ function ManageFormDetail() {
   const Info = useContext(InfoContext);
   const detailTitleRef = useRef('');
   const detailContentRef = useRef('');
-
+  const { description_title, description_detail } = Info;
   const handleTitle = e => {
     InfoDispatch({ type: 'UPDATE_DETAIL_TITLE', detail_title: e.target.value });
   };
@@ -19,9 +19,14 @@ function ManageFormDetail() {
   };
 
   useEffect(() => {
-    if (detailTitleRef.current && detailContentRef.current) {
-      detailTitleRef.current.value = Info.description_title;
-      detailContentRef.current.value = Info.description_detail;
+    if (
+      detailTitleRef.current &&
+      detailContentRef.current &&
+      description_detail &&
+      description_title
+    ) {
+      detailTitleRef.current.value = description_title;
+      detailContentRef.current.value = description_detail;
     }
   }, []);
   return (

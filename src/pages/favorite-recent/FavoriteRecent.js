@@ -40,16 +40,8 @@ function FavoriteRecent() {
           .then(data => setRecentRoom(data.recent));
       }
     }
-
-    //최근본방 목데이터 API
-    // fetch('/data/RecentRoomData.json')
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     setRecentRoom(data);
-    //   });
   }, []);
 
-  // console.log(typeof JSON.parse(localStorage.getItem('recentRoom')));
   return (
     <Wrapper>
       <Header />

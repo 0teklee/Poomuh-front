@@ -1,80 +1,126 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import { useState } from 'react';
 const EstateCard = () => {
   const navigate = useNavigate();
 
-  const deleteEstate = () => {
-    fetch(`http://localhost:8000/:id`, {
+  //token 가져오기
+  const token = localStorage.getItem('access_token');
+
+  const [estates, setEstates] = useState([]);
+
+  //매물 삭제
+  const deleteEstate = id => {
+    fetch(`http://localhost:8000/estates/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        token: token,
       },
     })
       .then(res => res.json())
       .then(res => console.log(res));
   };
 
-  //삭제 확인 알럿창
-  const checkDelete = () => {
-    const isDelete = window.confirm('삭제하시겠습니까?');
-    if (isDelete) {
-      deleteEstate();
-    }
+  //list 가져오기
+  useEffect(() => {
+    fetch('http://localhost:8000/estates/list/myList', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: token,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setEstates(data);
+      });
+  }, [deleteEstate]);
+
+  //날짜 형태 변경하는 함수
+  const formatDate = createdDate => {
+    const moment = require('moment');
+    const date = moment(createdDate).format('YYYY-MM-DD');
+    return date;
   };
 
   return (
     <Wrapper>
-      <CardBox>
-        <EstateBox>
-          <EstateDeadline>
-            <div className="estateNum">
-              <p>매물번호 27248658</p>
-            </div>
-            <div className="adInfo">
-              <p className="advertising">광고중</p>
-              <p className="expirationDate">광고종료 D-29</p>
-            </div>
-          </EstateDeadline>
-          <EstateInfo>
-            <div className="imgWrapper">
-              <img src="" alt="매물 사진" />
-            </div>
-            <div className="infoWrapper">
-              <p className="type">원룸</p>
-              <p className="price">월세 1억 2342만/122만</p>
-              <p className="status">업로드 처리중입니다.</p>
-            </div>
-          </EstateInfo>
-        </EstateBox>
-        <DescriptionBox>
-          <Description>
-            <div className="descBox" />
-          </Description>
-          <Buttons>
-            <div className="buttonDiv">
-              <div className="registerDate">
-                <p>
-                  등록일 <span className="date">2022-04-23</span>
-                </p>
-                <p>
-                  조회수 <span className="count">1</span>
-                </p>
-                <p>
-                  찜 <span className="count">0</span>
-                </p>
-              </div>
-              <div className="buttons">
-                <button onClick={() => navigate('/form/id')}>수정</button>
-                <button onClick={checkDelete}>삭제</button>
-                <button>광고 종료</button>
-                <button>거래 완료</button>
-              </div>
-            </div>
-          </Buttons>
-        </DescriptionBox>
-      </CardBox>
+      {estates.map(data => {
+        return (
+          <CardBox key={data.estateInfo.id}>
+            <EstateBox>
+              <EstateDeadline>
+                <div className="estateNum">
+                  <p>매물번호 {data.estateInfo.id}</p>
+                </div>
+                <div className="adInfo">
+                  <p className="advertising">광고중</p>
+                  <p className="expirationDate">광고종료 D-29</p>
+                </div>
+              </EstateDeadline>
+              <EstateInfo>
+                <div className="imgWrapper">
+                  <img src="" alt="매물 사진" />
+                </div>
+                <div className="infoWrapper">
+                  <p className="type">{data.estateInfo.categories.type}</p>
+                  <p className="price">
+                    {data.estateInfo.price_deposit} /{' '}
+                    {data.estateInfo.price_monthly}
+                  </p>
+                </div>
+              </EstateInfo>
+            </EstateBox>
+            <DescriptionBox>
+              <Description>
+                <div className="descBox" />
+              </Description>
+              <Buttons>
+                <div className="buttonDiv">
+                  <div className="registerDate">
+                    <p>
+                      등록일{' '}
+                      <span className="date">
+                        {formatDate(data.estateInfo.created_at)}
+                      </span>
+                    </p>
+                    <p>
+                      조회수 <span className="count">1</span>
+                    </p>
+                    <p>
+                      찜 <span className="count">{data.likes._count}</span>
+                    </p>
+                  </div>
+                  <div className="buttons">
+                    <button
+                      onClick={() =>
+                        navigate(`/manage/form/${data.estateInfo.id}`)
+                      }
+                    >
+                      수정
+                    </button>
+                    <button
+                      onClick={() => {
+                        const isDelete = window.confirm('삭제하시겠습니까?');
+                        if (isDelete) {
+                          deleteEstate(data.estateInfo.id);
+                        }
+                      }}
+                    >
+                      삭제
+                    </button>
+                    <button>광고 종료</button>
+                    <button>거래 완료</button>
+                  </div>
+                </div>
+              </Buttons>
+            </DescriptionBox>
+          </CardBox>
+        );
+      })}
     </Wrapper>
   );
 };

@@ -18,6 +18,8 @@ function List() {
   const [offset, setOffset] = useState(0);
   // //localStorage에 토큰 저장
   const token = localStorage.getItem('access_token');
+  const userType = localStorage.getItem('user_type');
+
   const tradeTypeFilter = RealEstate.tradeTypeFilter;
   const tradeType = Object.entries(tradeTypeFilter)
     .filter(el => el[1] === true)
@@ -30,15 +32,12 @@ function List() {
     LatLng: `${RealEstate.mapBounds.ha},${RealEstate.mapBounds.oa},${RealEstate.mapBounds.qa},${RealEstate.mapBounds.pa}`,
   };
 
-  useEffect(() => {
-    if (token) {
+  const fetchData = async () => {
+    if (token && userType === 'user') {
       header.token = token;
       setIsUser('/users');
     }
-  }, []);
 
-  const fetchData = async () => {
-    console.log('header>>', header);
     setTimeout(async () => {
       await fetch(
         `http://localhost:8000/estates/scroll${isUser}?tradeType=${tradeType}`,
