@@ -66,7 +66,7 @@ function List() {
     setEstateList(selected);
   }, [selected]);
 
-  //스크롤이 마지막에 도착하면 offset추가
+  // 스크롤이 마지막에 도착하면 offset추가
   useEffect(() => {
     if (inView && !isLoading) {
       setOffset(prevState => prevState + 1);
@@ -75,7 +75,9 @@ function List() {
 
   //offset의 값이 변경되거나 mapBound가 변경되면 fetch
   useEffect(() => {
-    fetchData(estateList);
+    if (selected.length === null) {
+      fetchData(estateList);
+    }
   }, [offset]);
 
   useEffect(() => {
