@@ -30,15 +30,12 @@ function List() {
     LatLng: `${RealEstate.mapBounds.ha},${RealEstate.mapBounds.oa},${RealEstate.mapBounds.qa},${RealEstate.mapBounds.pa}`,
   };
 
-  useEffect(() => {
+  const fetchData = async () => {
     if (token) {
       header.token = token;
       setIsUser('/users');
     }
-  }, []);
 
-  const fetchData = async () => {
-    console.log('header>>', header);
     setTimeout(async () => {
       await fetch(
         `http://localhost:8000/estates/scroll${isUser}?tradeType=${tradeType}`,

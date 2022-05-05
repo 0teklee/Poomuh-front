@@ -1,13 +1,12 @@
 import { createContext, useReducer } from 'react';
 
 const initialInfo = {
-  address_main: '',
+  address: '',
   jaddress: '',
   address_dong: '',
   address_ho: '',
   room_type: '',
   building_type: '',
-  building_name: '',
   supply_size: 0,
   exclusive_size: 0,
   building_floor: '',
@@ -20,9 +19,7 @@ const initialInfo = {
   description_title: '',
   description_detail: '',
   trade_id: [],
-  latitude: '',
-  longitude: '',
-  real_estate_agent_id: 0,
+  buildingName: '',
 };
 
 export const InfoContext = createContext();
@@ -35,11 +32,11 @@ function infoReducer(state, action) {
     case 'UPDATE_BUILDING_TYPE':
       return { ...state, building_type: action.buildingType };
     case 'UPDATE_ADDRESS':
-      return { ...state, address_main: action.address };
+      return { ...state, address: action.address };
     case 'UPDATE_JADDRESS':
       return { ...state, jaddress: action.jaddress };
     case 'UPDATE_BUILDINGNAME':
-      return { ...state, building_name: action.building_name };
+      return { ...state, buildingName: action.buildingName };
     case 'UPDATE_DONG':
       return { ...state, address_dong: action.dong };
     case 'UPDATE_HO':
@@ -68,12 +65,6 @@ function infoReducer(state, action) {
       return { ...state, price_monthly: action.price_monthly };
     case 'UPDATE_TRADE_ID':
       return { ...state, trade_id: action.trade_id };
-    case 'UPDATE_LONGITUDE':
-      return { ...state, longitude: action.longitude };
-    case 'UPDATE_LATITUDE':
-      return { ...state, latitude: action.latitude };
-    case 'UPDATE_REAL_ESTATE_AGENT_ID':
-      return { ...state, real_estate_agent_id: action.real_estate_agent_id };
     default:
       throw new Error(`Unknown action type : ${action.type}`);
   }

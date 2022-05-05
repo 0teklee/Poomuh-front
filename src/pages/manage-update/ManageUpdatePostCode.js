@@ -17,7 +17,7 @@ function ManageFormPostCode({ handle, val }) {
     infoDispatch({ type: 'UPDATE_JADDRESS', jaddress: data.jibunAddress });
     infoDispatch({
       type: 'UPDATE_BUILDINGNAME',
-      building_name: data.buildingName,
+      buildingName: data.buildingName,
     });
     val.value = data.address;
   };
