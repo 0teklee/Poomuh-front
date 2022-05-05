@@ -7,15 +7,17 @@ import ListCard from './ListCard';
 function List() {
   const RealEstate = useContext(RealEstateContext);
   const { kakao } = window;
-  const { map } = RealEstate;
+  const { map, mapBounds } = RealEstate;
 
   //무한 스크롤
   const [estateList, setEstateList] = useState([]);
   const [scrollHelper, setScrollHelper] = useState(0);
   const target = useRef(null);
   const [isUser, setIsUser] = useState('');
+
   //몇번째 페이지인지 알려주는 값
   const [offset, setOffset] = useState(0);
+
   // //localStorage에 토큰 저장
   const token = localStorage.getItem('access_token');
   const userType = localStorage.getItem('user_type');
@@ -25,6 +27,7 @@ function List() {
     .filter(el => el[1] === true)
     .map(el => el[0])
     .toString();
+
   //list에 보여줄 데이터 fetch하기
   const header = {
     'Content-Type': 'application/json',
