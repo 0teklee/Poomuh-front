@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { InfoDispatchContext } from './context';
+import { InfoContext, InfoDispatchContext } from './context';
 
 function ManageFormDetail() {
   const InfoDispatch = useContext(InfoDispatchContext);
+  const Info = useContext(InfoContext);
+  const detailTitleRef = useRef('');
+  const detailContentRef = useRef('');
+  const { description_title, description_detail } = Info;
   const handleTitle = e => {
     InfoDispatch({ type: 'UPDATE_DETAIL_TITLE', detail_title: e.target.value });
   };
@@ -13,6 +17,18 @@ function ManageFormDetail() {
       detail_content: e.target.value,
     });
   };
+
+  useEffect(() => {
+    if (
+      detailTitleRef.current &&
+      detailContentRef.current &&
+      description_detail &&
+      description_title
+    ) {
+      detailTitleRef.current.value = description_title;
+      detailContentRef.current.value = description_detail;
+    }
+  }, []);
   return (
     <Wrapper>
       <Title>상세정보</Title>
@@ -24,6 +40,7 @@ function ManageFormDetail() {
             placeholder="예 ) 신논현역 도보 5분거리, 혼자 살기 좋은 방입니다."
             onChange={handleTitle}
             maxLength={50}
+            ref={detailTitleRef}
           />
         </RowContent>
       </RowWrapper>
@@ -37,6 +54,7 @@ function ManageFormDetail() {
             - 매물등록규정에 위반되는 금칙어는 입력할 수 없습니다.
             위 주의사항 위반시 임의로 매물 삭제 혹은 서비스 이용이 제한될 수 있습니다."
             onChange={handleContent}
+            ref={detailContentRef}
           />
         </RowContent>
       </RowWrapper>

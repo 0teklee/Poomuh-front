@@ -43,6 +43,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 90vh;
+  .list {
+    margin-top: 65px;
+  }
 `;
 
 const MapWrapper = styled.div`

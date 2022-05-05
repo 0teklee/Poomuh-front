@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 function Header() {
   const navigate = useNavigate();
+  const token = localStorage.getItem('access_token');
+  const userType = localStorage.getItem('user_type');
 
+  const Logout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user_type');
+    window.location.reload();
+  };
   return (
     <Wrapper>
       <LogoWrapper onClick={() => navigate('/')}>
@@ -11,14 +19,30 @@ function Header() {
       </LogoWrapper>
       <MenuWrapper>
         <Link onClick={() => navigate('/search')}>지도</Link>
-        <Link onClick={() => navigate('/favorites/recent-room')}>관심목록</Link>
+        {userType === 'agent' ? (
+          ''
+        ) : (
+          <Link onClick={() => navigate('/favorites/recent-room')}>
+            관심목록
+          </Link>
+        )}
         <Link onClick={() => navigate('/manage/form')}>방내놓기</Link>
-        <Button onClick={() => navigate('/login')}>
-          <Login>로그인</Login>
-        </Button>
-        <Button onClick={() => navigate('/signup')}>
-          <SignUp>회원가입</SignUp>
-        </Button>
+        {token ? (
+          <>
+            <Button onClick={() => Logout()}>
+              <Login>로그아웃</Login>
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button onClick={() => navigate('/login')}>
+              <Login>로그인</Login>
+            </Button>
+            <Button onClick={() => navigate('/signup')}>
+              <SignUp>회원가입</SignUp>
+            </Button>
+          </>
+        )}
       </MenuWrapper>
     </Wrapper>
   );

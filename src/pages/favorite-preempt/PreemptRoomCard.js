@@ -15,14 +15,6 @@ function PreemptRoomCard({ data, updatePreempt }) {
     }).then(res => res.json());
 
     updatePreempt();
-    //찜한 방 API *******************************************************************
-    // fetch('http://localhost:8000/favorites/likes', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     token: token,
-    //   },
-    // }).then(res => res.json());
   };
 
   return (
@@ -53,7 +45,7 @@ function PreemptRoomCard({ data, updatePreempt }) {
             </Price>
             <Informations>
               {`${data.current_floor},
-              ${data.supply_size}`}
+              ${data.exclusive_size}`}
               m<sup>2</sup>
               <br />
               {data.description_title}
@@ -65,18 +57,15 @@ function PreemptRoomCard({ data, updatePreempt }) {
   );
 }
 const Wrapper = styled.div`
-  margin-bottom: 20px;
   width: 280px;
   margin-bottom: 4rem;
-  // height: 342px;
-  cursor: pointer;
   margin-left: 15px;
+  cursor: pointer;
 `;
 const ImageWrapper = styled.div`
   position: relative;
   width: 280px;
   height: 186px;
-  border-radius: 3px;
   overflow: hidden;
   img {
     object-fit: cover;

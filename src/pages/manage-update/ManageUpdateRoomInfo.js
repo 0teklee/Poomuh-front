@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { InfoContext, InfoDispatchContext } from './context';
 
@@ -6,7 +6,13 @@ function ManageFormRoomInfo() {
   // 258번째줄 REFACTOR
   const Info = useContext(InfoContext);
   const InfoDispatch = useContext(InfoDispatchContext);
-  const { exclusive_size, supply_size, current_floor, building_floor } = Info;
+  const {
+    exclusive_size,
+    supply_size,
+    current_floor,
+    building_floor,
+    heat_id,
+  } = Info;
 
   const SelectOption = num => {
     let result = [];
@@ -20,6 +26,9 @@ function ManageFormRoomInfo() {
   const supplySizeMRef = useRef('');
   const exclusiveSizePRef = useRef('');
   const exclusiveSizeMRef = useRef('');
+  const buildingFloorRef = useRef('');
+  const currentFloorRef = useRef('');
+  const heatRef = useRef('');
   const PtoM = (e, M) => {
     if (!e.target.value) {
       M.current.value = '';
@@ -58,6 +67,19 @@ function ManageFormRoomInfo() {
       available_date: e.target.value,
     });
   };
+  useEffect(() => {
+    if (supplySizeMRef.current && exclusiveSizeMRef.current) {
+      supplySizeMRef.current.value = supply_size;
+      exclusiveSizeMRef.current.value = exclusive_size;
+    }
+    if (buildingFloorRef.current && currentFloorRef.current) {
+      buildingFloorRef.current.value = building_floor;
+      currentFloorRef.current.value = current_floor;
+    }
+    if (heatRef.current) {
+      heatRef.current.value = heat_id;
+    }
+  }, []);
   return (
     <Wrapper>
       <Title>기본 정보</Title>
@@ -132,6 +154,7 @@ function ManageFormRoomInfo() {
                     building_floor: e.target.value,
                   });
                 }}
+                ref={buildingFloorRef}
               >
                 <option defaultValue style={{ display: 'none' }}>
                   건물 층수 선택
@@ -160,6 +183,7 @@ function ManageFormRoomInfo() {
                     current_floor: e.target.value,
                   });
                 }}
+                ref={currentFloorRef}
               >
                 <option defaultValue style={{ display: 'none' }}>
                   해당 층수 선택
@@ -182,6 +206,7 @@ function ManageFormRoomInfo() {
                 heat_id: e.target.value * 1,
               });
             }}
+            ref={heatRef}
           >
             <option defaultValue style={{ display: 'none' }}>
               난방 종류 선택

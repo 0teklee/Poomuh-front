@@ -1,15 +1,19 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
-import Map from './ManageFormMap';
-import ManageFormPostCode from './ManageFormPostCode';
+import Map from './ManageUpdateMap';
+import ManageFormPostCode from './ManageUpdatePostCode';
 import { InfoDispatchContext, InfoContext } from './context';
 
 function ManageFormAddress() {
   const [check, setCheck] = useState(false);
   const infoDispatch = useContext(InfoDispatchContext);
-  const infoContext = useContext(InfoContext);
+  const Info = useContext(InfoContext);
+  const { building_name, address_main, jaddress, address_dong, address_ho } =
+    Info;
   const searchAddressValue = useRef('');
+  const dongRef = useRef('');
+  const hoRef = useRef('');
 
   const handleCheck = () => {
     setCheck(prev => !prev);
@@ -33,7 +37,19 @@ function ManageFormAddress() {
   const handleShowModal = () => {
     setShowModal(prev => !prev);
   };
-
+  useEffect(() => {
+    if (
+      searchAddressValue.current &&
+      address_main &&
+      dongRef.current &&
+      address_dong.current &&
+      address_ho
+    ) {
+      searchAddressValue.current.value = address_main;
+      dongRef.current.value = address_dong;
+      hoRef.current.value = address_ho;
+    }
+  }, []);
   return (
     <Wrapper>
       {showModal && (
@@ -64,18 +80,14 @@ function ManageFormAddress() {
               <ButtonInput value="주소검색" onClick={handleShowModal} />
             </SearchAddressBox>
             <BorderBox>
-              <div className="addressText">
+              <div className="addressText" onChange={e => console.log(e)}>
                 {' '}
                 <span>도로명 : </span>
-                {`${infoContext.address_main} ${
-                  infoContext.building_name
-                    ? `(${infoContext.building_name})`
-                    : ''
-                }`}
+                {`${address_main} ${building_name ? `(${building_name})` : ''}`}
               </div>
               <div className="addressText">
                 <span>지 번 : </span>
-                {infoContext.jaddress}
+                {jaddress}
               </div>
             </BorderBox>
             <FlexDiv>
@@ -84,6 +96,7 @@ function ManageFormAddress() {
                   placeholder="예 ) 101동"
                   check={check}
                   onChange={handleDongAddress}
+                  ref={dongRef}
                 />
                 <DetailAdressBox marginRight="5px">동</DetailAdressBox>
               </FlexDiv>
@@ -91,6 +104,7 @@ function ManageFormAddress() {
                 <TextInput
                   placeholder="예 ) 101호"
                   onChange={handleHoAddress}
+                  ref={hoRef}
                 />
                 <DetailAdressBox>호</DetailAdressBox>
               </FlexDiv>
@@ -113,7 +127,7 @@ function ManageFormAddress() {
             </Input>
           </InputInnerWrapper>
           <MapWrapper>
-            <Map Address={infoContext.address} />
+            <Map Address={address_main} />
           </MapWrapper>
         </AddressInputWrapper>
       </RowWrapper>
