@@ -127,12 +127,14 @@ const EstateCard = () => {
 
 const Wrapper = styled.section`
   width: 100%;
+  margin-bottom: 50px;
 `;
 
 const CardBox = styled.section`
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
+  margin-bottom: 15px;
   border: 1px solid rgb(226, 226, 226);
 `;
 

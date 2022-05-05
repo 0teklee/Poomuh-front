@@ -1,3 +1,4 @@
+import Footer from '../../components/footer/Footer';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,15 +9,18 @@ import ManageListNotice from './ManageListNotice';
 
 function ManageList() {
   return (
-    <Wrapper>
+    <>
       <Header />
-      <TitleWrapper>
-        <Title>방내놓기</Title>
-      </TitleWrapper>
-      <ManageNav select="list" />
-      <ManageListNotice />
-      <EstateCard />
-    </Wrapper>
+      <Wrapper>
+        <TitleWrapper>
+          <Title>방내놓기</Title>
+        </TitleWrapper>
+        <ManageNav select="list" />
+        <ManageListNotice />
+        <EstateCard />
+      </Wrapper>
+      <Footer />
+    </>
   );
 }
 
