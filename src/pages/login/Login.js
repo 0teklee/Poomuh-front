@@ -5,7 +5,6 @@ import Header from '../../components/header/Header';
 function Login() {
   const navigate = useNavigate();
   const onLogin = () => {
-    console.log('requestedUrl', requestedUrl);
     fetch(`http://localhost:8000/${requestedUrl}/login`, {
       method: 'POST',
       headers: {
@@ -18,11 +17,14 @@ function Login() {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res.accessToken);
-        localStorage.setItem('access_token', res.accessToken);
-        localStorage.setItem('user_type', res.userType);
-        navigate('/');
-        console.log(res);
+        if (res.accessToken === undefined) {
+          alert('중개사 회원은 중개인으로 로그인하기를 체크해 주세요');
+          navigate('/login');
+        } else {
+          localStorage.setItem('access_token', res.accessToken);
+          localStorage.setItem('user_type', res.userType);
+          navigate('/');
+        }
       });
   };
 
