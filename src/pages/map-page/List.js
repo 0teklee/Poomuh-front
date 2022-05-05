@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer';
 
 function List() {
   const RealEstate = useContext(RealEstateContext);
+
   const { kakao } = window;
   const { map, mapBounds, selected } = RealEstate;
 
@@ -62,10 +63,6 @@ function List() {
     }, 700);
   };
 
-  useEffect(() => {
-    setEstateList(selected);
-  }, [selected]);
-
   //스크롤이 마지막에 도착하면 offset추가
   useEffect(() => {
     if (inView && !isLoading) {
@@ -73,7 +70,7 @@ function List() {
     }
   }, [inView, isLoading]);
 
-  //offset의 값이 변경되거나 mapBound가 변경되면 fetch
+  // //offset의 값이 변경되거나 mapBound가 변경되면 fetch
   useEffect(() => {
     fetchData(estateList);
   }, [offset]);
@@ -82,6 +79,10 @@ function List() {
     setOffset(0);
     fetchData([]);
   }, [mapBounds]);
+
+  useEffect(() => {
+    fetchData([]);
+  }, [selected]);
 
   let circle = useRef(
     new kakao.maps.Circle({
