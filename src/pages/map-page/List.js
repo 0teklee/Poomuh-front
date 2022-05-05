@@ -8,7 +8,7 @@ import { useInView } from 'react-intersection-observer';
 function List() {
   const RealEstate = useContext(RealEstateContext);
   const { kakao } = window;
-  const { map, mapBounds } = RealEstate;
+  const { map, mapBounds, selected } = RealEstate;
 
   //무한 스크롤
   const [estateList, setEstateList] = useState([]);
@@ -61,6 +61,10 @@ function List() {
         });
     }, 700);
   };
+
+  useEffect(() => {
+    setEstateList(selected);
+  }, [selected]);
 
   //스크롤이 마지막에 도착하면 offset추가
   useEffect(() => {
