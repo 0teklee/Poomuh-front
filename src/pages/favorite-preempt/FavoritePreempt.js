@@ -77,7 +77,6 @@ const TitleWrapper = styled.header`
   align-items: center;
   justify-content: center;
   height: 200px;
-  // border: 1px solid black;
 `;
 const Title = styled.h1`
   font-size: 2rem;
@@ -105,12 +104,4 @@ const CardWrapper = styled.div`
   margin-bottom: 7rem;
   margin-left: -15px;
 `;
-
 export default FavoritePreempt;
-
-//최근본방 목데이터 가져오기
-// fetch('/data/PreemptData.json')
-//   .then(res => res.json())
-//   .then(data => {
-//     setPreemptRoom(data);
-//   });
