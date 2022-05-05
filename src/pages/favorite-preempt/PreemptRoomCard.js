@@ -57,18 +57,15 @@ function PreemptRoomCard({ data, updatePreempt }) {
   );
 }
 const Wrapper = styled.div`
-  margin-bottom: 20px;
   width: 280px;
   margin-bottom: 4rem;
-  // height: 342px;
-  cursor: pointer;
   margin-left: 15px;
+  cursor: pointer;
 `;
 const ImageWrapper = styled.div`
   position: relative;
   width: 280px;
   height: 186px;
-  border-radius: 3px;
   overflow: hidden;
   img {
     object-fit: cover;

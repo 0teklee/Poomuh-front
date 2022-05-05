@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+
 function Header() {
   const navigate = useNavigate();
   const token = localStorage.getItem('access_token');
+  const userType = localStorage.getItem('user_type');
+
   const Logout = () => {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('user_type');
     window.location.reload();
-    console.log('로그아웃!');
   };
   return (
     <Wrapper>
@@ -16,7 +19,13 @@ function Header() {
       </LogoWrapper>
       <MenuWrapper>
         <Link onClick={() => navigate('/search')}>지도</Link>
-        <Link onClick={() => navigate('/favorites/recent-room')}>관심목록</Link>
+        {userType === 'agent' ? (
+          ''
+        ) : (
+          <Link onClick={() => navigate('/favorites/recent-room')}>
+            관심목록
+          </Link>
+        )}
         <Link onClick={() => navigate('/manage/form')}>방내놓기</Link>
         {token ? (
           <>

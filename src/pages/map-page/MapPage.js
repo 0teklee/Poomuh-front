@@ -51,6 +51,8 @@ const Wrapper = styled.div`
 const MapWrapper = styled.div`
   display: flex;
   flex: 1;
+  height: 90vh;
+
   .list {
     width: 25rem;
     border-right: 1px solid rgb(205, 205, 205);

@@ -72,16 +72,15 @@ function RecentRoomCard({ data }) {
 }
 
 const Wrapper = styled.div`
-  margin-bottom: 20px;
   width: 280px;
   margin-bottom: 4rem;
+  margin-left: 15px;
   cursor: pointer;
 `;
 const ImageWrapper = styled.div`
   position: relative;
   width: 280px;
   height: 186px;
-
   img {
     object-fit: cover;
     width: 100%;
