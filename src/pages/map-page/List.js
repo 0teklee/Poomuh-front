@@ -36,7 +36,7 @@ function List() {
     LatLng: `${RealEstate.mapBounds.ha},${RealEstate.mapBounds.oa},${RealEstate.mapBounds.qa},${RealEstate.mapBounds.pa}`,
   };
 
-  const fetchData = async () => {
+  const fetchData = async list => {
     if (token && userType === 'user') {
       header.token = token;
       setIsUser('/users');
@@ -53,14 +53,13 @@ function List() {
         .then(res => res.json())
         .then(data => {
           if (data.map.length < 4) {
-            setEstateList(estateList.concat(data.map));
+            setEstateList(list.concat(data.map));
           } else {
-            setEstateList(estateList.concat(data.map));
+            setEstateList(list.concat(data.map));
             setIsLoading(false);
           }
         });
     }, 700);
-    console.log('estateList!!!!>>>', estateList);
   };
 
   //스크롤이 마지막에 도착하면 offset추가
@@ -72,16 +71,12 @@ function List() {
 
   //offset의 값이 변경되거나 mapBound가 변경되면 fetch
   useEffect(() => {
-    fetchData();
+    fetchData(estateList);
   }, [offset]);
 
   useEffect(() => {
-    console.log('estateListInuseEffect', estateList);
     setOffset(0);
-    fetchData();
-    return () => {
-      setEstateList([]);
-    };
+    fetchData([]);
   }, [mapBounds]);
 
   let circle = useRef(
