@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { InfoContext, InfoDispatchContext } from './context';
 
@@ -6,7 +6,13 @@ function ManageFormRoomInfo() {
   // 258번째줄 REFACTOR
   const Info = useContext(InfoContext);
   const InfoDispatch = useContext(InfoDispatchContext);
-  const { exclusive_size, supply_size, current_floor, building_floor } = Info;
+  const {
+    exclusive_size,
+    supply_size,
+    current_floor,
+    building_floor,
+    heat_id,
+  } = Info;
 
   const SelectOption = num => {
     let result = [];
@@ -58,6 +64,7 @@ function ManageFormRoomInfo() {
       available_date: e.target.value,
     });
   };
+
   return (
     <Wrapper>
       <Title>기본 정보</Title>

@@ -28,7 +28,7 @@ function ManageFormDetail() {
       detailTitleRef.current.value = description_title;
       detailContentRef.current.value = description_detail;
     }
-  }, []);
+  }, [Info]);
   return (
     <Wrapper>
       <Title>상세정보</Title>
