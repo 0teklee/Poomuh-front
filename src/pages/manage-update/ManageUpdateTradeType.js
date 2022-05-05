@@ -49,20 +49,16 @@ function Trade({ name, close }) {
       }`;
     }
   };
+
   useEffect(() => {
-    if (
-      depositRef.current &&
-      monthlyRef.current &&
-      priceMainRef.current &&
-      price_deposit &&
-      price_monthly &&
-      price_main
-    ) {
+    if (depositRef.current && monthlyRef.current) {
       depositRef.current.value = price_deposit;
       monthlyRef.current.value = price_monthly;
+    } else if (priceMainRef.current) {
       priceMainRef.current.value = price_main;
     }
   }, []);
+
   return (
     <TradeWrapper>
       <span className="typeName">{name}</span>
@@ -153,6 +149,7 @@ function ManageFormTradeType() {
   };
   const InfoDispatch = useContext(InfoDispatchContext);
   const Info = useContext(InfoContext);
+  const { trade_id, dataIn } = Info;
 
   const handleTradeType = e => {
     InfoDispatch({
@@ -160,12 +157,35 @@ function ManageFormTradeType() {
       trade_id: [...Info.trade_id, e.target.id * 1],
     });
   };
+
   useEffect(() => {
-    setTrade([
-      { name: '월세', key: tradeKey++ },
-      { name: '전세', key: tradeKey++ },
-    ]);
-  }, []);
+    trade_id.includes(1 && 2)
+      ? setTrade([
+          {
+            key: ++tradeKey,
+            name: '월세',
+          },
+          {
+            key: ++tradeKey,
+            name: '전세',
+          },
+        ])
+      : trade_id.includes(1)
+      ? setTrade([
+          {
+            key: ++tradeKey,
+            name: '월세',
+          },
+        ])
+      : trade_id.includes(2)
+      ? setTrade([
+          {
+            key: ++tradeKey,
+            name: '전세',
+          },
+        ])
+      : setTrade([...trade]);
+  }, [dataIn]);
   return (
     <Wrapper>
       <Title>거래 정보</Title>
