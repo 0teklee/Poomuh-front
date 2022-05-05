@@ -161,10 +161,8 @@ function ManageFormTradeType() {
     });
   };
   useEffect(() => {
-    if() {
-      
-    }
-
+    // if() {
+    // }
   }, [Info]);
   return (
     <Wrapper>
