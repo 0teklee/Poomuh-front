@@ -9,13 +9,12 @@ function ListCard({ data }) {
   const navigate = useNavigate();
   const RealEstate = useContext(RealEstateContext);
   const token = localStorage.getItem('access_token');
-
-  // 86번째줄 데이터타입 없어서 주석처리 안하면 렌더링 안됨,
+  const userType = localStorage.getItem('user_type');
   const updateLike = () => {
     setLike(like ? false : true);
 
     //찜 변경 API(회원만 가능) *******************************************************************
-    fetch(`http://localhost:8000/favorite/likes/${data.id}`, {
+    fetch(`http://localhost:8000/favorites/likes/${data.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -49,19 +48,14 @@ function ListCard({ data }) {
           >
             <ImageWrapper>
               <img alt="이미지" src={data.image_url} />
-
-              {/* 좋아요 버튼(API연결) */}
               <Like>
-                {data.hasOwnProperty('is_like') ? (
+                {userType === 'user' ? (
                   like ? (
-                    <IoMdHeart color="red" onClick={() => updateLike()} />
+                    <IoMdHeart color="red" onClick={updateLike} />
                   ) : (
-                    <IoMdHeartEmpty
-                      color="white"
-                      onClick={() => updateLike()}
-                    />
+                    <IoMdHeartEmpty color="white" onClick={updateLike} />
                   )
-                ) : (
+                ) : userType === 'agent' ? null : (
                   <IoMdHeartEmpty
                     color="white"
                     onClick={() => navigate('/login')}
@@ -71,7 +65,7 @@ function ListCard({ data }) {
             </ImageWrapper>
             <InfoWrapper>
               <p className="price">
-                {/* {data.trade_type.length === 1 && data.trade_type[0] === '전세' //배열데이터[월세,전세] or [전세]
+                {data.trade_type.length === 1 && data.trade_type[0] === '전세' //배열데이터[월세,전세] or [전세]
                   ? `전세 ${Math.floor(data.price_main / 10000)}억${
                       Math.floor(data.price_main) -
                         Math.floor(data.price_main / 10000) * 10000 ===
@@ -81,7 +75,7 @@ function ListCard({ data }) {
                           Math.floor(data.price_main / 10000) * 10000
                     }`
                   : `월세
-                    ${data.price_deposit}/${data.price_monthly}`} */}
+                    ${data.price_deposit}/${data.price_monthly}`}
               </p>
               <br />
               <p className="type">{data.category_type}</p>
