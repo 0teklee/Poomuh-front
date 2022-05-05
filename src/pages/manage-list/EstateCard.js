@@ -11,6 +11,7 @@ const EstateCard = () => {
 
   const [estates, setEstates] = useState([]);
 
+  //매물 삭제
   const deleteEstate = id => {
     fetch(`http://localhost:8000/estates/${id}`, {
       method: 'DELETE',
@@ -23,6 +24,7 @@ const EstateCard = () => {
       .then(res => console.log(res));
   };
 
+  //list 가져오기
   useEffect(() => {
     fetch('http://localhost:8000/estates/list/myList', {
       method: 'GET',
@@ -35,25 +37,24 @@ const EstateCard = () => {
       .then(data => {
         setEstates(data);
       });
-  }, []);
+  }, [deleteEstate]);
 
-  // //삭제 확인 알럿창
-  // const checkDelete = () => {
-  //   const isDelete = window.confirm('삭제하시겠습니까?');
-  //   if (isDelete) {
-  //     deleteEstate();
-  //   }
-  // };
+  //날짜 형태 변경하는 함수
+  const formatDate = createdDate => {
+    const moment = require('moment');
+    const date = moment(createdDate).format('YYYY-MM-DD');
+    return date;
+  };
 
   return (
     <Wrapper>
       {estates.map(data => {
         return (
-          <CardBox key={data.id}>
+          <CardBox key={data.estateInfo.id}>
             <EstateBox>
               <EstateDeadline>
                 <div className="estateNum">
-                  <p>매물번호 {data.id}</p>
+                  <p>매물번호 {data.estateInfo.id}</p>
                 </div>
                 <div className="adInfo">
                   <p className="advertising">광고중</p>
@@ -65,9 +66,11 @@ const EstateCard = () => {
                   <img src="" alt="매물 사진" />
                 </div>
                 <div className="infoWrapper">
-                  <p className="type">{data.price_monthly}</p>
-                  <p className="price">{data.price_main}</p>
-                  <p className="status">{data.price_deposit}</p>
+                  <p className="type">{data.estateInfo.categories.type}</p>
+                  <p className="price">
+                    {data.estateInfo.price_deposit} /{' '}
+                    {data.estateInfo.price_monthly}
+                  </p>
                 </div>
               </EstateInfo>
             </EstateBox>
@@ -79,24 +82,31 @@ const EstateCard = () => {
                 <div className="buttonDiv">
                   <div className="registerDate">
                     <p>
-                      등록일 <span className="date" />
+                      등록일{' '}
+                      <span className="date">
+                        {formatDate(data.estateInfo.created_at)}
+                      </span>
                     </p>
                     <p>
                       조회수 <span className="count">1</span>
                     </p>
                     <p>
-                      찜<span className="count" />
+                      찜 <span className="count">{data.likes._count}</span>
                     </p>
                   </div>
                   <div className="buttons">
-                    <button onClick={() => navigate(`/manage/form/${data.id}`)}>
+                    <button
+                      onClick={() =>
+                        navigate(`/manage/form/${data.estateInfo.id}`)
+                      }
+                    >
                       수정
                     </button>
                     <button
                       onClick={() => {
                         const isDelete = window.confirm('삭제하시겠습니까?');
                         if (isDelete) {
-                          deleteEstate(data.id);
+                          deleteEstate(data.estateInfo.id);
                         }
                       }}
                     >
