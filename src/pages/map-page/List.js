@@ -72,15 +72,10 @@ function List() {
 
   useEffect(() => {
     setEstateList([]);
-<<<<<<< Updated upstream
-    fetchData();
-  }, [RealEstate.mapBounds]);
-=======
     setOffset(0);
 
     fetchData();
   }, [RealEstate.realEstate]);
->>>>>>> Stashed changes
 
   //scrollHelper값이 0->1로 바뀌면 fetch
   useEffect(() => {
