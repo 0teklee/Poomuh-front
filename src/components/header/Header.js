@@ -19,7 +19,7 @@ function Header() {
       </LogoWrapper>
       <MenuWrapper>
         <Link onClick={() => navigate('/search')}>지도</Link>
-        {userType === 'agents' ? (
+        {userType === 'agent' ? (
           ''
         ) : (
           <Link onClick={() => navigate('/favorites/recent-room')}>
