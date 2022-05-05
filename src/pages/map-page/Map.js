@@ -169,9 +169,13 @@ function Map() {
     RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
 
     kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      console.log('ZoomMapBounds>>', RealEstate.mapBounds);
+
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
     });
     kakao.maps.event.addListener(map, 'dragend', () => {
+      console.log('DragMapBounds>>', RealEstate.mapBounds);
+
       RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
     });
     kakao.maps.event.addListener(map, 'click', () =>
