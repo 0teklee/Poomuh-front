@@ -113,7 +113,7 @@ function ManageFormAddress() {
             </Input>
           </InputInnerWrapper>
           <MapWrapper>
-            <Map Address={infoContext.address} />
+            <Map Address={infoContext.address_main} />
           </MapWrapper>
         </AddressInputWrapper>
       </RowWrapper>
