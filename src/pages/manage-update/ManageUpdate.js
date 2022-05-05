@@ -32,11 +32,11 @@ function ManageUpdate() {
         });
         InfoDispatchContext({
           type: 'UPDATE_ADDRESS',
-          address: data.address_main,
+          address_main: data.address_main,
         });
         InfoDispatchContext({
           type: 'UPDATE_BUILDINGNAME',
-          buildingName: data.building_name,
+          building_name: data.building_name,
         });
         InfoDispatchContext({
           type: 'UPDATE_DONG',

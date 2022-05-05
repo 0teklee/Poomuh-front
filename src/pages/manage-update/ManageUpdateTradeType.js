@@ -7,6 +7,7 @@ function Trade({ name, close }) {
   const sampleMonthly = useRef('');
   const InfoDispatch = useContext(InfoDispatchContext);
   const Info = useContext(InfoContext);
+  const { price_deposit, price_monthly, price_main } = Info;
   const depositRef = useRef('');
   const monthlyRef = useRef('');
   const priceMainRef = useRef('');
@@ -49,10 +50,17 @@ function Trade({ name, close }) {
     }
   };
   useEffect(() => {
-    if (depositRef.current && monthlyRef.current && priceMainRef.current) {
-      depositRef.current.value = Info.price_deposit;
-      monthlyRef.current.value = Info.price_monthly;
-      priceMainRef.current.value = Info.price_main;
+    if (
+      depositRef.current &&
+      monthlyRef.current &&
+      priceMainRef.current &&
+      price_deposit &&
+      price_monthly &&
+      price_main
+    ) {
+      depositRef.current.value = price_deposit;
+      monthlyRef.current.value = price_monthly;
+      priceMainRef.current.value = price_main;
     }
   }, []);
   return (
