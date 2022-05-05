@@ -31,7 +31,6 @@ function ManageFormMap() {
           const coords = new kakao.maps.LatLng(result.y, result.x);
           map.setCenter(coords);
           marker.setPosition(coords);
-          console.log(result.y, result.x);
           infoDispatch({ type: 'UPDATE_LATITUDE', latitude: result.y });
           infoDispatch({ type: 'UPDATE_LONGITUDE', longitude: result.x });
         }
