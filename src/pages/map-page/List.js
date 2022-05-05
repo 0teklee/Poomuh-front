@@ -82,9 +82,11 @@ function List() {
   }, [offset]);
 
   useEffect(() => {
-    setOffset(0);
-    fetchData([]);
-  }, [mapBounds]);
+    if (selected.length === 0) {
+      setOffset(0);
+      fetchData([]);
+    }
+  }, [mapBounds, selected]);
 
   useEffect(() => {
     setEstateList(selected);
