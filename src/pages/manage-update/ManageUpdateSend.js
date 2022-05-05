@@ -8,6 +8,8 @@ function ManageFormSend() {
   const [agree, setAgree] = useState(false);
   const handleAgree = () => {
     setAgree(prev => !prev);
+    console.log('Info >>>', Info);
+    console.log('params >>>', RealEstateId.id);
   };
 
   const Info = useContext(InfoContext);
@@ -18,7 +20,7 @@ function ManageFormSend() {
     const token = localStorage.getItem('access_token');
     fetch(`http://localhost:8000/estates/${RealEstateId.id}`, {
       method: 'PUT',
-      headers: { 'Cotent-type': 'application/json', token: token },
+      headers: { 'Content-type': 'application/json', token: token },
       body: JSON.stringify(Info),
     })
       .then(res => res.json())
@@ -27,13 +29,11 @@ function ManageFormSend() {
       })
       .catch(err => console.log(err));
   };
-
   const verify = () => {
     const {
-      address,
+      address_main,
       address_ho,
-      room_type,
-      building_type,
+      category_id,
       supply_size,
       exclusive_size,
       building_floor,
@@ -44,24 +44,22 @@ function ManageFormSend() {
       heat_id,
       available_date,
       description_title,
-      description_detai,
+      description_detail,
       trade_id,
     } = Info;
     if (
-      !address ||
+      !address_main ||
       !address_ho ||
-      !room_type ||
-      !building_type ||
+      !category_id ||
       !supply_size ||
       !exclusive_size ||
       !building_floor ||
       !current_floor ||
-      !price_main ||
-      !(price_deposit && price_monthly) ||
+      !((price_deposit && price_monthly) || price_main) ||
       !heat_id ||
       !available_date ||
       !description_title ||
-      !description_detai ||
+      !description_detail ||
       !trade_id
     ) {
       alert('모든 정보를 입력해주세요');

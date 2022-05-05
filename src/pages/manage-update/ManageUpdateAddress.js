@@ -38,18 +38,10 @@ function ManageFormAddress() {
     setShowModal(prev => !prev);
   };
   useEffect(() => {
-    if (
-      searchAddressValue.current &&
-      address_main &&
-      dongRef.current &&
-      address_dong.current &&
-      address_ho
-    ) {
-      searchAddressValue.current.value = address_main;
-      dongRef.current.value = address_dong;
-      hoRef.current.value = address_ho;
-    }
-  }, [Info]);
+    searchAddressValue.current.value = address_main;
+    dongRef.current.value = address_dong;
+    hoRef.current.value = address_ho;
+  }, [searchAddressValue.current, dongRef.current, hoRef.current]);
   return (
     <Wrapper>
       {showModal && (

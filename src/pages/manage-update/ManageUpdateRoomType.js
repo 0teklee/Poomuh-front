@@ -11,23 +11,8 @@ function ManageFormRoomType() {
     infoDispatch({ type: 'UPDATE_CATEGORY', category_id: e.target.value * 1 });
   };
   useEffect(() => {
-    switch (Info.category_id) {
-      case 1:
-        setSelectBuilding('원룸');
-        break;
-      case 2:
-        setSelectBuilding('빌라');
-        break;
-      case 3:
-        setSelectBuilding('오피스텔');
-        break;
-      case 4:
-        setSelectBuilding('아파트');
-        break;
-      default:
-        return;
-    }
-  }, [Info]);
+    setSelectBuilding('다세대주택');
+  }, []);
 
   return (
     <Wrapper>
@@ -117,13 +102,13 @@ function ManageFormRoomType() {
             </li>
             <li>
               <RadioBtn
-                id="빌라/연립/다세대"
-                name="빌라/연립/다세대"
-                value="빌라/연립/다세대"
-                checked={selectBuilding === '빌라/연립/다세대'}
+                id="다세대주택"
+                name="다세대주택"
+                value="다세대주택"
+                checked={selectBuilding === '다세대주택'}
                 onChange={e => setSelectBuilding(e.target.value)}
               />
-              <Label htmlFor="빌라/연립/다세대">
+              <Label htmlFor="다세대주택">
                 <p>다세대주택</p>
               </Label>
             </li>
