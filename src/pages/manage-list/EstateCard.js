@@ -127,6 +127,7 @@ const EstateCard = () => {
 
 const Wrapper = styled.section`
   width: 100%;
+  margin-bottom: 50px;
 `;
 
 const CardBox = styled.section`
@@ -243,7 +244,7 @@ const Buttons = styled.div`
   .buttons {
     margin-top: 20px;
     button {
-      padding: 10px 15px;
+      padding: 10px 10px;
       background-color: white;
       border: 1px solid rgb(226, 226, 226);
       :hover {
