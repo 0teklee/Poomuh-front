@@ -35,7 +35,7 @@ function infoReducer(state, action) {
     case 'UPDATE_BUILDING_TYPE':
       return { ...state, building_type: action.buildingType };
     case 'UPDATE_ADDRESS':
-      return { ...state, address_main: action.address };
+      return { ...state, address_main: action.address_main };
     case 'UPDATE_JADDRESS':
       return { ...state, jaddress: action.jaddress };
     case 'UPDATE_BUILDINGNAME':

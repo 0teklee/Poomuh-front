@@ -19,7 +19,17 @@ function ManageFormSend() {
       method: 'POST',
       headers: { 'Content-type': 'application/json', token: token },
       body: JSON.stringify(Info),
-    }).then(alert('매물이 등록되었습니다.'));
+    })
+      .then(res => {
+        if (!res.OK) {
+          throw new Error(res.statusText);
+          return;
+        }
+        res.json();
+      })
+      .catch(err => alert(err))
+      .then(alert('매물이 등록되었습니다.'))
+      .then(navigate('/manage/list'));
   };
 
   const verify = () => {
@@ -58,7 +68,6 @@ function ManageFormSend() {
       alert('모든 정보를 입력해주세요');
       return;
     }
-    console.log(Info);
     sendInfo();
   };
 
@@ -79,7 +88,7 @@ function ManageFormSend() {
           <input
             type="button"
             value="취소"
-            onClick={() => navigate('/manage/list')}
+            onClick={() => navigate('/manage/list', { replace: true })}
           />
           <input type="button" value="매물등록" onClick={() => verify()} />
         </FlexDiv>
