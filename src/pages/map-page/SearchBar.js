@@ -88,7 +88,6 @@ function SearchBar() {
   const getSearchResult = () => {
     // 한국어 검색어를 헤더에 넣어서 non ISO-8859-1 code point 에러 발생. / Esint가 자동으로 쉼표를 지우기 때문으로 추정
     // 쿼리 스트링으로 대체
-    console.log('searchText >>>>', searchModal.searchText);
     fetch(
       `http://localhost:8000/estates/content/search?search=${searchModal.searchText}`,
       {
