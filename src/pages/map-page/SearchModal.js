@@ -50,7 +50,7 @@ function SearchModal({ result, addressResult }) {
           <Wrapper>
             <ItemTitle>지역</ItemTitle>
             <DataScroll>
-              {addressResult.length < 1 ? (
+              {addressResult && addressResult.length < 1 ? (
                 <NoResult>
                   <p>검색 결과가 없습니다</p>
                 </NoResult>
@@ -61,7 +61,7 @@ function SearchModal({ result, addressResult }) {
               )}
             </DataScroll>
           </Wrapper>
-          {result.office.length !== 0 ? (
+          {result && result.office.length !== 0 ? (
             <Wrapper>
               <ItemTitle>오피스텔</ItemTitle>
               <DataScroll>
@@ -80,7 +80,7 @@ function SearchModal({ result, addressResult }) {
           ) : (
             ''
           )}
-          {result.apartment.length !== 0 ? (
+          {result && result.apartment.length !== 0 ? (
             <Wrapper>
               <ItemTitle>아파트</ItemTitle>
               <DataScroll>
