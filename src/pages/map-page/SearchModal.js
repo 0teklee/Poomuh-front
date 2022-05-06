@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { RealEstateContext } from './context';
+import { RealEstateContext, RealEstateContextDispatch } from './context';
 
 let resultKey = 0;
 
@@ -10,6 +10,7 @@ function ResultData({ address, buildingName, data }) {
   const { kakao } = window;
   const coords = (lat, lng) => new kakao.maps.LatLng(lat, lng);
   const RealEstate = useContext(RealEstateContext);
+  const RealEstateDispatch = useContext(RealEstateContextDispatch);
   const { map } = RealEstate;
 
   // 백엔드 소통이후 전부 수정
@@ -28,6 +29,10 @@ function ResultData({ address, buildingName, data }) {
           return;
         }
         map.setCenter(coords(data.latitude, data.longitude));
+        RealEstateDispatch({
+          type: 'GET_BOUNDS',
+          getBounds: map.getBounds(),
+        });
       }}
     >
       <p>{buildingName}</p>
