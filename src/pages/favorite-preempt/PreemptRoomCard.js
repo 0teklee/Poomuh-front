@@ -18,11 +18,11 @@ function PreemptRoomCard({ data, updatePreempt }) {
   };
 
   return (
-    <>
+    <div>
       {data.length === 0 ? null : (
         <Wrapper>
           <ImageWrapper>
-            <Image alt="image" src={data.image_url}></Image>
+            <Image alt="image" src={data.image_url} />
 
             <Like>
               <IoMdHeart color="red" onClick={updateLike} />
@@ -46,14 +46,14 @@ function PreemptRoomCard({ data, updatePreempt }) {
             <Informations>
               {`${data.current_floor},
               ${data.exclusive_size}`}
-              m<sup>2</sup>
+              <span>㎡</span>
               <br />
               {data.description_title}
             </Informations>
           </ContentWrapper>
         </Wrapper>
       )}
-    </>
+    </div>
   );
 }
 const Wrapper = styled.div`
@@ -115,8 +115,8 @@ const Informations = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  sup {
-    font-size: 0.5rem;
+  span {
+    font-size: 1.1rem;
   }
 `;
 export default PreemptRoomCard;

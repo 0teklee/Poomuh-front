@@ -27,13 +27,19 @@ function MainHeader() {
               관심목록
             </Link>
           )}
-          <Link onClick={() => navigate('/manage/form')}>방내놓기</Link>
+          {userType === 'user' ? null : (
+            <Link
+              onClick={() => {
+                !token ? navigate('/login') : navigate('/manage/form');
+              }}
+            >
+              방내놓기
+            </Link>
+          )}
           {token ? (
-            <>
-              <Button onClick={() => Logout()}>
-                <Login>로그아웃</Login>
-              </Button>
-            </>
+            <Button onClick={() => Logout()}>
+              <Login>로그아웃</Login>
+            </Button>
           ) : (
             <>
               <Button onClick={() => navigate('/login')}>

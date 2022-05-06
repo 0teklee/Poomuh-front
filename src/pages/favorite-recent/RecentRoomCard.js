@@ -22,11 +22,11 @@ function RecentRoomCard({ data }) {
   };
 
   return (
-    <>
+    <div>
       {data.length === 0 ? null : (
         <Wrapper>
           <ImageWrapper>
-            <Image alt="image" src={data.image_url}></Image>
+            <Image alt="image" src={data.image_url} />
             <Like>
               {token ? (
                 like ? (
@@ -60,14 +60,14 @@ function RecentRoomCard({ data }) {
             <Informations>
               {`${data.current_floor},
               ${data.exclusive_size}`}
-              m<sup>2</sup>
+              <span>㎡</span>
               <br />
               {data.description_title}
             </Informations>
           </ContentWrapper>
         </Wrapper>
       )}
-    </>
+    </div>
   );
 }
 
@@ -82,10 +82,7 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 280px;
   height: 186px;
-<<<<<<< HEAD
   border-radius: 3px;
-=======
->>>>>>> develop
   img {
     object-fit: cover;
     width: 100%;
@@ -134,8 +131,8 @@ const Informations = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  sup {
-    font-size: 0.5rem;
+  span {
+    font-size: 1.1rem;
   }
 `;
 export default RecentRoomCard;

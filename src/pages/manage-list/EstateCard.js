@@ -22,7 +22,7 @@ const EstateCard = () => {
       },
     })
       .then(res => res.json())
-      .then(res => console.log(res));
+      .then(res => alert('삭제 성공!'));
   };
 
   //list 가져오기
@@ -68,15 +68,15 @@ const EstateCard = () => {
                 </div>
                 <div className="infoWrapper">
                   <p className="type">{data.estateInfo.categories.type}</p>
-                  {data.estateInfo.price_main && (
+                  {data.estateInfo.price_main != '0' && (
                     <p className="price">
-                      전세
+                      전세 &nbsp;
                       {data.estateInfo.price_main}
                     </p>
                   )}
-                  {data.estateInfo.price_monthly && (
+                  {data.estateInfo.price_monthly != '0' && (
                     <p className="price">
-                      월세
+                      월세 &nbsp;
                       {data.estateInfo.price_deposit} /{' '}
                       {data.estateInfo.price_monthly}
                     </p>
@@ -213,6 +213,11 @@ const EstateInfo = styled.div`
     .status {
       font-size: 14px;
       font-weight: 400;
+    }
+
+    .price {
+      font-size: 15px;
+      font-weight: 500;
     }
   }
 `;

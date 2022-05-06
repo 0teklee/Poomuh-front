@@ -28,7 +28,6 @@ function ManageUpdate() {
     })
       .then(rest => rest.json())
       .then(data => {
-        console.log('datain>>>', data);
         InfoDispatch({
           type: 'UPDATE_CATEGORY',
           category_id: data.category_id,

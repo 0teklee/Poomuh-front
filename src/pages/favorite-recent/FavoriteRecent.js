@@ -61,7 +61,6 @@ function FavoriteRecent() {
         ) : (
           <CardWrapper>
             {recentRoom.map(data => {
-              console.log(data);
               return <RecentRoomCard key={data.id} data={data} />;
             })}
           </CardWrapper>
@@ -107,7 +106,7 @@ const Notification = styled.p`
   text-align: center;
   color: rgb(202, 202, 202);
 `;
-const CardWrapper = styled.p`
+const CardWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;

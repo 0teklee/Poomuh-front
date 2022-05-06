@@ -23,8 +23,7 @@ function FavoritePreempt() {
         .then(res => res.json())
         .then(data => {
           setPreemptRoom(data.likeEstates);
-        })
-        .then(console.log(preemptRoom));
+        });
     }
   }, [updatedPreemptRoom]);
 
