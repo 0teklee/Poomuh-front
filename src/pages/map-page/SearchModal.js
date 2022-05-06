@@ -27,7 +27,7 @@ function ResultData({ address, buildingName, data }) {
           map.setCenter(coords(address.address.y * 1, address.address.x * 1));
           return;
         }
-        map.setCenter(coords(data.lat, data.lng));
+        map.setCenter(coords(data.latitude, data.longitude));
       }}
     >
       <p>{buildingName}</p>
@@ -37,6 +37,7 @@ function ResultData({ address, buildingName, data }) {
 }
 
 function SearchModal({ result, addressResult }) {
+  console.log(result);
   return (
     <Outer>
       {!result && !addressResult ? (
@@ -61,15 +62,15 @@ function SearchModal({ result, addressResult }) {
               )}
             </DataScroll>
           </Wrapper>
-          {result.오피스텔 ? (
+          {result.office.length !== 0 ? (
             <Wrapper>
               <ItemTitle>오피스텔</ItemTitle>
               <DataScroll>
-                {result.오피스텔.map(el => {
+                {result.office.map(el => {
                   return (
                     <ResultData
-                      buildingName={el.buildingName}
-                      address={el.addressMain}
+                      buildingName={el.building_name}
+                      address={el.address_main}
                       key={resultKey++}
                       data={el}
                     />
@@ -80,15 +81,15 @@ function SearchModal({ result, addressResult }) {
           ) : (
             ''
           )}
-          {result.아파트 ? (
+          {result.apartment.length !== 0 ? (
             <Wrapper>
               <ItemTitle>아파트</ItemTitle>
               <DataScroll>
-                {result.아파트.map(el => {
+                {result.apartment.map(el => {
                   return (
                     <ResultData
-                      buildingName={el.buildingName}
-                      address={el.addressMain}
+                      buildingName={el.building_name}
+                      address={el.address_main}
                       key={resultKey++}
                       data={el}
                     />

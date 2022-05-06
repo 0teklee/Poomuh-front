@@ -16,14 +16,38 @@ function Map() {
   const tradeTypeFilter = RealEstate.tradeTypeFilter;
   let tradeTypeQuery;
 
-  // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
-  useEffect(() => {
-    mapDOM.current = mapscript();
-  }, []);
+  // 지도 생성 함수
+  const mapscript = () => {
+    let container = mapContainer.current;
+    let options = {
+      center: new kakao.maps.LatLng(37.507454314288054, 127.03402073986199),
+      level: 4,
+      maxLevel: 7,
+    };
+
+    const map = new kakao.maps.Map(container, options);
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
+
+    RealEstateDispatch({ type: 'UPDATE_MAP', map: map });
+    RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
+
+    kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
+      RealEstateDispatch({ type: 'GET_SELECTED_ESTATE', selected: [] });
+    });
+    kakao.maps.event.addListener(map, 'dragend', () => {
+      RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
+      RealEstateDispatch({ type: 'GET_SELECTED_ESTATE', selected: [] });
+    });
+    kakao.maps.event.addListener(map, 'click', () =>
+      RealEstateDispatch({ type: 'GET_SELECTED_ESTATE', selected: [] })
+    );
+    return map;
+  };
 
   // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 받는 fetch 함수
   const sendBoundGetItem = () => {
-    // fetch('백엔드에서 좌표 범위 내의 매물을 요청하는 URI로 변경', {
     if (
       Object.entries(tradeTypeFilter).filter(el => el[1] === true).length === 0
     ) {
@@ -34,17 +58,13 @@ function Map() {
         .map(el => el[0])
         .toString();
     }
-    fetch(
-      // searchText 제거 수정
-      `http://localhost:8000/estates?tradeType=${tradeTypeQuery}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          LatLng: `${RealEstate.mapBounds.ha},${RealEstate.mapBounds.oa},${RealEstate.mapBounds.qa},${RealEstate.mapBounds.pa}`,
-        },
-      }
-    )
+    fetch(`http://localhost:8000/estates?tradeType=${tradeTypeQuery}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        LatLng: `${RealEstate.mapBounds.ha},${RealEstate.mapBounds.oa},${RealEstate.mapBounds.qa},${RealEstate.mapBounds.pa}`,
+      },
+    })
       .then(res => {
         if (!res.ok) {
           throw new Error(res.statusText);
@@ -63,9 +83,9 @@ function Map() {
             filter => filter.isOn === true
           ).length < 4
         ) {
-          const filteredData = data.filter(estate =>
+          const filteredData = data.clusters.filter(estate =>
             Object.values(RealEstate.roomTypeFilter).find(
-              filter => filter.roomType === estate.roomType && filter.isOn
+              filter => filter.roomType === estate.category_type && filter.isOn
             )
           );
           RealEstateDispatch({
@@ -83,13 +103,17 @@ function Map() {
       });
   };
 
+  // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
+  useEffect(() => {
+    mapDOM.current = mapscript();
+  }, []);
+
   // 지도의 범위가 바뀔 때마다 fetch함수가 실행, Context에 범위 내 매물 저장
   useEffect(() => {
     sendBoundGetItem();
   }, [RealEstate.mapBounds, RealEstate.roomTypeFilter, tradeTypeFilter]);
 
   // 현재 좌표 범위 내의 매물들이 로드 되고 난 후, 클러스터만 다시 렌더링
-
   useEffect(() => {
     if (kakaoClusterer) {
       kakaoClusterer.clear();
@@ -146,35 +170,6 @@ function Map() {
       RealEstateDispatch({ type: 'UPDATE_MARKER', marker: marker });
     }
   }, [RealEstate.realEstate]);
-
-  const mapscript = () => {
-    let container = mapContainer.current;
-    let options = {
-      center: new kakao.maps.LatLng(37.507454314288054, 127.03402073986199),
-      level: 4,
-      maxLevel: 7,
-    };
-
-    const map = new kakao.maps.Map(container, options);
-    const zoomControl = new kakao.maps.ZoomControl();
-    map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
-
-    RealEstateDispatch({ type: 'UPDATE_MAP', map: map });
-    RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
-
-    kakao.maps.event.addListener(map, 'zoom_changed', () => {
-      RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
-      RealEstateDispatch({ type: 'GET_SELECTED_ESTATE', selected: [] });
-    });
-    kakao.maps.event.addListener(map, 'dragend', () => {
-      RealEstateDispatch({ type: 'GET_BOUNDS', getBounds: map.getBounds() });
-      RealEstateDispatch({ type: 'GET_SELECTED_ESTATE', selected: [] });
-    });
-    kakao.maps.event.addListener(map, 'click', () =>
-      RealEstateDispatch({ type: 'GET_SELECTED_ESTATE', selected: [] })
-    );
-    return map;
-  };
 
   return (
     <div>
