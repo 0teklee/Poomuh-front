@@ -42,12 +42,12 @@ const EstateCard = () => {
       });
   }, []);
 
-  //날짜 형태 변경하는 함수
-  const formatDate = createdDate => {
-    const moment = require('moment');
-    const date = moment(createdDate).format('YYYY-MM-DD');
-    return date;
-  };
+  // //날짜 형태 변경하는 함수
+  // const formatDate = createdDate => {
+  //   const moment = require('moment');
+  //   const date = moment(createdDate).format('YYYY-MM-DD');
+  //   return date;
+  // };
 
   return (
     <Wrapper>
@@ -96,7 +96,8 @@ const EstateCard = () => {
                     <p>
                       등록일{' '}
                       <span className="date">
-                        {formatDate(data.estateInfo.created_at)}
+                        {/* {formatDate(data.estateInfo.created_at)} */}
+                        2022-05-06
                       </span>
                     </p>
                     <p>
