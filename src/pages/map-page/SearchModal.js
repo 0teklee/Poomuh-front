@@ -37,7 +37,6 @@ function ResultData({ address, buildingName, data }) {
 }
 
 function SearchModal({ result, addressResult }) {
-  console.log(result);
   return (
     <Outer>
       {!result && !addressResult ? (
