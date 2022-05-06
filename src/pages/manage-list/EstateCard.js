@@ -13,6 +13,7 @@ const EstateCard = () => {
 
   //매물 삭제
   const deleteEstate = id => {
+    setEstates(estates.filter(el => el.estateInfo.id !== id));
     fetch(`http://localhost:8000/estates/${id}`, {
       method: 'DELETE',
       headers: {
@@ -26,7 +27,7 @@ const EstateCard = () => {
 
   //list 가져오기
   useEffect(() => {
-    fetch('http://localhost:8000/estates/list/myList', {
+    fetch('http://localhost:8000/estates/agents/list', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const EstateCard = () => {
       .then(data => {
         setEstates(data);
       });
-  }, [deleteEstate]);
+  }, []);
 
   //날짜 형태 변경하는 함수
   const formatDate = createdDate => {
@@ -67,10 +68,20 @@ const EstateCard = () => {
                 </div>
                 <div className="infoWrapper">
                   <p className="type">{data.estateInfo.categories.type}</p>
-                  <p className="price">
-                    {data.estateInfo.price_deposit} /{' '}
-                    {data.estateInfo.price_monthly}
-                  </p>
+                  {data.estateInfo.price_main && (
+                    <p className="price">
+                      전세
+                      {data.estateInfo.price_main}
+                    </p>
+                  )}
+                  {data.estateInfo.price_monthly &
+                  (
+                    <p className="price">
+                      월세
+                      {data.estateInfo.price_deposit} /{' '}
+                      {data.estateInfo.price_monthly}
+                    </p>
+                  )}
                 </div>
               </EstateInfo>
             </EstateBox>
