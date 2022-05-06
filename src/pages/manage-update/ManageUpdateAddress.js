@@ -9,8 +9,14 @@ function ManageFormAddress() {
   const [check, setCheck] = useState(false);
   const infoDispatch = useContext(InfoDispatchContext);
   const Info = useContext(InfoContext);
-  const { building_name, address_main, jaddress, address_dong, address_ho } =
-    Info;
+  const {
+    building_name,
+    address_main,
+    jaddress,
+    address_dong,
+    address_ho,
+    dataIn,
+  } = Info;
   const searchAddressValue = useRef('');
   const dongRef = useRef('');
   const hoRef = useRef('');
@@ -22,14 +28,14 @@ function ManageFormAddress() {
     const { value } = e.target;
     infoDispatch({
       type: 'UPDATE_DONG',
-      dong: `${value}동`,
+      address_dong: `${value}동`,
     });
   };
   const handleHoAddress = e => {
     const { value } = e.target;
     infoDispatch({
       type: 'UPDATE_HO',
-      ho: `${value}호`,
+      address_ho: `${value}호`,
     });
   };
 
@@ -41,7 +47,7 @@ function ManageFormAddress() {
     searchAddressValue.current.value = address_main;
     dongRef.current.value = address_dong;
     hoRef.current.value = address_ho;
-  }, [searchAddressValue.current, dongRef.current, hoRef.current]);
+  }, [dataIn]);
   return (
     <Wrapper>
       {showModal && (
@@ -72,7 +78,7 @@ function ManageFormAddress() {
               <ButtonInput value="주소검색" onClick={handleShowModal} />
             </SearchAddressBox>
             <BorderBox>
-              <div className="addressText" onChange={e => console.log(e)}>
+              <div className="addressText">
                 {' '}
                 <span>도로명 : </span>
                 {`${address_main} ${building_name ? `(${building_name})` : ''}`}

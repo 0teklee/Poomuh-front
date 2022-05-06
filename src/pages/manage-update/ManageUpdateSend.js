@@ -8,8 +8,6 @@ function ManageFormSend() {
   const [agree, setAgree] = useState(false);
   const handleAgree = () => {
     setAgree(prev => !prev);
-    console.log('Info >>>', Info);
-    console.log('params >>>', RealEstateId.id);
   };
 
   const Info = useContext(InfoContext);
@@ -23,11 +21,15 @@ function ManageFormSend() {
       headers: { 'Content-type': 'application/json', token: token },
       body: JSON.stringify(Info),
     })
-      .then(res => res.json())
-      .then(data => {
-        navigate('/manage/list', { replace: true });
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        res.json();
       })
-      .catch(err => console.log(err));
+      .catch(err => alert(err))
+      .then(alert('매물 정보가 수정되었습니다'))
+      .then(navigate('/manage/list', { replace: true }));
   };
   const verify = () => {
     const {
