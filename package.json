@@ -6,10 +6,18 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^4.20.0",
+    "cross-spawn": "^7.0.3",
+    "http-proxy-middleware": "^2.0.6",
+    "moment": "^2.29.3",
     "react": "^18.0.0",
+    "react-daum-postcode": "^3.0.1",
     "react-dom": "^18.0.0",
+    "react-icons": "^4.3.1",
+    "react-intersection-observer": "^9.1.0",
+    "react-is": "^18.0.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "styled-components": "^5.3.5",
     "styled-reset": "^4.3.4",
     "web-vitals": "^2.1.4"
@@ -18,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "distribute": "npm i && npm run build && pm2 serve build 3000 --name <poomuh-front> --spa"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +51,7 @@
     "dotenv": "^16.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "pm2": "^5.2.0",
     "prettier": "^2.6.2"
   }
 }
