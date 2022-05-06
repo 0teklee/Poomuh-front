@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/Header';
 import ManageNav from '../manage-form/ManageNav';
 import EstateCard from './EstateCard';
