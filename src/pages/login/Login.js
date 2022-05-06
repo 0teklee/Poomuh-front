@@ -5,7 +5,6 @@ import Header from '../../components/header/Header';
 function Login() {
   const navigate = useNavigate();
   const onLogin = () => {
-    console.log('requestedUrl', requestedUrl);
     fetch(`http://localhost:8000/${requestedUrl}/login`, {
       method: 'POST',
       headers: {
@@ -19,7 +18,7 @@ function Login() {
       .then(res => res.json())
       .then(res => {
         if (res.accessToken === undefined) {
-          alert('중개사 회원은 중개인으로 로그인하기를 체크해 주세요');
+          alert('유효하지 않은 회원입니다.');
           navigate('/login');
         } else {
           localStorage.setItem('access_token', res.accessToken);
