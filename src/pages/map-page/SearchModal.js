@@ -27,7 +27,7 @@ function ResultData({ address, buildingName, data }) {
           map.setCenter(coords(address.address.y * 1, address.address.x * 1));
           return;
         }
-        map.setCenter(coords(data.lat, data.lng));
+        map.setCenter(coords(data.latitude, data.longitude));
       }}
     >
       <p>{buildingName}</p>
@@ -61,7 +61,7 @@ function SearchModal({ result, addressResult }) {
               )}
             </DataScroll>
           </Wrapper>
-          {result.오피스텔 ? (
+          {result.office ? (
             <Wrapper>
               <ItemTitle>오피스텔</ItemTitle>
               <DataScroll>
@@ -84,7 +84,7 @@ function SearchModal({ result, addressResult }) {
             <Wrapper>
               <ItemTitle>아파트</ItemTitle>
               <DataScroll>
-                {result.아파트.map(el => {
+                {result.appartment.map(el => {
                   return (
                     <ResultData
                       buildingName={el.buildingName}
