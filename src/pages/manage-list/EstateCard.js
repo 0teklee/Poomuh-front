@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import BASE_URL from '../../config';
+
 const EstateCard = () => {
   const navigate = useNavigate();
 
@@ -14,7 +16,7 @@ const EstateCard = () => {
   //매물 삭제
   const deleteEstate = id => {
     setEstates(estates.filter(el => el.estateInfo.id !== id));
-    fetch(`http://localhost:8000/estates/${id}`, {
+    fetch(`${BASE_URL}/estates/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +29,7 @@ const EstateCard = () => {
 
   //list 가져오기
   useEffect(() => {
-    fetch('http://localhost:8000/estates/agents/list', {
+    fetch(`${BASE_URL}/estates/agents/list`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

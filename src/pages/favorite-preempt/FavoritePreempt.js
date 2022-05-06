@@ -4,6 +4,7 @@ import PreemptRoomCard from './PreemptRoomCard';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import NavBar from '../favorite-recent/NavBar';
+import BASE_URL from '../../config';
 
 function FavoritePreempt() {
   const [preemptRoom, setPreemptRoom] = useState([]);
@@ -13,7 +14,7 @@ function FavoritePreempt() {
   useEffect(() => {
     //찜한방 API (회원만 가능, 로그인 토큰 필요)*******************************************************************
     if (token) {
-      fetch('http://localhost:8000/favorites/likes', {
+      fetch(`${BASE_URL}/favorites/likes`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
+import BASE_URL from '../../config';
 
 function RecentRoomCard({ data }) {
   const [like, setLike] = useState(data.is_like);
@@ -12,7 +13,7 @@ function RecentRoomCard({ data }) {
     setLike(like ? false : true);
 
     //찜 변경 API(회원만 가능) *******************************************************************
-    fetch(`http://localhost:8000/favorites/likes/${data.id}`, {
+    fetch(`${BASE_URL}/favorites/likes/${data.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

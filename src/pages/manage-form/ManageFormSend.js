@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
 import { InfoContext } from './context';
+import BASE_URL from '../../config';
 
 function ManageFormSend() {
   const [agree, setAgree] = useState(false);
@@ -15,7 +16,7 @@ function ManageFormSend() {
 
   // 로그인 한 상태라면 로컬스토리지의 로그인 정보를 함께 전달/
   const sendInfo = () => {
-    fetch('http://localhost:8000/estates', {
+    fetch(`${BASE_URL}/estates`, {
       method: 'POST',
       headers: { 'Content-type': 'application/json', token: token },
       body: JSON.stringify(Info),

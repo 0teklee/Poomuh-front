@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/header/Header';
+import BASE_URL from '../../config';
+
 function Login() {
   const navigate = useNavigate();
   const onLogin = () => {
-    fetch(`http://localhost:8000/${requestedUrl}/login`, {
+    fetch(`${BASE_URL}/${requestedUrl}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

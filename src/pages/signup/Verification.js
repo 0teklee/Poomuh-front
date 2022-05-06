@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { UserInfoContext, UserInfoDispatchContext } from './signupContext';
+import BASE_URL from '../../config';
 
 const Verification = ({ setShow }) => {
   //context.js
@@ -19,7 +20,7 @@ const Verification = ({ setShow }) => {
 
   const onSignup = () => {
     console.log('hi');
-    fetch(`http://localhost:8000/${requestedUrl}`, {
+    fetch(`${BASE_URL}/${requestedUrl}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

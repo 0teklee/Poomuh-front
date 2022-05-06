@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useContext, useMemo, useState } from 'react';
 import { markerdata } from './markerData';
 import { RealEstateContext, RealEstateContextDispatch } from './context';
+import BASE_URL from '../../config';
 
 function Map() {
   const RealEstate = useContext(RealEstateContext);
@@ -58,7 +59,7 @@ function Map() {
         .map(el => el[0])
         .toString();
     }
-    fetch(`http://localhost:8000/estates?tradeType=${tradeTypeQuery}`, {
+    fetch(`${BASE_URL}/estates?tradeType=${tradeTypeQuery}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',

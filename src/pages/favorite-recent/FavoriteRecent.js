@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import NavBar from './NavBar';
+import BASE_URL from '../../config';
 
 function FavoriteRecent() {
   const token = localStorage.getItem('access_token');
@@ -16,7 +17,7 @@ function FavoriteRecent() {
       arr = [];
     } else {
       if (token) {
-        fetch('http://localhost:8000/favorites/users/recent', {
+        fetch(`${BASE_URL}/favorites/users/recent`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -28,7 +29,7 @@ function FavoriteRecent() {
           .then(res => res.json())
           .then(data => setRecentRoom(data.recent));
       } else {
-        fetch('http://localhost:8000/favorites/recent', {
+        fetch(`${BASE_URL}/favorites/recent`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

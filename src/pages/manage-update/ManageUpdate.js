@@ -12,6 +12,7 @@ import { InfoDispatchContext, InfoContext } from './context';
 import ManageUpdateDetail from './ManageUpdateDetail';
 import ManageUpdateRoomInfo from './ManageUpdateRoomInfo';
 import ManageUpdateTradeType from './ManageUpdateTradeType';
+import BASE_URL from '../../config';
 
 function ManageUpdate() {
   // 유효성 검사 추가. 검증 실패시 해당 ref 위치로 스크롤
@@ -22,7 +23,7 @@ function ManageUpdate() {
   const Info = useContext(InfoContext);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/estates/${RealEstateId.id}`, {
+    fetch(`${BASE_URL}/estates/${RealEstateId.id}`, {
       method: 'GET',
       headers: { 'Content-type': 'application/json', token: token },
     })

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { RealEstateContext } from './context';
 import ListCard from './ListCard';
 import { useInView } from 'react-intersection-observer';
+import BASE_URL from '../../config';
 
 function List() {
   const RealEstate = useContext(RealEstateContext);
@@ -45,7 +46,7 @@ function List() {
     setIsLoading(true);
     setTimeout(async () => {
       await fetch(
-        `http://localhost:8000/estates/scroll${isUser}?tradeType=${tradeType}`,
+        `${BASE_URL}/estates/scroll${isUser}?tradeType=${tradeType}`,
         {
           method: 'GET',
           headers: header,

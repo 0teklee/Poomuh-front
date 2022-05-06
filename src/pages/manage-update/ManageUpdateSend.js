@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { BsCheck } from 'react-icons/bs';
 import styled from 'styled-components';
 import { InfoContext } from './context';
+import BASE_URL from '../../config';
 
 function ManageFormSend() {
   const [agree, setAgree] = useState(false);
@@ -16,7 +17,7 @@ function ManageFormSend() {
   // 로컬스토리지의 토큰을 함께 전달/
   const sendInfo = () => {
     const token = localStorage.getItem('access_token');
-    fetch(`http://localhost:8000/estates/${RealEstateId.id}`, {
+    fetch(`${BASE_URL}/estates/${RealEstateId.id}`, {
       method: 'PUT',
       headers: { 'Content-type': 'application/json', token: token },
       body: JSON.stringify(Info),

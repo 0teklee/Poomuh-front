@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import { IoIosSearch, IoMdRefresh } from 'react-icons/io';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import { RealEstateContext, RealEstateContextDispatch } from './context';
 import RoomTypeModal from './RoomTypeModal';
 import TradeTypeModal from './TradeTypeModal';
 import SearchModal from './SearchModal';
+import BASE_URL from '../../config';
 
 function SearchBar() {
   const [roomTypeModal, setRoomTypeModal] = useState(false);
@@ -89,7 +89,7 @@ function SearchBar() {
     // 한국어 검색어를 헤더에 넣어서 non ISO-8859-1 code point 에러 발생. / Esint가 자동으로 쉼표를 지우기 때문으로 추정
     // 쿼리 스트링으로 대체
     fetch(
-      `http://localhost:8000/estates/content/search?search=${searchModal.searchText}`,
+      `${BASE_URL}/estates/content/search?search=${searchModal.searchText}`,
       {
         method: 'GET',
       }

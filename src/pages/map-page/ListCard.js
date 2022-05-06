@@ -3,24 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { RealEstateContext } from './context';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
+import BASE_URL from '../../config';
 
 function ListCard({ data }) {
-  const [like, setLike] = useState(data.isLike);
+  const [like, setLike] = useState(data.is_like);
   const navigate = useNavigate();
   const RealEstate = useContext(RealEstateContext);
   const token = localStorage.getItem('access_token');
   const userType = localStorage.getItem('user_type');
+
   const updateLike = () => {
+    console.log(data);
     setLike(like ? false : true);
 
     //찜 변경 API(회원만 가능) *******************************************************************
-    fetch(`http://localhost:8000/favorites/likes/${data.id}`, {
+    fetch(`${BASE_URL}/favorites/likes/${data.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         token: token,
       },
-    }).then(res => res.json());
+    })
+      .then(res => res.json())
+      .then(console.log('success!!!!'));
   };
 
   const updateRecentRoom = () => {
