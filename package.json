@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "distribute": "npm i && npm run build && pm2 serve build 3000 --name <poomuh-front> --spa"
+    "distribute": "npm i && npm run build && pm2 serve build 3000 --name justcode-4-2nd-poomuh-poomang-front --spa"
   },
   "eslintConfig": {
     "extends": [
