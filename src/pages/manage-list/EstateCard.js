@@ -74,8 +74,7 @@ const EstateCard = () => {
                       {data.estateInfo.price_main}
                     </p>
                   )}
-                  {data.estateInfo.price_monthly &
-                  (
+                  {data.estateInfo.price_monthly && (
                     <p className="price">
                       월세
                       {data.estateInfo.price_deposit} /{' '}
