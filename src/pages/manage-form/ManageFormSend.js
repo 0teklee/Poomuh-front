@@ -21,9 +21,8 @@ function ManageFormSend() {
       body: JSON.stringify(Info),
     })
       .then(res => {
-        if (!res.OK) {
+        if (!res.ok) {
           throw new Error(res.statusText);
-          return;
         }
         res.json();
       })
