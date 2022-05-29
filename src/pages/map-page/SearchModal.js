@@ -21,11 +21,10 @@ function ResultData({ address, buildingName, data }) {
     addressSpan = address;
   }
   return (
-    // 이벤트 수정
     <ResultItem
       onClick={() => {
-        if (address.address) {
-          map.setCenter(coords(address.address.y * 1, address.address.x * 1));
+        if (typeof address === 'object') {
+          map.setCenter(coords(address.y * 1, address.x * 1));
           return;
         }
         map.setCenter(coords(data.latitude, data.longitude));

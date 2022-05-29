@@ -8,6 +8,7 @@ import TradeTypeModal from './TradeTypeModal';
 import SearchModal from './SearchModal';
 
 function SearchBar() {
+  // 모달 관리 state
   const [roomTypeModal, setRoomTypeModal] = useState(false);
   const [tradeTypeModal, setTradeTypeModal] = useState(false);
   const [searchModal, setSearchModal] = useState({
@@ -17,15 +18,11 @@ function SearchBar() {
     addressResult: [],
   });
 
+  // kakao 전역 객체, 키워드 검색을 위한 Places 객체 
   const { kakao } = window;
-  const geocoder = new kakao.maps.services.Geocoder();
-  // 주소 검색 콜백 함수
-  const geoSearch = (result, status) => {
-    if (status === kakao.maps.services.Status.OK) {
-      setSearchModal({ ...searchModal, addressResult: result });
-      return;
-    }
-  };
+  const places = new kakao.maps.services.Places();
+
+  // 모달 핸들러 
   const tradeModalHandler = e => {
     if (e.target !== e.currentTarget) {
       return;
@@ -50,6 +47,7 @@ function SearchBar() {
     setSearchModal({ ...searchModal, isOn: false });
   };
 
+  // 모달 밖 클릭 시 모달 isOn false 
   const useOutSideRef = () => {
     const ref = useRef('');
     useEffect(() => {
@@ -67,13 +65,22 @@ function SearchBar() {
   };
   const outerRef = useOutSideRef('');
 
+    // 주소 검색 콜백 함수
+    const placeSearch = (result, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        setSearchModal({ ...searchModal, addressResult: result });
+        return;
+      }
+    };
+  //  
   const searchTextHandler = ({ target }) => {
     if (2 <= target.value.length) {
       setSearchModal({ ...searchModal, isOn: true, searchText: target.value });
       setTradeTypeModal(false);
       setRoomTypeModal(false);
+      
       // 검색 시 주소 검색 결과 배열 state 추가
-      geocoder.addressSearch(target.value, geoSearch);
+      places.keywordSearch(target.value, placeSearch);
     } else {
       setSearchModal({
         ...searchModal,
@@ -89,7 +96,7 @@ function SearchBar() {
     // 한국어 검색어를 헤더에 넣어서 non ISO-8859-1 code point 에러 발생. / Esint가 자동으로 쉼표를 지우기 때문으로 추정
     // 쿼리 스트링으로 대체
     fetch(
-      `http://localhost:8000/estates/content/search?search=${searchModal.searchText}`,
+      `${BASE_URL}/estates/content/search?search=${searchModal.searchText}`,
       {
         method: 'GET',
       }
