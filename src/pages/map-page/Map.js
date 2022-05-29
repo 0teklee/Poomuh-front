@@ -6,15 +6,21 @@ import BASE_URL from '../../config';
 function Map() {
   const RealEstate = useContext(RealEstateContext);
   const RealEstateDispatch = useContext(RealEstateContextDispatch);
+  const { mapBounds, 
+          roomTypeFilter,
+          tradeTypeFilter, 
+          clustererStyle, 
+          realEstate}  = RealEstate;
+
   const { kakao } = window;
   const mapContainer = useRef('');
-  // 지도 객체, 클러스터러를 담을 ref
+
+  // 지도 객체, 클러스터러 데이터를 담을 ref
   const mapDOM = useRef('');
   const clustererDOM = useRef('');
   const markerDOM = useRef('');
   const kakaoMap = mapDOM.current;
   const kakaoClusterer = clustererDOM.current;
-  const tradeTypeFilter = RealEstate.tradeTypeFilter;
   let tradeTypeQuery;
 
   // 지도 생성 함수
@@ -44,16 +50,16 @@ function Map() {
     kakao.maps.event.addListener(map, 'click', () =>
       RealEstateDispatch({ type: 'GET_SELECTED_ESTATE', selected: [] })
     );
+    // 지도 객체를 반환하여 ref에 저장
     return map;
   };
 
-  // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 받는 fetch 함수
+  // 지도의 좌표 범위를 보내고, 범위 내의 매물을 Context에 저장하는 fetch 함수
   const sendBoundGetItem = () => {
+    // 거래 종류(전세, 월세) 필터를 query에 담는 조건문 
     if (
-      Object.entries(tradeTypeFilter).filter(el => el[1] === true).length === 0
-    ) {
-      tradeTypeQuery = '';
-    } else {
+      Object.entries(tradeTypeFilter).filter(el => el[1] === true).length !== 0
+    )  {
       tradeTypeQuery = Object.entries(tradeTypeFilter)
         .filter(el => el[1] === true)
         .map(el => el[0])
@@ -73,12 +79,13 @@ function Map() {
         return res.json();
       })
       .catch(err => {
+        // 응답 에러 시 context의 매물 정보를 빈 배열로 전환
+        console.log(err.message)
         RealEstateDispatch({ type: 'GET_REAL_ESTATE', realEstate: [] });
       })
-      // 에러 핸들링 추후에 수정
       .then(data => {
-        // 해당 범위 내의 존재하는 매물이 없다면
-        // 백엔드 상에서 realEstate에 빈 배열을 보내주도록 할 것.
+        // 해당 범위 내의 존재하는 매물이 없다면 context에 빈 배열로 저장
+        // fetch로 받은 매물에서 방종류(원룸, 빌라, 오피스텔, 아파트)를 필터링하는 로직
         if (
           Object.values(RealEstate.roomTypeFilter).filter(
             filter => filter.isOn === true
@@ -104,7 +111,7 @@ function Map() {
       });
   };
 
-  // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도와 클러스터러 객체를 저장.
+  // 첫 마운트시 1번만 지도를 렌더링하고, useRef에 지도 객체를 저장.
   useEffect(() => {
     mapDOM.current = mapscript();
   }, []);
@@ -112,17 +119,17 @@ function Map() {
   // 지도의 범위가 바뀔 때마다 fetch함수가 실행, Context에 범위 내 매물 저장
   useEffect(() => {
     sendBoundGetItem();
-  }, [RealEstate.mapBounds, RealEstate.roomTypeFilter, tradeTypeFilter]);
+  }, [mapBounds, roomTypeFilter, tradeTypeFilter]);
 
   // 현재 좌표 범위 내의 매물들이 로드 되고 난 후, 클러스터만 다시 렌더링
   useEffect(() => {
+    // ref에 저장된 기존의 클러스터를 삭제
     if (kakaoClusterer) {
       kakaoClusterer.clear();
     }
-    const clusterStyle = RealEstate.clustererStyle;
 
     if (kakaoMap) {
-      const marker = RealEstate.realEstate.map(el => {
+      const marker = realEstate.map(el => {
         return new kakao.maps.Marker({
           map: kakaoMap,
           position: new kakao.maps.LatLng(el.lat, el.lng),
@@ -165,9 +172,11 @@ function Map() {
           }),
         });
       });
+
       clustererDOM.current = clusterer;
-      RealEstateDispatch({ type: 'UPDATE_CLUSTERER', clusterer: clusterer });
       markerDOM.current = marker;
+
+      RealEstateDispatch({ type: 'UPDATE_CLUSTERER', clusterer: clusterer });
       RealEstateDispatch({ type: 'UPDATE_MARKER', marker: marker });
     }
   }, [RealEstate.realEstate]);
