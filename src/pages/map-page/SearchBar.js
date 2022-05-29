@@ -108,8 +108,6 @@ function SearchBar() {
     getSearchResult();
   }, [searchModal.searchText]);
 
-  useEffect(() => {}, []);
-
   return (
     <div ref={outerRef}>
       <Wrapper>
