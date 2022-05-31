@@ -1,25 +1,49 @@
-_프로젝트 소개는 아래를 참고해서 자유롭게 작성해주세요._ <br>
-_그대로 따라서 작성하면, 다른 프로젝트와 획일화 되어서 특별해보이지 않습니다. 나만의 언어로 나의 소중한 프로젝트를 특별하게 설명해주세요_
 
-## 푸망 프로젝트 Front-end 소개
+# 담당 기능 데모
 
-- 다방 클론 프로젝트입니다.
+## 지도 컴포넌트 (범위 내 매물 불러오기)
+### <img src="public/poomang_map.gif">
 
+## 지도 범위 내 매물 검색 및 필터링
+### <img src="public/poomang_search.gif">
+### <img src="public/poomang_filter_1.gif">
+### <img src="public/poomang_filter_2.gif">
+
+## 매물 등록 
+### <img src="public/poomang_register.gif">
+
+
+### Description
+
+- Poomang은 부동산 중개 플랫폼 서비스입니다. 부동산 중개 플랫폼 다방의 디자인과 기획만 참고하였습니다. 5명의 팀원들과 함께 서버/클라이언트를 개발하고 배포까지 진행했습니다.  
 ### 개발 인원 및 기간
 
 - 개발기간 : 2022/4/18 ~ 2022/5/6
 - 개발 인원 : 프론트엔드 3명, 백엔드 2명
 - [백엔드 github 링크](https://github.com/wecode-bootcamp-korea/justcode-4-2nd-poomuh-back)
 
-### 프로젝트 선정이유
+### Project Goal
 
-- 이 사이트는...
+- 오픈 API를 통해 **다양한 이벤트 처리**를 해야하는 서비스에 도전하고자 했습니다.
+- 백엔드 **서버에 저장된 매물의 등록, 수정, 삭제 상태가 지도 UI에 반영**되도록 API를 활용하고 싶었습니다.
 
-### 데모 영상(이미지 클릭)
+### Tech Stack
 
-_유투브 영상 링크나 캡쳐 이미지 넣어주세요._
+`React.js`, `Styled-Components`, `Context API`, `KaKao Maps API`, `react-daum-postcode api` 
 
-<br>
+### Responsibilities
+
+- 부동산 매물 등록 / 수정 페이지
+    - 페이지 내 모든 input 을 컴포넌트 분리하고, `**Context API**` 를 활용해 리렌더링을 최소화
+    - `**react-daum-postcode api**`를 이용해 상세주소 검색창을 모달로 구현하고, 모달에서 선택한 검색 결과 주소로 `**Kakao map api**` 의 지도를 업데이트하도록 구현
+
+- 부동산 매물 탐색 페이지 지도 컴포넌트
+    - **`Context API`**로 지도의 좌표 정보와 범위 내의 매물 데이터를 페이지 안에서 전역으로 관리하게끔 로직을 단순화하였고, 이를 통해 팀 생산성을 개선함
+    
+- 부동산 매물 탐색 페이지 검색/필터링 모달
+    - onClick 이벤트로 모달 밖 영역 클릭 시 모달이 꺼지도록 개선
+    - 방 종류와 거래 종류에 따른 필터링 기능 구현
+    - 매물, 주소 검색 기능 구현
 
 ## 적용 기술 및 구현 기능
 
@@ -27,13 +51,11 @@ _유투브 영상 링크나 캡쳐 이미지 넣어주세요._
 
 > - Front-End : React.js, Styled-Components, react-modal
 > - Back-End : Python, Django web framework, Beautifulsoup, Selenium, Bcrypt, My SQL
-> - Common : KAKAO social login, AWS(EC2,RDS), RESTful API
+> - Common : AWS(EC2,RDS), RESTful API
 
 ### 구현 기능
 
 #### 메인페이지
-
--
 
 #### 지도
 
@@ -59,9 +81,6 @@ _유투브 영상 링크나 캡쳐 이미지 넣어주세요._
 #### 회원가입
 
 - 일반, 중개인 회원가입을 한 페이지에 구현
-  <br>
-
-_아래 Reference 부분은 README.md에 꼭 포함되어야 하는 내용입니다_
 
 ## Reference
 
